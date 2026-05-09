@@ -192,7 +192,7 @@ export default async function BlogPost({
           </article>
 
           {/* Sidebar */}
-          <aside className="hidden lg:block w-64 shrink-0">
+          <aside className="w-full lg:w-64 shrink-0 mt-12 lg:mt-0">
             <div className="sticky top-8 space-y-6">
               {(post.relatedPosts || []).length > 0 && (
                 <div className="bg-gray-800 rounded-xl p-5 border border-gray-700">
