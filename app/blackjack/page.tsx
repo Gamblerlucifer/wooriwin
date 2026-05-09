@@ -122,52 +122,146 @@ export default function BlackjackPage() {
           </div>
         </section>
 
-        <section className="max-w-4xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-yellow-400">에볼루션카지노 블랙잭이란?</h2>
-          <div className="text-gray-300 space-y-5 leading-relaxed text-base md:text-lg">
-            <p>
-              <strong className="text-white">에볼루션카지노 블랙잭</strong>은 카지노 게임 중 가장 높은 RTP를 자랑하는 두뇌 게임입니다.
-              기본 전략을 완벽히 따를 경우 RTP 99.28%, 하우스 엣지 0.5% 수준으로 낮출 수 있어
-              전략적 플레이어에게 가장 매력적인 선택지입니다.
+        <section className="max-w-4xl mx-auto px-4 py-20 text-gray-300">
+          {/* 헤더 섹션: 신뢰도와 임팩트 */}
+          <header className="mb-16 border-b border-gray-800 pb-10">
+            <div className="flex items-center space-x-3 mb-4">
+              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Strategy Game</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-6 text-white border-b border-gray-800 pb-4">
+              에볼루션 블랙잭: <span className="text-yellow-400 text-xl md:text-2xl">0.5%의 하우스 엣지에 도전하는 기술</span>
+            </h2>
+            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl">
+              단순한 운에 맡기는 베팅은 이제 그만하십시오. 에볼루션 블랙잭은 수학적 근거를 바탕으로 플레이어가 딜러를 상대로 우위를 점할 수 있는 유일한 영역입니다. 99% 이상의 RTP를 현실로 만드는 마스터 가이드를 공개합니다.
             </p>
-            <p>
-              블랙잭의 목표는 딜러보다 21에 가까운 점수를 만드는 것입니다. A는 1 또는 11, 10·J·Q·K는 10,
-              나머지는 숫자 그대로 계산합니다. 21을 초과하면(버스트) 자동 패배합니다.
-              처음 두 장의 합이 정확히 21이면 <strong className="text-white">블랙잭(자연 블랙잭)</strong>으로
-              통상 1.5배 배당을 받습니다.
-            </p>
-            <p>
-              에볼루션 블랙잭의 핵심 전략은 <strong className="text-white">기본 전략(Basic Strategy)</strong>입니다.
-              플레이어의 핸드 합계와 딜러의 업카드 조합에 따라 Hit·Stand·Double·Split의 최적 행동을 도표화한 것으로,
-              이를 완벽히 따르면 통계적으로 가장 유리한 결과를 얻을 수 있습니다.
-              온라인 블랙잭에서는 기본 전략표를 참고하며 플레이하는 것이 허용되므로 적극 활용하세요.
-            </p>
-            <p>
-              에볼루션의 대표 변형 게임인 <strong className="text-white">인피니트 블랙잭</strong>은
-              한 테이블에 무제한 플레이어가 동시 착석할 수 있는 혁신적인 게임입니다.
-              모든 플레이어가 동일한 두 장의 오프닝 카드를 받아 시작하지만,
-              이후 Hit·Stand·Double·Split 결정은 각자 독립적으로 내립니다.
-              6가지 사이드 베팅(Any Pair, 21+3 등)도 추가로 제공합니다.
-            </p>
-            <p>
-              <strong className="text-white">더블다운(Double Down)</strong>은 처음 두 장을 받은 후 베팅을 두 배로 올리고
-              카드 한 장을 더 받는 선택입니다. 핸드가 10 또는 11점일 때 딜러 업카드가 낮을 경우
-              더블다운이 통계적으로 유리합니다. 에볼루션 블랙잭은 모든 합계에서 더블다운이 허용됩니다.
-            </p>
-            <p>
-              <strong className="text-white">스플릿(Split)</strong>은 동일한 두 장의 카드를 두 개의 독립 핸드로 나누는 선택입니다.
-              AA와 88은 항상 스플릿하는 것이 유리하며, TT(10 페어)는 이미 20점으로 강한 핸드이므로
-              스플릿하지 않습니다. 에볼루션 블랙잭에서는 스플릿 후 다시 스플릿(Re-split)도 허용됩니다.
-            </p>
-            <p>
-              <strong className="text-white">라이트닝 블랙잭</strong>은 매 라운드 무작위로 멀티플라이어 카드가 선정되어
-              자연 블랙잭에 최대 25x 추가 배당이 적용되는 변형 게임입니다. 기본 베팅 외 추가 비용이 발생하지만
-              큰 당첨금의 기회를 제공합니다. 흥미로운 점은 이 게임도 RTP가 99.56%로 일반 블랙잭보다 높습니다.
-            </p>
-            <p>
-              WOORIWIN에서는 에볼루션 블랙잭의 기본 전략표, 변형 게임별 특징, 사이드 베팅 분석을
-              블로그를 통해 지속적으로 업데이트합니다. 블랙잭 전략을 완벽히 익혀 하우스 엣지를 최소화하세요.
-            </p>
+          </header>
+
+          <div className="space-y-16 text-base md:text-lg leading-relaxed">
+            
+            {/* 섹션 1: 블랙잭의 본질과 수학적 신뢰성 */}
+            <article className="prose prose-invert max-w-none">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+                <span className="text-yellow-400 mr-3">#01</span> 99.28%의 수익률, 그 메커니즘
+              </h3>
+              <p className="mb-6">
+                에볼루션카지노 블랙잭이 전 세계 전략가들의 성지가 된 이유는 명확합니다. 완벽한 <strong>기본 전략(Basic Strategy)</strong>을 구사할 경우, 하우스 엣지(카지노의 이익률)를 0.5% 미만으로 억제할 수 있기 때문입니다. 이는 온라인에서 즐길 수 있는 모든 카지노 게임 중 플레이어에게 가장 유리한 수치입니다.
+              </p>
+              <div className="bg-gray-900/60 p-6 rounded-xl border-l-4 border-yellow-400 mb-6 text-sm md:text-base">
+                <p><strong>점수 계산의 핵심:</strong></p>
+                <ul className="list-disc ml-6 space-y-2 mt-2">
+                  <li><strong>A (Ace):</strong> 상황에 따라 1 또는 11로 유연하게 활용 (소프트 핸드의 핵심)</li>
+                  <li><strong>10·J·Q·K:</strong> 모두 10점으로 계산 (덱의 약 30.7%를 차지하는 가장 중요한 카드군)</li>
+                  <li><strong>블랙잭(Natural):</strong> 첫 두 장으로 21을 완성 시 베팅액의 1.5배(3:2) 지급</li>
+                </ul>
+              </div>
+            </article>
+
+            {/* 섹션 2: 승률 극대화를 위한 '기본 전략'의 심층 분석 */}
+            <article>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+                <span className="text-yellow-400 mr-3">#02</span> 의사결정의 기술: Hit, Stand, or Double?
+              </h3>
+              <p className="mb-8">
+                블랙잭은 단순히 21에 가깝게 만드는 게임이 아닙니다. <strong>'딜러가 버스트(21 초과)될 확률'</strong>을 계산하는 게임입니다. 에볼루션의 라이브 환경에서는 실시간으로 통계 데이터를 확인할 수 있어 최적의 판단이 가능합니다.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-black/40 p-6 rounded-2xl border border-gray-700 hover:border-yellow-400 transition-colors">
+                  <h4 className="text-white font-bold text-lg mb-3">더블다운(Double Down)</h4>
+                  <p className="text-sm text-gray-400">
+                    승률이 압도적으로 높을 때 베팅액을 2배로 증폭시키세요. 보통 합계가 10이나 11일 때, 딜러의 업카드가 2~6 사이라면 주저 없이 선택해야 합니다. 에볼루션은 모든 합계에서 더블다운을 허용하여 공격적인 플레이를 지원합니다.
+                  </p>
+                </div>
+                <div className="bg-black/40 p-6 rounded-2xl border border-gray-700 hover:border-yellow-400 transition-colors">
+                  <h4 className="text-white font-bold text-lg mb-3">스플릿(Split) 전략</h4>
+                  <p className="text-sm text-gray-400">
+                    수학적으로 <strong>AA와 88은 무조건 스플릿</strong>해야 합니다. 반면, 10-10(20점)은 이미 최상위 승률을 가진 핸드이므로 절대 나누지 않는 것이 정석입니다. 에볼루션은 스플릿 후 리스플릿 기능을 통해 전략적 유연성을 더해줍니다.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            {/* 섹션 3: 진화된 라인업 - 인피니트 & 라이트닝 */}
+            <article className="bg-gray-800/20 p-8 rounded-3xl border border-gray-800 shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-8 italic">Evolution Innovation: 미래형 블랙잭</h3>
+              
+              <div className="space-y-10">
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  <div className="w-full md:w-1/3">
+                    <h4 className="text-yellow-400 font-extrabold text-xl mb-2">인피니트 블랙잭</h4>
+                    <span className="text-xs border border-yellow-400/50 px-2 py-0.5 rounded text-yellow-400 uppercase">Unlimited Seats</span>
+                  </div>
+                  <div className="w-full md:w-2/3">
+                    <p className="text-sm text-gray-300">
+                      만석을 기다릴 필요가 없습니다. 무제한 플레이어가 동시에 참여하며, 모든 플레이어는 공통의 카드로 시작하지만 <strong>결과는 각자의 전략</strong>에 따라 달라집니다. 특히 '6-Card Charlie' 룰(6장을 받을 때까지 버스트되지 않으면 무조건 승리)이 적용되어 색다른 재미를 선사합니다.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  <div className="w-full md:w-1/3">
+                    <h4 className="text-yellow-400 font-extrabold text-xl mb-2">라이트닝 블랙잭</h4>
+                    <span className="text-xs border border-yellow-400/50 px-2 py-0.5 rounded text-yellow-400 uppercase">Multiplier Win</span>
+                  </div>
+                  <div className="w-full md:w-2/3">
+                    <p className="text-sm text-gray-300">
+                      블랙잭에 '폭발적 수익'을 더했습니다. 매 라운드 승리 시 다음 라운드에 적용되는 <strong>2배~25배의 멀티플라이어</strong>를 획득할 수 있습니다. 놀라운 점은 이러한 고배당 룰을 유지하면서도 RTP를 99.56%까지 끌어올려, 흥행과 수익률이라는 두 마리 토끼를 모두 잡았다는 점입니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            {/* 섹션 4: YMYL 필수 요소 - 리스크 관리와 심리 */}
+            <article>
+              <h3 className="text-2xl font-bold text-white mb-6">데이터로 증명하는 사이드 베팅의 진실</h3>
+              <p className="mb-6 text-gray-400 text-sm md:text-base">
+                21+3, 애니 페어(Any Pair) 등 에볼루션 블랙잭의 사이드 베팅은 매혹적인 배당을 제시합니다. 하지만 <strong>YMYL 관점</strong>에서 냉정히 분석하자면, 사이드 베팅의 하우스 엣지는 기본 게임보다 훨씬 높습니다. WOORIWIN은 엔터테인먼트적 요소로 소액을 즐기되, 메인 전략의 흐름을 방해하지 않는 영리한 베팅을 권장합니다.
+              </p>
+              
+              <div className="bg-black/50 p-6 rounded-xl border border-gray-800">
+                <h4 className="text-white font-bold mb-4 flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  플레이어 체크리스트
+                </h4>
+                <ul className="grid md:grid-cols-2 gap-3 text-xs md:text-sm">
+                  <li className="flex items-center text-gray-400">✔ 보험(Insurance) 베팅은 장기적으로 기대값이 낮습니다.</li>
+                  <li className="flex items-center text-gray-400">✔ 감정에 휘둘리지 말고 전략표(Chart)를 신뢰하세요.</li>
+                  <li className="flex items-center text-gray-400">✔ 뱅크롤 매니지먼트는 승률만큼이나 중요합니다.</li>
+                  <li className="flex items-center text-gray-400">✔ 에볼루션의 통계 탭에서 딜러의 버스트 히스토리를 참고하세요.</li>
+                </ul>
+              </div>
+            </article>
+
+            {/* 섹션 5: 결론 (신뢰 구축) */}
+            <footer className="pt-12 border-t border-gray-800 text-left">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
+                <div className="max-w-2xl">
+                  <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tighter">
+                    Responsible Gaming & Strategy
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed mb-6">
+                    <span className="text-white font-semibold">WOORIWIN</span>은 단순한 정보 제공을 넘어, 건전하고 지속 가능한 게임 문화를 지향합니다.
+                    에볼루션카지노 블랙잭의 모든 변형 게임에 대한 심층 분석과 실시간 확률 데이터는
+                    오직 플레이어 여러분의 현명한 선택을 돕기 위해 존재합니다.
+                  </p>
+                  <p className="text-gray-400 leading-relaxed">
+                    에볼루션이 제공하는 기술의 정점을 만끽하시되, 항상 본인만의 자산 관리 원칙을 준수하시길 권장합니다.
+                  </p>
+                </div>
+                <div className="bg-yellow-400/5 p-6 rounded-2xl border border-yellow-400/20 md:min-w-[320px]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                    <p className="text-yellow-400 font-bold uppercase tracking-widest text-sm">WOORIWIN CHECK</p>
+                  </div>
+                  <p className="text-sm text-gray-300 leading-snug">
+                    "블랙잭은 전략이 승률을 바꾸는 유일한 게임입니다. 감정이 아닌 기본 전략표를 신뢰하는 것이 가장 강력한 무기입니다."
+                  </p>
+                </div>
+              </div>
+            </footer>
           </div>
         </section>
 

@@ -105,9 +105,10 @@ export default function LiveCasinoPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
+        {/* Hero */}
         <section className="relative flex flex-col items-center justify-center min-h-[55vh] text-center px-4 py-20 overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <Image src="/images/live-casino.jpg" alt="에볼루션 라이브카지노 스튜디오" fill className="object-cover opacity-25" priority />
+            <Image src="/images/live-casino.jpg" alt="에볼루션 라이브카지노 스튜디오 딜러" fill className="object-cover opacity-25" priority />
           </div>
           <div className="relative z-10 max-w-4xl mx-auto">
             <nav className="text-sm text-gray-400 mb-6">
@@ -124,61 +125,150 @@ export default function LiveCasinoPage() {
           </div>
         </section>
 
-        <section className="max-w-4xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-yellow-400">에볼루션 라이브카지노란?</h2>
-          <div className="text-gray-300 space-y-5 leading-relaxed text-base md:text-lg">
-            <p>
-              <strong className="text-white">에볼루션 라이브카지노</strong>는 실제 딜러가 진행하는 카지노 게임을
-              HD 영상으로 실시간 스트리밍하는 세계 최고 수준의 라이브 카지노 플랫폼입니다.
-              2006년 설립 후 20년간 업계를 선도하며 현재 전 세계 1,000개 이상의 온라인 카지노에
-              소프트웨어를 공급하는 절대적인 업계 표준입니다.
+        <section className="max-w-4xl mx-auto px-4 py-20 text-gray-300">
+          <header className="mb-16 border-b border-gray-800 pb-10">
+            <div className="flex items-center space-x-3 mb-4">
+              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Live Casino</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-6 text-white border-b border-gray-800 pb-4">
+              에볼루션 라이브카지노: <span className="text-yellow-400 text-xl md:text-2xl">20년 기술력이 만든 세계 표준</span>
+            </h2>
+            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl">
+              단순한 온라인 게임이 아닙니다. 실제 딜러, 실제 카드, 실제 룰렛 휠. 에볼루션이 만든 라이브카지노는 오프라인 카지노의 긴장감과 온라인의 편의성을 완벽하게 융합한 새로운 차원의 경험입니다.
             </p>
-            <p>
-              에볼루션의 라이브카지노가 일반 온라인 카지노와 다른 가장 큰 특징은
-              <strong className="text-white"> 실물 게임 도구</strong>를 사용한다는 점입니다.
-              바카라·블랙잭은 실제 카드덱으로, 룰렛은 실제 룰렛 휠과 볼로 진행됩니다.
-              모든 과정이 카메라로 촬영되어 실시간 전송되므로 RNG(난수생성기) 게임과 달리
-              결과 조작이 물리적으로 불가능합니다.
-            </p>
-            <p>
-              에볼루션 라이브카지노의 스튜디오는 라트비아 리가·조지아 트빌리시·루마니아·캐나다 밴쿠버 등
-              전 세계에 분산 운영됩니다. 각 스튜디오는 최첨단 조명·카메라·음향 시스템을 갖추고
-              <strong className="text-white"> 24시간 365일</strong> 운영됩니다.
-              새벽 시간대에도 딜러 부족 없이 모든 주요 게임 테이블이 열려 있습니다.
-            </p>
-            <p>
-              에볼루션 라이브카지노의 게임 라인업은 업계 최대 규모입니다.
-              <strong className="text-white"> 바카라</strong>(스피드·라이트닝·스퀴즈 등 10종 이상),
-              <strong className="text-white"> 블랙잭</strong>(인피니트·스피드·라이트닝 등),
-              <strong className="text-white"> 룰렛</strong>(라이트닝·이머시브·프렌치 등),
-              <strong className="text-white"> 게임쇼</strong>(크레이지타임·모노폴리 라이브·메가볼 등)까지
-              200종 이상의 라이브 테이블이 동시 운영됩니다.
-            </p>
-            <p>
-              에볼루션카지노 이용 방법은 간단합니다. 에볼루션은 B2B 소프트웨어 회사이므로
-              직접 회원가입은 불가능하며, <strong className="text-white">에볼루션 라이선스를 보유한 온라인 카지노</strong>를
-              통해 이용합니다. 카지노에 가입하고 입금 후 라이브카지노 로비에 입장하면
-              에볼루션의 모든 게임을 바로 이용할 수 있습니다.
-            </p>
-            <p>
-              에볼루션의 <strong className="text-white">살롱 프리베(Salon Privé)</strong>는 고액 VIP 전용 테이블입니다.
-              일반 테이블보다 훨씬 높은 베팅 한도와 프라이빗한 환경을 제공하며,
-              특정 VIP 고객만 입장 가능한 독점적인 경험을 선사합니다. 바카라·블랙잭·룰렛 모두
-              살롱 프리베 버전이 있으며, 한도는 카지노와 협의하여 결정됩니다.
-            </p>
-            <p>
-              모바일 이용 측면에서 에볼루션은 <strong className="text-white">HTML5 기반</strong>으로
-              iOS·Android 모든 기기에서 별도 앱 설치 없이 모바일 브라우저에서 이용 가능합니다.
-              세로 모드에서도 완벽하게 최적화된 UI를 제공하며, 터치 인터페이스로
-              베팅·채팅·게임 기록 확인이 모두 가능합니다.
-            </p>
-            <p>
-              WOORIWIN은 에볼루션 라이브카지노의 모든 게임 가이드, 추천 카지노 정보, 최신 보너스 정보를
-              지속적으로 업데이트합니다. 안전하고 검증된 에볼루션 카지노를 이용하려면 WOORIWIN을 참고하세요.
-            </p>
+          </header>
+
+          <div className="space-y-16 text-base md:text-lg leading-relaxed">
+
+            {/* 섹션 1 */}
+            <article>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+                <span className="text-yellow-400 mr-3">#01</span> 왜 1,000개 카지노가 에볼루션을 선택하는가
+              </h3>
+              <p className="mb-4">
+                <strong>에볼루션카지노(Evolution Gaming)</strong>는 2006년 설립 이후 단 한 번도 업계 1위 자리를 내준 적이 없습니다. 그 비결은 단순합니다. 경쟁사가 흉내 낼 수 없는 <strong>하드웨어 기술력</strong>과 <strong>운영 노하우</strong>입니다. 라트비아 리가, 조지아 트빌리시, 캐나다 밴쿠버 등 전 세계 스튜디오에서 24시간 365일 HD 스트리밍이 끊김 없이 제공됩니다.
+              </p>
+              <p>
+                에볼루션의 모든 게임은 <strong>UKGC(영국 도박위원회)</strong>와 <strong>MGA(몰타 게임청)</strong> 라이선스를 보유하고 있으며, eCOGRA 등 국제 공인기관의 정기 감사를 통해 공정성이 검증됩니다. 실물 카드·룰렛 휠을 사용하기 때문에 RNG 게임과 달리 결과 조작이 물리적으로 불가능합니다.
+              </p>
+            </article>
+
+            {/* 섹션 2: PRO ANALYSIS */}
+            <article className="bg-gray-800/30 p-8 rounded-2xl border border-gray-700">
+              <h3 className="text-xl font-bold text-yellow-400 mb-6 text-center underline underline-offset-8">
+                PRO ANALYSIS: 에볼루션 라이브카지노 게임별 RTP 비교
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div className="bg-black/40 p-5 rounded-xl text-center border border-gray-600">
+                  <p className="text-gray-400 text-sm mb-2">바카라 (뱅커)</p>
+                  <p className="text-3xl font-black text-green-400">98.94%</p>
+                  <p className="text-xs mt-2 text-gray-500">업계 최저 하우스 엣지</p>
+                </div>
+                <div className="bg-black/40 p-5 rounded-xl text-center border border-gray-600">
+                  <p className="text-gray-400 text-sm mb-2">블랙잭 (기본전략)</p>
+                  <p className="text-3xl font-black text-blue-400">99.28%</p>
+                  <p className="text-xs mt-2 text-gray-500">전략 적용 시 최고 환수율</p>
+                </div>
+                <div className="bg-black/40 p-5 rounded-xl text-center border border-gray-600">
+                  <p className="text-gray-400 text-sm mb-2">라이트닝 룰렛</p>
+                  <p className="text-3xl font-black text-yellow-400">97.30%</p>
+                  <p className="text-xs mt-2 text-gray-500">최대 500x 멀티플라이어</p>
+                </div>
+              </div>
+              <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400">
+                "게임 선택이 곧 전략입니다. 장기적인 수익을 추구한다면 RTP가 높은 바카라·블랙잭이 유리하고, 단기 고배당을 노린다면 라이트닝 룰렛·크레이지타임이 적합합니다."
+              </blockquote>
+            </article>
+
+            {/* 섹션 3 */}
+            <article className="bg-gray-800/20 p-8 rounded-3xl border border-gray-800 shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-8 italic">Evolution Innovation: 200종 게임 라인업</h3>
+              <div className="space-y-10">
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  <div className="w-full md:w-1/3">
+                    <h4 className="text-yellow-400 font-extrabold text-xl mb-2">라이브 테이블 게임</h4>
+                    <span className="text-xs border border-yellow-400/50 px-2 py-0.5 rounded text-yellow-400 uppercase">Core Games</span>
+                  </div>
+                  <div className="w-full md:w-2/3">
+                    <p className="text-sm text-gray-300">
+                      바카라(스피드·라이트닝·스퀴즈·노커미션 등 10종), 블랙잭(인피니트·스피드·라이트닝), 룰렛(라이트닝·이머시브·프렌치·아메리칸), 홀덤 포커, 드래곤 타이거까지. 에볼루션의 <strong>핵심 테이블 게임</strong>은 모두 실물 도구로 진행되며 24시간 운영됩니다.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  <div className="w-full md:w-1/3">
+                    <h4 className="text-yellow-400 font-extrabold text-xl mb-2">라이브 게임쇼</h4>
+                    <span className="text-xs border border-yellow-400/50 px-2 py-0.5 rounded text-yellow-400 uppercase">Game Show</span>
+                  </div>
+                  <div className="w-full md:w-2/3">
+                    <p className="text-sm text-gray-300">
+                      크레이지타임, 모노폴리 라이브, 메가볼, 드림캐처, 딜 오어 노딜 등 <strong>TV 게임쇼 포맷</strong>을 카지노에 접목한 혁신적인 타이틀입니다. 단순 베팅을 넘어 엔터테인먼트 경험을 제공하며, MZ 세대에게 폭발적인 인기를 끌고 있습니다.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  <div className="w-full md:w-1/3">
+                    <h4 className="text-yellow-400 font-extrabold text-xl mb-2">살롱 프리베 VIP</h4>
+                    <span className="text-xs border border-yellow-400/50 px-2 py-0.5 rounded text-yellow-400 uppercase">VIP Only</span>
+                  </div>
+                  <div className="w-full md:w-2/3">
+                    <p className="text-sm text-gray-300">
+                      고액 플레이어를 위한 프라이빗 테이블입니다. 일반 테이블보다 높은 베팅 한도, 전담 딜러, 독립된 게임 환경을 제공합니다. 바카라·블랙잭·룰렛 모두 살롱 프리베 버전이 있으며, <strong>VIP 자격 조건</strong>은 각 카지노마다 상이합니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            {/* 섹션 4 */}
+            <article>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+                <span className="text-yellow-400 mr-3">#04</span> 모바일 최적화: 언제 어디서나 HD 품질
+              </h3>
+              <p className="mb-6">
+                에볼루션 라이브카지노 전체 트래픽의 <strong>60% 이상이 모바일</strong>에서 발생합니다. HTML5 기반으로 iOS·Android 모든 기기에서 별도 앱 설치 없이 모바일 브라우저로 이용 가능합니다. 세로 모드에서도 완벽하게 최적화된 UI를 제공하며, 터치 인터페이스로 베팅·채팅·게임 기록 확인이 모두 가능합니다.
+              </p>
+              <div className="bg-black/50 p-6 rounded-xl border border-gray-800">
+                <h4 className="text-white font-bold mb-4">모바일 최적 환경 체크리스트</h4>
+                <ul className="grid md:grid-cols-2 gap-3 text-xs md:text-sm">
+                  <li className="flex items-center text-gray-400">✔ Wi-Fi 또는 5G 환경 권장 (HD 스트리밍 기준 10Mbps 이상)</li>
+                  <li className="flex items-center text-gray-400">✔ Chrome·Safari 최신 버전 사용</li>
+                  <li className="flex items-center text-gray-400">✔ 배터리 절약 모드 해제 시 화질 안정</li>
+                  <li className="flex items-center text-gray-400">✔ 화면 밝기 70% 이상 권장</li>
+                </ul>
+              </div>
+            </article>
+
+            {/* 섹션 5: Responsible Gaming */}
+            <footer className="pt-12 border-t border-gray-800 text-left">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
+                <div className="max-w-2xl">
+                  <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tighter">
+                    Responsible Gaming & Strategy
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed mb-6">
+                    <span className="text-white font-semibold">WOORIWIN</span>은 단순한 정보 제공을 넘어, 건전하고 지속 가능한 게임 문화를 지향합니다.
+                    에볼루션 라이브카지노의 모든 게임 분석과 가이드는 오직 플레이어 여러분의 현명한 선택을 돕기 위해 존재합니다.
+                  </p>
+                  <p className="text-gray-400 leading-relaxed">
+                    에볼루션이 제공하는 기술의 정점을 만끽하시되, 항상 본인만의 자산 관리 원칙을 준수하시길 권장합니다.
+                  </p>
+                </div>
+                <div className="bg-yellow-400/5 p-6 rounded-2xl border border-yellow-400/20 md:min-w-[320px]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                    <p className="text-yellow-400 font-bold uppercase tracking-widest text-sm">WOORIWIN CHECK</p>
+                  </div>
+                  <p className="text-sm text-gray-300 leading-snug">
+                    "에볼루션 라이브카지노는 게임의 공정성을 보장하지만, 장기적 수익은 보장하지 않습니다. 게임은 엔터테인먼트입니다. 즐길 수 있는 범위 안에서 플레이하세요."
+                  </p>
+                </div>
+              </div>
+            </footer>
           </div>
         </section>
 
+        {/* 특징 카드 */}
         <section className="bg-gray-800 py-16 px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-3">에볼루션 라이브카지노 특징</h2>
@@ -195,6 +285,7 @@ export default function LiveCasinoPage() {
           </div>
         </section>
 
+        {/* FAQ */}
         <section className="max-w-4xl mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-10 text-center">에볼루션 라이브카지노 FAQ</h2>
           <div className="space-y-4">
@@ -210,6 +301,7 @@ export default function LiveCasinoPage() {
           </div>
         </section>
 
+        {/* 내부 링크 */}
         <footer className="bg-gray-950 py-10 px-4 text-center">
           <p className="text-gray-500 text-sm mb-4">관련 에볼루션카지노 가이드</p>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
