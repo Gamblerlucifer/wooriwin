@@ -216,11 +216,11 @@ export default function Home() {
               에볼루션카지노의 모든 정보를 WOORIWIN에서 확인하세요.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/baccarat" className="bg-yellow-400 text-gray-900 font-bold px-8 py-3 rounded-lg hover:bg-yellow-300 transition">
-                바카라 가이드 보기
+              <Link href="https://ac24mj.com/" target="_blank" rel="noopener noreferrer" className="bg-yellow-400 text-gray-900 font-bold px-8 py-3 rounded-lg hover:bg-yellow-300 transition">
+                에볼루션카지노 가입
               </Link>
               <Link href="/blog" className="border border-white text-white font-semibold px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition">
-                전략 블로그
+                에볼루션카지노 블로그
               </Link>
             </div>
           </div>
