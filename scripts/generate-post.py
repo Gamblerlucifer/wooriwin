@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import time
 import requests
@@ -13,9 +14,9 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
 
 # ── 경로 ──────────────────────────────────────────
-BASE_DIR   = os.path.join(os.path.dirname(__file__), "..")
-POSTS_DIR  = os.path.join(BASE_DIR, "data", "posts")
-USED_CACHE = os.path.join(BASE_DIR, "data", "used_topics.json")
+BASE_DIR      = os.path.join(os.path.dirname(__file__), "..")
+POSTS_DIR     = os.path.join(BASE_DIR, "data", "posts")
+USED_CACHE    = os.path.join(BASE_DIR, "data", "used_topics.json")
 POSTS_PER_RUN = 3
 
 # ── E-E-A-T 고정 문구 (모든 글 하단 hard-code) ────
@@ -29,6 +30,24 @@ RESPONSIBLE_GAMBLING_TEXT = """
 > 도박 문제로 어려움을 겪고 계신다면 **한국도박문제예방치유원 ☎ 1336** (24시간 무료상담)에 연락하세요.
 > 온라인 상담: [kcgp.or.kr](https://kcgp.or.kr)
 """
+
+# ── [2번] CTR 스코어링 단어 리스트 ───────────────
+# 클릭베이트 위험 단어 제거, SEO 안전 단어 중심
+HIGH_CTR_WORDS = [
+    "전략", "실전", "2026", "승률", "핵심",
+    "노하우", "TOP", "분석", "완벽", "가이드",
+    "비교", "차이", "방법", "공개", "검증",
+]
+
+# ── [4번] 도입부 유형 랜덤화 리스트 ─────────────
+INTRO_TYPES = [
+    "이용자들이 가장 많이 하는 실수 TOP 3로 시작",
+    "업계 전문가만 아는 충격적인 통계 수치 제시로 시작",
+    "10년 딜러 경력의 현장 사례 한 가지로 시작",
+    "대부분의 플레이어가 놓치는 핵심 포인트 한 줄로 시작",
+    "실제 유저 질문에서 발견한 공통 오해로 시작",
+    "오늘 당장 써먹을 수 있는 실전 팁 하나로 시작",
+]
 
 # ── 21개 확정 주제 (주제 + 카테고리 + Pexels 쿼리 세트) ──
 TOPICS = [
@@ -172,10 +191,24 @@ INTERNAL_LINKS = [
     {"slug": "live-casino", "title": "에볼루션 라이브카지노 완벽 가이드",  "anchor": "에볼루션 라이브카지노"},
 ]
 
-# ── [추가된 유틸리티 함수] ────────────────────────
+# ── 페르소나 시스템 지침 (공통) ───────────────────
+SYSTEM_INSTRUCTION = (
+    "당신은 10년 경력의 에볼루션카지노 전문 딜러 출신 SEO 컨설턴트입니다. "
+    "라이브 카지노 현장 경험을 바탕으로 독창적인 실전 노하우를 제공하며 "
+    "구글 E-E-A-T를 철저히 준수합니다. "
+    "뻔한 정보는 절대 쓰지 않고, 구체적인 수치와 현장 경험을 바탕으로 글을 작성합니다."
+)
+
+# ─────────────────────────────────────────────────
+# 유틸리티 함수
+# ─────────────────────────────────────────────────
+
+def setup_gemini() -> genai.Client:
+    return genai.Client(api_key=GEMINI_API_KEY)
+
 
 def clean_json_response(text: str) -> str:
-    """제미나이 응답에서 순수 JSON만 추출 (안정성 강화)"""
+    """Gemini 응답에서 순수 JSON만 추출"""
     text = text.strip()
     if "```json" in text:
         text = text.split("```json")[1].split("```")[0]
@@ -183,21 +216,6 @@ def clean_json_response(text: str) -> str:
         text = text.split("```")[1].split("```")[0]
     return text.strip()
 
-def get_weighted_related_posts(category: str) -> list:
-    """핵심 페이지(바카라/블랙잭 등)에 우선순위를 둔 내부 링크 생성"""
-    high_value_slugs = ["baccarat", "blackjack", "live-casino"]
-    cat_map = {"바카라": "baccarat", "블랙잭": "blackjack", "룰렛": "roulette", "슬롯/게임쇼": "slots", "가이드": "live-casino"}
-    current_cat_slug = cat_map.get(category, "")
-    
-    candidates = [l for l in INTERNAL_LINKS if l["slug"] != current_cat_slug]
-    # 핵심 페이지를 리스트 앞으로 보내 가중치 부여
-    candidates.sort(key=lambda x: x["slug"] in high_value_slugs, reverse=True)
-    return random.sample(candidates[:4], min(3, len(candidates)))
-
-# ── [수정된 핵심 로직 함수] ────────────────────────
-
-def setup_gemini():
-    return genai.Client(api_key=GEMINI_API_KEY)
 
 def load_used_topics() -> list:
     if os.path.exists(USED_CACHE):
@@ -205,33 +223,128 @@ def load_used_topics() -> list:
             return json.load(f).get("used_ids", [])
     return []
 
+
 def save_used_topics(used_ids: list):
     os.makedirs(os.path.dirname(USED_CACHE), exist_ok=True)
     with open(USED_CACHE, "w", encoding="utf-8") as f:
         json.dump({"used_ids": used_ids}, f, ensure_ascii=False, indent=2)
+
 
 def get_existing_slugs() -> set:
     if not os.path.exists(POSTS_DIR):
         return set()
     return {f.replace(".json", "") for f in os.listdir(POSTS_DIR) if f.endswith(".json")}
 
+
 def get_available_topics(used_ids: list) -> list:
-    """사용되지 않은 주제 반환. 전부 소진되면 리셋."""
+    """사용되지 않은 주제 반환. 전부 소진되면 자동 리셋."""
     available = [t for t in TOPICS if t["id"] not in used_ids]
     if not available:
-        print("  🔄 21개 주제 전부 소진 → 리셋 후 재시작")
+        print("  🔄 21개 주제 전부 소진 → 자동 리셋 후 재시작")
+        save_used_topics([])
         available = TOPICS.copy()
     return available
 
-def generate_titles_with_trending(client, topic: str) -> list:
-    """
-    제미나이가 오늘의 구글 인기 키워드를 섞어서
-    해당 주제로 매력적인 제목 3개를 생성
-    """
-    prompt = f"""
-당신은 10년 경력의 에볼루션카지노 전문 딜러 출신 SEO 컨설턴트입니다.
-라이브 카지노 현장 경험을 바탕으로 글을 씁니다.
 
+def get_weighted_related_posts(category: str) -> list:
+    """핵심 페이지에 우선순위를 둔 내부 링크 3개 반환."""
+    high_value_slugs = ["baccarat", "blackjack", "live-casino"]
+    cat_map = {
+        "바카라": "baccarat", "블랙잭": "blackjack",
+        "룰렛": "roulette", "슬롯/게임쇼": "slots", "가이드": "live-casino",
+    }
+    current_cat_slug = cat_map.get(category, "")
+    candidates = [l for l in INTERNAL_LINKS if l["slug"] != current_cat_slug]
+    candidates.sort(key=lambda x: x["slug"] in high_value_slugs, reverse=True)
+    return random.sample(candidates[:4], min(3, len(candidates)))
+
+
+# ─────────────────────────────────────────────────
+# [1번] JSON 에러 방지 및 재시도 (안정성)
+# ─────────────────────────────────────────────────
+
+def safe_generate_content(client: genai.Client, prompt: str, use_search: bool = False, retries: int = 1) -> dict | list | None:
+    """
+    실패 시 재시도 로직이 포함된 안전한 생성 함수.
+    재시도 시 프롬프트 끝에 변형 지시를 추가해 같은 오류 반복을 방지.
+    """
+    for attempt in range(retries + 1):
+        try:
+            cfg = {"system_instruction": SYSTEM_INSTRUCTION}
+            if use_search:
+                cfg["tools"] = [{"google_search": {}}]
+
+            # 재시도 시 프롬프트 살짝 변형 (같은 오류 반복 방지)
+            current_prompt = prompt
+            if attempt > 0:
+                current_prompt += f"\n\n[재시도 {attempt}회차: 반드시 유효한 JSON만 출력할 것. 마크다운 코드블록 없이 순수 JSON만.]"
+
+            response = client.models.generate_content(
+                model="gemini-3.1-flash-lite",
+                contents=current_prompt,
+                config=cfg,
+            )
+            cleaned = clean_json_response(response.text)
+            return json.loads(cleaned)
+
+        except json.JSONDecodeError as e:
+            if attempt < retries:
+                print(f"  ⚠️ JSON 파싱 실패({e}), {attempt + 1}회 재시도 중...")
+                time.sleep(2)
+            else:
+                print(f"  ❌ 최종 JSON 파싱 실패 — 포스트 스킵")
+                return None
+        except Exception as e:
+            if attempt < retries:
+                print(f"  ⚠️ 생성 실패({e}), {attempt + 1}회 재시도 중...")
+                time.sleep(2)
+            else:
+                print(f"  ❌ 최종 생성 실패 — 포스트 스킵")
+                return None
+
+
+# ─────────────────────────────────────────────────
+# [2번] CTR 스코어링 — 돈 되는 제목 선택
+# ─────────────────────────────────────────────────
+
+def get_best_title(titles: list) -> str:
+    """
+    제목들 중 CTR 점수가 가장 높은 것을 선택.
+    클릭베이트 위험 단어 제외, SEO 안전 단어 중심.
+    """
+    def score_title(t: str) -> int:
+        return sum(1 for word in HIGH_CTR_WORDS if word in t)
+
+    scored = sorted(titles, key=score_title, reverse=True)
+    best = scored[0]
+    print(f"  🏆 CTR 스코어링 결과: '{best}' (점수: {score_title(best)})")
+    return best
+
+
+# ─────────────────────────────────────────────────
+# [3번] 고유 슬러그 생성 — Gemini가 기존 슬러그와 비교해 생성
+# ─────────────────────────────────────────────────
+
+def ensure_unique_slug(slug: str, existing_slugs: set) -> str:
+    """
+    Gemini가 생성한 슬러그가 중복일 때 최후 방어선.
+    날짜 접미사 추가로 유니크 보장.
+    """
+    if slug not in existing_slugs:
+        return slug
+    suffix = datetime.now().strftime("%m%d%H%M")
+    unique = f"{slug}-{suffix}"
+    print(f"  🔄 슬러그 중복 → 변경: {slug} → {unique}")
+    return unique
+
+
+# ─────────────────────────────────────────────────
+# Gemini API 호출 함수
+# ─────────────────────────────────────────────────
+
+def generate_titles_with_trending(client: genai.Client, topic: str) -> list:
+    """Google Search 툴로 트렌드 반영 제목 3개 생성. safe_generate_content 사용."""
+    prompt = f"""
 오늘 날짜: {datetime.now().strftime("%Y년 %m월 %d일")}
 
 다음 주제를 바탕으로, 오늘의 구글 인기 검색 트렌드를 섞어서
@@ -243,61 +356,69 @@ def generate_titles_with_trending(client, topic: str) -> list:
 - "에볼루션카지노" 키워드 반드시 포함
 - 클릭하고 싶은 호기심 유발 제목
 - 구체적인 수치나 연도 포함 시 더 좋음
-- 각 제목은 서로 다른 앵글(초보자용/전략형/최신트렌드형)
+- 각 제목은 서로 다른 앵글(초보자용 / 전략형 / 최신트렌드형)
 
 JSON 배열만 응답 (다른 텍스트 없이):
 ["제목1", "제목2", "제목3"]
 """
-    try:
-        response = client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=prompt,
-            config={"tools": [{"google_search": {}}]}
-        )
-        text = response.text.strip()
-        if "```" in text:
-            text = text.split("```")[1]
-            if text.startswith("json"):
-                text = text[4:]
-        titles = json.loads(text.strip())
-        return titles if isinstance(titles, list) else []
-    except Exception as e:
-        print(f"  ⚠️ 제목 생성 오류: {e}")
-        return [topic]
+    result = safe_generate_content(client, prompt, use_search=True, retries=1)
+    if isinstance(result, list) and result:
+        return result
+    print(f"  ⚠️ 제목 생성 실패 → 원본 주제로 대체")
+    return [topic]
 
-def generate_post_content(client, title: str, topic: str, category: str) -> dict:
+
+def generate_post_content(
+    client: genai.Client,
+    title: str,
+    topic: str,
+    category: str,
+    fixed_queries: list,
+    existing_slugs: set,
+    intro_type: str,          # [4번] 도입부 유형 주입
+) -> dict | None:
     """
-    확정된 제목으로 본문 생성
-    페르소나 + 표 + 도입부 전략 + Pexels alt 모두 포함
+    확정된 제목으로 본문 생성.
+    - [1번] safe_generate_content로 재시도 포함
+    - [3번] 기존 슬러그 목록 주입 → Gemini가 겹치지 않게 생성
+    - [4번] 도입부 유형 랜덤 주입
     """
+    # 기존 슬러그 최근 50개만 프롬프트에 주입 (토큰 절약)
+    slugs_sample = list(existing_slugs)[-50:]
+    slugs_list   = "\n".join(f"- {s}" for s in slugs_sample) if slugs_sample else "없음"
+
     prompt = f"""
-당신은 10년 경력의 에볼루션카지노 전문 딜러 출신 SEO 컨설턴트입니다.
-라이브 카지노 현장 경험을 바탕으로 글을 씁니다.
-초보자가 절대 모르는 실전 노하우를 반드시 포함하고, 뻔한 정보는 절대 쓰지 않습니다.
-구글 로봇이 즉시 파악할 수 있게 의미론적으로 완벽한 글을 설계합니다.
-모든 글은 사이트 전체의 주제적 권위(Topical Authority)를 높이는 방향으로 작성합니다.
-
 글 제목: {title}
 주제: {topic}
 카테고리: {category}
+참고 이미지 키워드(영문): {", ".join(fixed_queries)}
 
 작성 규칙:
 1. 본문은 최소 1500자 이상
 2. H2 헤더(## )를 4~6개 포함
 3. 구체적인 수치와 통계 포함 (RTP, 승률, 배율 등 실제 데이터)
-4. [도입부 필수] 첫 문단에 "이용자들이 가장 많이 하는 실수 TOP 3" 또는 충격적인 통계로 시작
+4. [도입부 필수] 반드시 "{intro_type}" 방식으로 첫 문단을 작성할 것
 5. 본문 중간에 마크다운 표(|컬럼|컬럼|) 반드시 1개 이상 포함
 6. FAQ 5개 포함 (실전 경험에서 나온 질문)
 7. SEO 최적화된 자연스러운 키워드 배치
-8. slug는 제목을 영문으로 번역한 URL 친화적 형태
+8. pexels_query 필드에 이 글에 딱 맞는 영문 이미지 검색어 1개를 제안
 
-다음 JSON 형식으로만 응답 (다른 텍스트 없이):
+⚠️ 슬러그 생성 규칙:
+- 아래 기존 슬러그 목록과 절대 겹치지 않게 생성
+- 영문 소문자 + 숫자 + 하이픈만 사용, 50자 이내
+- 에볼루션카지노 관련 키워드 포함 권장
+
+기존 슬러그 목록:
+{slugs_list}
+
+다음 JSON 형식으로만 응답 (마크다운 코드블록 없이 순수 JSON만):
 {{
-  "slug": "title-in-english-url-friendly",
+  "slug": "unique-english-url-friendly-slug",
   "title": "{title}",
   "description": "포스트 설명 (150자 이내, 키워드 자연스럽게 포함)",
   "keywords": ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"],
   "imageAlt": "에볼루션카지노 관련 구체적 이미지 설명 (키워드 포함, 50자 이내)",
+  "pexels_query": "suggested-english-image-search-query",
   "content": "본문 내용 (마크다운 형식, 1500자 이상, 표 포함)",
   "faq": [
     {{"q": "질문1", "a": "답변1"}},
@@ -308,31 +429,21 @@ def generate_post_content(client, title: str, topic: str, category: str) -> dict
   ]
 }}
 """
-    try:
-        response = client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=prompt
-        )
-        text = response.text.strip()
-        if text.startswith("```"):
-            text = text.split("```")[1]
-            if text.startswith("json"):
-                text = text[4:]
-        return json.loads(text.strip())
-    except Exception as e:
-        print(f"  ❌ Gemini 생성 오류: {e}")
-        return None
+    return safe_generate_content(client, prompt, use_search=False, retries=1)
+
 
 def fetch_pexels_image(queries: list) -> str:
-    """주제별 고정 Pexels 쿼리로 이미지 검색 (fallback 포함)"""
+    """Gemini 추천 쿼리 → 고정 쿼리 순차 시도, 모두 실패 시 fallback."""
     fallback = "https://images.pexels.com/photos/1871508/pexels-photo-1871508.jpeg"
     for query in queries:
+        if not query:
+            continue
         try:
             res = requests.get(
                 "https://api.pexels.com/v1/search",
                 headers={"Authorization": PEXELS_API_KEY},
                 params={"query": query, "per_page": 5, "orientation": "landscape"},
-                timeout=10
+                timeout=10,
             )
             res.raise_for_status()
             photos = res.json().get("photos", [])
@@ -345,18 +456,9 @@ def fetch_pexels_image(queries: list) -> str:
     print("  ⚠️ fallback 이미지 사용")
     return fallback
 
-def get_related_posts(category: str) -> list:
-    """카테고리 기반 내부 링크 3개"""
-    cat_map = {
-        "바카라": "baccarat", "블랙잭": "blackjack",
-        "룰렛": "roulette", "슬롯/게임쇼": "slots", "가이드": "live-casino",
-    }
-    current = cat_map.get(category, "")
-    candidates = [l for l in INTERNAL_LINKS if l["slug"] != current]
-    return random.sample(candidates, min(3, len(candidates)))
 
 def save_post(slug, content_data, image_url, category, date, related_posts):
-    # E-E-A-T 책임감 있는 게임 문구 하드코딩
+    """E-E-A-T 책임감 있는 게임 문구 하드코딩 후 JSON 저장."""
     content_with_eeat = content_data["content"] + RESPONSIBLE_GAMBLING_TEXT
 
     post = {
@@ -379,7 +481,11 @@ def save_post(slug, content_data, image_url, category, date, related_posts):
         json.dump(post, f, ensure_ascii=False, indent=2)
     print(f"  ✅ 포스트 저장: {slug}.json")
 
-# ── 메인 ─────────────────────────────────────────
+
+# ─────────────────────────────────────────────────
+# 메인
+# ─────────────────────────────────────────────────
+
 def main():
     print("=" * 55)
     print("  WOORIWIN 블로그 포스트 자동 생성 시작")
@@ -389,53 +495,68 @@ def main():
     os.makedirs(POSTS_DIR, exist_ok=True)
     client = setup_gemini()
 
-    used_ids = load_used_topics()
+    used_ids       = load_used_topics()
     existing_slugs = get_existing_slugs()
-    available_topics = get_available_topics(used_ids)
+    available      = get_available_topics(used_ids)
+    selected       = random.sample(available, min(POSTS_PER_RUN, len(available)))
 
-    # 오늘 쓸 주제 3개 랜덤 선택
-    selected = random.sample(available_topics, min(POSTS_PER_RUN, len(available_topics)))
-
-    today = datetime.now()
+    today   = datetime.now()
     success = 0
 
     for i, topic_data in enumerate(selected):
-        date = (today - timedelta(days=i)).strftime("%Y-%m-%d")
-        topic   = topic_data["topic"]
-        category = topic_data["category"]
+        date           = (today - timedelta(days=i)).strftime("%Y-%m-%d")
+        topic          = topic_data["topic"]
+        category       = topic_data["category"]
         pexels_queries = topic_data["pexels_queries"]
 
-        print(f"\n📌 주제 [{topic_data['id']}/21]: {topic[:40]}...")
-        print(f"  카테고리: {category}")
+        print(f"\n📌 주제 [{topic_data['id']}/21]: {topic[:45]}...")
+        print(f"   카테고리: {category}")
 
-        # Step 1: 오늘의 트렌드 키워드 섞어서 제목 3개 생성
-        print("  🔍 오늘의 트렌드 키워드로 제목 생성 중...")
+        # Step 1 — 트렌드 키워드 반영 제목 3개 생성
+        print("  🔍 트렌드 키워드로 제목 생성 중...")
         titles = generate_titles_with_trending(client, topic)
-        title = titles[0] if titles else topic
-        print(f"  📝 선택된 제목: {title}")
+
+        # [2번] CTR 스코어링으로 최고 제목 선택
+        title = get_best_title(titles)
         time.sleep(1)
 
-        # Step 2: 본문 생성
+        # [4번] 도입부 유형 랜덤 선택
+        intro_type = random.choice(INTRO_TYPES)
+        print(f"  📖 도입부 유형: {intro_type}")
+
+        # Step 2 — 본문 생성
+        # [1번] safe_generate_content 재시도 포함
+        # [3번] 기존 슬러그 목록 전달 → Gemini가 겹치지 않게 생성
+        # [4번] intro_type 주입
         print("  🤖 Gemini 본문 생성 중...")
-        content_data = generate_post_content(client, title, topic, category)
+        content_data = generate_post_content(
+            client, title, topic, category,
+            pexels_queries, existing_slugs, intro_type
+        )
         if not content_data:
             continue
 
-        slug = content_data.get("slug", "")
-        if not slug or slug in existing_slugs:
-            print(f"  ⏭️ 스킵 (슬러그 없음 또는 중복): {slug}")
+        # [3번] 슬러그 유니크 보장 (Gemini 생성 후 2중 검증)
+        raw_slug = content_data.get("slug", "")
+        if not raw_slug:
+            print("  ⏭️ 슬러그 없음 → 스킵")
             used_ids.append(topic_data["id"])
             save_used_topics(used_ids)
             continue
 
-        # Step 3: 주제별 고정 Pexels 쿼리로 이미지
-        print(f"  📸 Pexels 이미지 검색 중...")
-        image_url = fetch_pexels_image(pexels_queries)
+        slug = ensure_unique_slug(raw_slug, existing_slugs)
 
-        # Step 4: 관련 포스트
-        related_posts = get_related_posts(category)
+        # Step 3 — 이미지 검색 (Gemini 추천 → 고정 쿼리 순차)
+        gemini_query  = content_data.get("pexels_query", "")
+        image_queries = ([gemini_query] if gemini_query else []) + pexels_queries
+        print("  📸 Pexels 이미지 검색 중...")
+        image_url = fetch_pexels_image(image_queries)
 
-        # Step 5: 저장 (E-E-A-T 문구 자동 삽입)
+        # Step 4 — 가중치 적용된 내부 링크
+        related_posts = get_weighted_related_posts(category)
+
+        # Step 5 — 저장
+        content_data["slug"] = slug  # ensure_unique_slug 결과 반영
         save_post(slug, content_data, image_url, category, date, related_posts)
 
         used_ids.append(topic_data["id"])
@@ -446,11 +567,11 @@ def main():
 
     print("\n" + "=" * 55)
     print(f"  완료: {success}개 포스트 생성")
-    print(f"  사용된 주제: {len(used_ids)}/21개")
     remaining = [t for t in TOPICS if t["id"] not in used_ids]
-    print(f"  남은 주제: {len(remaining)}개")
+    print(f"  사용된 주제: {len(used_ids)}/21 | 남은 주제: {len(remaining)}")
     print("=" * 55)
-    print("\n✨ git add . && git commit -m 'feat: add posts' && git push")
+    print("\n✨ git add . && git commit -m 'auto: add posts' && git push")
+
 
 if __name__ == "__main__":
     main()
