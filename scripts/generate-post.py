@@ -585,6 +585,8 @@ def generate_titles_with_trending(client: genai.Client, topic: str) -> list:
 포맷 풀: N가지 방법 / N가지 팁 / N가지 체크리스트 / N가지 비교 포인트 / N가지 설정 요소 / N가지 핵심 기능
 N은 3·4·5·6·7·10 중 주제에 맞게 자유 선택
 3개 제목 모두 같은 포맷 금지
+제목에 콜론(:) 사용 금지
+에볼루션카지노 + 핵심키워드 + N가지 포맷으로 간결하게 작성
 
 금지 표현:
 
@@ -647,15 +649,18 @@ def generate_post_content(
 6. 본문 중간에 마크다운 표(|컬럼|컬럼|) 최소 1개 포함
 7. FAQ 5개 포함 (초보자 관점 질문 포함)
 8. SEO 키워드는 자연스럽게 배치
-9. pexels_query 필드에 적절한 영문 이미지 검색어 1개 생성
-10. RTP·배당률·확률 관련 내용은 설명형 정보로만 제한
-11. 수치 보장·승률 예측·결과 보장 표현 절대 금지
-12. 공식 제공 정보 기반의 일반 설명 형태 유지
+9. pexels_query 필드에 본문 주제와 어울리는 구체적인 영문 이미지 검색어 1개 생성 (예: 'baccarat dealer cards')
+10. [절대 금지] '승률 200%', '필승법', '수익 보장' 등 비논리적이거나 확정적인 보장 표현은 절대 금지
+11. [순화] 높은 수치를 강조하고 싶을 때는 '전략적 효율성 2배 향상', '수익성 극대화 전략' 등 운영/전략 관점의 용어로 순화
+12. [출처 명시] 본문 중 '에볼루션 공식 가이드라인 및 통계 데이터에 기반한 분석'임을 반드시 명시
 
 ⚠️ 슬러그 생성 규칙:
 - 아래 기존 슬러그 목록과 절대 겹치지 않게 생성
-- 영문 소문자 + 숫자 + 하이픈만 사용, 50자 이내
 - 에볼루션카지노 관련 키워드 포함 권장
+- 제목에 숫자(N가지)가 있으면 반드시 슬러그에 숫자 포함
+- 위의 조건을 모두 만족하면 한글 제목을 생성하고 제목 전체를 영문으로 번역하여 슬러그 생성 (일부분만 번역 금지)
+- 영문 소문자 + 숫자 + 하이픈만 사용, 50자 이내
+- 예시: "에볼루션카지노 쾌적한 플레이를 위한 5가지 설정 요소" → "evolution-casino-5-settings-comfortable-play"
 
 기존 슬러그 목록:
 {slugs_list}
@@ -747,7 +752,14 @@ def main():
     used_ids       = load_used_topics()
     existing_slugs = get_existing_slugs()
     available      = get_available_topics(used_ids)
-    selected       = random.sample(available, min(POSTS_PER_RUN, len(available)))
+    cat_groups = {}
+    for t in available:
+        cat = t["category"]
+        if cat not in cat_groups:
+            cat_groups[cat] = []
+        cat_groups[cat].append(t)
+    selected_cats = random.sample(list(cat_groups.keys()), min(POSTS_PER_RUN, len(cat_groups)))
+    selected = [random.choice(cat_groups[cat]) for cat in selected_cats]
 
     today   = datetime.now()
     success = 0
@@ -804,7 +816,7 @@ def main():
         # Step 4 — 가중치 적용된 내부 링크
         related_posts = get_weighted_related_posts(category)
 
-        # Step 5 — 저장
+        # Step 5 — 저장ㄹ
         content_data["slug"] = slug  # ensure_unique_slug 결과 반영
         save_post(slug, content_data, image_url, category, date, related_posts)
 
