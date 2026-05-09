@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // ── 에볼루션카지노.site → wooriwin.com 301 리다이렉트 ──
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "xn--o80b14lqrduwfmtg5wg16i.site" }],
+        destination: "https://wooriwin.com/:path*",
+        permanent: true,
+      },
+
+      // ── 기존 WordPress 한글 URL → 새 URL ──
       { source: "/%ec%97%90%eb%b3%bc%eb%a3%a8%ec%85%98-%ec%b9%b4%ec%a7%80%eb%85%b8-%eb%b0%94%ec%b9%b4%eb%9d%bc", destination: "/baccarat", permanent: true },
       { source: "/%eb%b0%94%ec%b9%b4%eb%9d%bc-%ec%a0%84%eb%9e%b5-%ec%99%84%eb%b2%bd-%eb%b6%84%ec%84%9d", destination: "/baccarat", permanent: true },
       { source: "/%eb%b8%94%eb%9e%99%ec%9e%ad-%ec%a0%84%eb%9e%b5-%ec%99%84%eb%b2%bd-%eb%b6%84%ec%84%9d", destination: "/blackjack", permanent: true },
