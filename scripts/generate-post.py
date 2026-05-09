@@ -34,151 +34,350 @@ RESPONSIBLE_GAMBLING_TEXT = """
 # ── [2번] CTR 스코어링 단어 리스트 ───────────────
 # 클릭베이트 위험 단어 제거, SEO 안전 단어 중심
 HIGH_CTR_WORDS = [
-    "전략", "실전", "2026", "승률", "핵심",
-    "노하우", "TOP", "분석", "완벽", "가이드",
-    "비교", "차이", "방법", "공개", "검증",
+                    "전략", "가이드", "분석", "비교", "방법", "설정", "인터페이스", "UX", "환경", "리스크",
 ]
 
 # ── [4번] 도입부 유형 랜덤화 리스트 ─────────────
 INTRO_TYPES = [
-    "이용자들이 가장 많이 하는 실수 TOP 3로 시작",
-    "업계 전문가만 아는 충격적인 통계 수치 제시로 시작",
-    "10년 딜러 경력의 현장 사례 한 가지로 시작",
-    "대부분의 플레이어가 놓치는 핵심 포인트 한 줄로 시작",
-    "실제 유저 질문에서 발견한 공통 오해로 시작",
-    "오늘 당장 써먹을 수 있는 실전 팁 하나로 시작",
+                "사용자들이 자주 혼동하는 인터페이스 설정 문제로 시작",
+                "플레이 환경 최적화 관점의 설명으로 시작",
+                "UX 분석 기반의 기능 설명으로 시작",
+                "초보자들이 놓치기 쉬운 설정 요소 소개로 시작",
+                "리스크 관리 관점의 플레이 환경 설명으로 시작",
+                "실제 사용자 FAQ 기반 설명으로 시작",
 ]
-
+TITLE_FORMATS = [
+    "N가지 방법",
+    "N가지 팁",
+    "N가지 체크리스트",
+    "N가지 비교 포인트",
+    "N가지 설정 요소",
+    "N가지 핵심 기능",
+    "완벽 가이드",
+    "A vs B 비교 분석",
+    "초보자를 위한 입문",
+    "란 무엇인가",
+]
 # ── 21개 확정 주제 (주제 + 카테고리 + Pexels 쿼리 세트) ──
 TOPICS = [
-    # ── 카테고리 1: 초보자 교육 및 기술적 신뢰 ──
+    # ── 카테고리 1: 에볼루션 가이드 ──
     {
         "id": 1,
-        "topic": "에볼루션 카지노 라이선스의 모든 것: MGA, UKGC 등 보안 안정성 분석",
-        "category": "가이드",
-        "pexels_queries": ["casino license security certificate", "official gambling regulation", "casino security trust"],
+        "topic": "에볼루션카지노란 무엇인가: 플랫폼 구조와 게임 환경 완벽 이해",
+        "category": "에볼루션 가이드",
+        "pexels_queries": ["live casino studio overview", "casino platform interface", "online casino environment"],
     },
     {
         "id": 2,
-        "topic": "모바일 최적화 가이드: 빠른 접속을 위한 에볼루션 설정법",
-        "category": "가이드",
-        "pexels_queries": ["mobile casino smartphone", "online casino mobile app", "smartphone gaming casino"],
+        "topic": "에볼루션카지노 처음 시작하는 법: 가입부터 첫 게임까지 단계별 가이드",
+        "category": "에볼루션 가이드",
+        "pexels_queries": ["online casino beginner guide", "casino registration setup", "casino first game"],
     },
     {
         "id": 3,
-        "topic": "에볼루션 입출금 시스템 이해: 안전한 자금 관리를 위한 초보자 매뉴얼",
-        "category": "가이드",
-        "pexels_queries": ["casino payment deposit withdraw", "online banking casino", "secure payment casino"],
-    },
-    {
-        "id": 4,
-        "topic": "인터페이스(UI) 완벽 조작법: 멀티 게임 모드 및 채팅 기능 활용하기",
-        "category": "가이드",
+        "topic": "에볼루션카지노 인터페이스(UI) 활용법: 멀티 게임 모드와 채팅 기능",
+        "category": "에볼루션 가이드",
         "pexels_queries": ["casino user interface screen", "live casino interface multiple games", "casino chat interface"],
     },
     {
-        "id": 5,
-        "topic": "에볼루션만의 독점 기술: 듀얼 플레이와 다이렉트 게임 Launch 기술 분석",
-        "category": "가이드",
+        "id": 4,
+        "topic": "에볼루션카지노 독점 기술 분석: 듀얼 플레이와 다이렉트 런치 기능",
+        "category": "에볼루션 가이드",
         "pexels_queries": ["casino technology innovation", "live streaming casino studio", "casino dual screen technology"],
     },
     {
+        "id": 5,
+        "topic": "에볼루션카지노 역사와 성장: 업계 1위가 된 배경과 기술력",
+        "category": "에볼루션 가이드",
+        "pexels_queries": ["casino history evolution timeline", "gambling company headquarters", "casino industry growth"],
+    },
+
+    # ── 카테고리 2: 바카라 가이드 ──
+    {
         "id": 6,
-        "topic": "라이브 스트리밍 품질 최적화: 끊김 없는 게임을 위한 네트워크 환경 설정",
-        "category": "가이드",
-        "pexels_queries": ["live streaming network setup", "internet connection speed router", "casino streaming HD quality"],
+        "topic": "에볼루션카지노 바카라 기본 규칙: 카드 계산법과 배팅 종류 완벽 정리",
+        "category": "바카라 가이드",
+        "pexels_queries": ["baccarat casino table cards", "baccarat rules card game", "live baccarat dealer"],
     },
     {
         "id": 7,
-        "topic": "에볼루션 카지노 역사: 업계 1위가 된 기술력과 성장 스토리",
-        "category": "가이드",
-        "pexels_queries": ["casino history evolution timeline", "gambling company headquarters", "casino industry growth"],
-    },
-    # ── 카테고리 2: 게임별 심층 전략 및 확률 ──
-    {
-        "id": 8,
-        "topic": "라이트닝 바카라 vs 일반 바카라: 승률과 배당의 수학적 차이 분석",
-        "category": "바카라",
+        "topic": "라이트닝 바카라 vs 일반 바카라: 게임 구조와 배당 방식 비교",
+        "category": "바카라 가이드",
         "pexels_queries": ["baccarat cards lightning casino", "baccarat table comparison", "casino card game odds"],
     },
     {
-        "id": 9,
-        "topic": "골든 바카라: 골든 카드를 활용한 수익 극대화 전략",
-        "category": "바카라",
+        "id": 8,
+        "topic": "골든 바카라 완벽 가이드: 골든 카드 시스템과 게임 특징 이해",
+        "category": "바카라 가이드",
         "pexels_queries": ["golden baccarat casino cards", "gold playing cards casino", "baccarat golden strategy"],
     },
     {
-        "id": 10,
-        "topic": "에볼루션 블랙잭: 전문가들이 말하는 기본 전략(Basic Strategy) 적용법",
-        "category": "블랙잭",
-        "pexels_queries": ["blackjack basic strategy cards", "blackjack casino table dealer", "card counting blackjack"],
-    },
-    {
-        "id": 11,
-        "topic": "라이트닝 룰렛 확률 분석: 번개 번호가 터지는 메커니즘 이해하기",
-        "category": "룰렛",
-        "pexels_queries": ["roulette wheel lightning bolt", "casino roulette numbers", "lightning roulette casino"],
-    },
-    {
-        "id": 12,
-        "topic": "코리안 스피드 바카라: 한국인 딜러와 함께하는 게임의 장단점 리뷰",
-        "category": "바카라",
+        "id": 9,
+        "topic": "코리안 스피드 바카라: 한국어 서비스 환경과 게임 특징 리뷰",
+        "category": "바카라 가이드",
         "pexels_queries": ["korean casino dealer baccarat", "asian live casino dealer", "baccarat speed cards"],
     },
     {
+        "id": 10,
+        "topic": "바카라 로드맵 시스템 이해: 에볼루션 그림 표시 방식과 활용법",
+        "category": "바카라 가이드",
+        "pexels_queries": ["baccarat road map scoreboard", "baccarat pattern analysis", "casino baccarat statistics"],
+    },
+
+    # ── 카테고리 3: 블랙잭 가이드 ──
+    {
+        "id": 11,
+        "topic": "에볼루션카지노 블랙잭 기본 규칙: 카드 합산과 딜러 규칙 완벽 정리",
+        "category": "블랙잭 가이드",
+        "pexels_queries": ["blackjack casino table cards", "blackjack dealer rules", "live blackjack casino"],
+    },
+    {
+        "id": 12,
+        "topic": "블랙잭 베이직 스트래티지 가이드: 상황별 최적 판단 기준 이해",
+        "category": "블랙잭 가이드",
+        "pexels_queries": ["blackjack basic strategy cards", "blackjack casino table dealer", "card strategy blackjack"],
+    },
+    {
         "id": 13,
-        "topic": "에볼루션 게임쇼 TOP 3: 크레이지타임, 모노폴리 라이브 완벽 분석",
-        "category": "슬롯/게임쇼",
-        "pexels_queries": ["casino game show wheel spin", "crazy time casino colorful", "monopoly live casino board"],
+        "topic": "에볼루션 인피니트 블랙잭: 다중 참여 방식과 게임 구조 분석",
+        "category": "블랙잭 가이드",
+        "pexels_queries": ["infinite blackjack casino multiple players", "live blackjack studio", "blackjack online interface"],
     },
     {
         "id": 14,
-        "topic": "바카라 로드맵 분석의 허와 실: 에볼루션 그림 시스템 활용법",
-        "category": "바카라",
-        "pexels_queries": ["baccarat road map scoreboard", "baccarat pattern analysis", "casino baccarat statistics"],
+        "topic": "블랙잭 사이드 베팅 종류: Perfect Pairs와 21+3 옵션 이해",
+        "category": "블랙잭 가이드",
+        "pexels_queries": ["blackjack side bet casino", "blackjack pairs betting", "casino card side bet"],
     },
-    # ── 카테고리 3: 트렌드 및 책임감 있는 게임 ──
     {
         "id": 15,
-        "topic": "2026년 에볼루션 신규 출시 게임: 최신 라인업 미리보기 및 리뷰",
-        "category": "가이드",
-        "pexels_queries": ["new casino game launch 2026", "casino innovation new release", "live casino new game"],
+        "topic": "에볼루션 파워 블랙잭: 더블 다운과 스플릿 기능 활용 가이드",
+        "category": "블랙잭 가이드",
+        "pexels_queries": ["blackjack double down split", "power blackjack casino", "blackjack advanced options"],
     },
+
+    # ── 카테고리 4: 게임쇼 분석 ──
     {
         "id": 16,
-        "topic": "에볼루션 카지노와 암호화폐: 비트코인 결제 및 보안 트렌드",
-        "category": "가이드",
-        "pexels_queries": ["bitcoin casino cryptocurrency payment", "crypto gambling blockchain", "digital currency casino"],
+        "topic": "에볼루션 크레이지타임 완벽 가이드: 게임 구조와 보너스 라운드 이해",
+        "category": "게임쇼 분석",
+        "pexels_queries": ["crazy time casino wheel colorful", "casino game show spin", "live game show casino"],
     },
     {
         "id": 17,
-        "topic": "도박 중독 방지 가이드: 에볼루션 내 자기 제한 기능 설정하는 법",
-        "category": "가이드",
-        "pexels_queries": ["responsible gambling awareness", "casino self exclusion limit", "gambling addiction prevention"],
+        "topic": "모노폴리 라이브 분석: 보드게임 연동 방식과 보너스 게임 구조",
+        "category": "게임쇼 분석",
+        "pexels_queries": ["monopoly live casino board", "casino board game show", "monopoly game show studio"],
     },
     {
         "id": 18,
-        "topic": "라이브 딜러와의 에티켓: 건전한 게임 환경을 위한 커뮤니티 가이드",
-        "category": "가이드",
-        "pexels_queries": ["live casino dealer etiquette", "casino community friendly dealer", "live dealer smile casino"],
+        "topic": "에볼루션 드림캐처: 휠 게임 구조와 배당 방식 완벽 이해",
+        "category": "게임쇼 분석",
+        "pexels_queries": ["dream catcher casino wheel", "casino wheel spin colorful", "live casino wheel game"],
     },
     {
         "id": 19,
-        "topic": "에볼루션 카지노 FAQ: 유저들이 가장 많이 묻는 질문 10가지",
-        "category": "가이드",
-        "pexels_queries": ["casino FAQ questions answers", "customer support casino help", "online casino guide beginner"],
+        "topic": "메가볼 완벽 가이드: 빙고 방식 게임 구조와 멀티플라이어 시스템",
+        "category": "게임쇼 분석",
+        "pexels_queries": ["mega ball casino bingo", "casino ball game show", "live casino lottery game"],
     },
     {
         "id": 20,
-        "topic": "글로벌 에볼루션 스튜디오 탐방: 라트비아에서 몰타까지의 인프라 분석",
-        "category": "가이드",
+        "topic": "에볼루션 게임쇼 TOP 5 비교: 구조와 특징으로 보는 선택 가이드",
+        "category": "게임쇼 분석",
+        "pexels_queries": ["casino game show comparison", "live casino variety games", "casino entertainment show"],
+    },
+
+    # ── 카테고리 5: 룰렛 & 포커 ──
+    {
+        "id": 21,
+        "topic": "에볼루션카지노 룰렛 기본 규칙: 유럽식과 미국식 차이 완벽 정리",
+        "category": "룰렛 & 포커",
+        "pexels_queries": ["roulette wheel casino table", "european roulette casino", "live roulette dealer"],
+    },
+    {
+        "id": 22,
+        "topic": "라이트닝 룰렛 완벽 가이드: 멀티플라이어 시스템과 게임 구조 이해",
+        "category": "룰렛 & 포커",
+        "pexels_queries": ["lightning roulette casino wheel", "roulette multiplier game", "casino roulette numbers"],
+    },
+    {
+        "id": 23,
+        "topic": "에볼루션 임머시브 룰렛: 멀티 카메라 환경과 슬로우 모션 기능 분석",
+        "category": "룰렛 & 포커",
+        "pexels_queries": ["immersive roulette slow motion", "casino roulette close up", "live roulette camera"],
+    },
+    {
+        "id": 24,
+        "topic": "에볼루션 카지노 홀덤 포커: 게임 규칙과 진행 방식 완벽 가이드",
+        "category": "룰렛 & 포커",
+        "pexels_queries": ["casino holdem poker table", "live poker casino dealer", "poker casino cards"],
+    },
+    {
+        "id": 25,
+        "topic": "에볼루션 3 카드 포커: 게임 구조와 배팅 옵션 이해",
+        "category": "룰렛 & 포커",
+        "pexels_queries": ["three card poker casino", "poker three cards dealer", "live poker casino table"],
+    },
+
+    # ── 카테고리 6: 최신 트렌드 ──
+    {
+        "id": 26,
+        "topic": "2026년 에볼루션카지노 신규 게임 라인업: 최신 출시작 완벽 리뷰",
+        "category": "최신 트렌드",
+        "pexels_queries": ["new casino game launch 2026", "casino innovation new release", "live casino new game"],
+    },
+    {
+        "id": 27,
+        "topic": "에볼루션카지노 암호화폐 결제: 비트코인 입출금 환경과 보안 트렌드",
+        "category": "최신 트렌드",
+        "pexels_queries": ["bitcoin casino cryptocurrency payment", "crypto gambling blockchain", "digital currency casino"],
+    },
+    {
+        "id": 28,
+        "topic": "라이브 카지노 AI 기술 트렌드: 에볼루션의 기술 혁신 방향 분석",
+        "category": "최신 트렌드",
+        "pexels_queries": ["casino AI technology innovation", "live casino future technology", "casino digital innovation"],
+    },
+    {
+        "id": 29,
+        "topic": "글로벌 에볼루션 스튜디오 탐방: 라트비아부터 몰타까지 인프라 분석",
+        "category": "최신 트렌드",
         "pexels_queries": ["casino studio latvia filming", "live casino studio interior", "casino broadcasting studio"],
     },
     {
-        "id": 21,
-        "topic": "나에게 맞는 에볼루션 게임 찾기: 성향별 게임 추천 테스트",
-        "category": "가이드",
-        "pexels_queries": ["casino game selection choice", "casino variety games table", "player choosing casino game"],
+        "id": 30,
+        "topic": "에볼루션카지노 VR 라이브 카지노: 미래 게임 환경 전망과 현황",
+        "category": "최신 트렌드",
+        "pexels_queries": ["VR casino virtual reality", "future casino technology VR", "virtual casino environment"],
+    },
+
+    # ── 카테고리 7: 자금 관리 ──
+    {
+        "id": 31,
+        "topic": "카지노 자금 관리 기초: 세션 예산 설정과 플레이 환경 최적화",
+        "category": "자금 관리",
+        "pexels_queries": ["casino budget management finance", "money management casino", "casino bankroll planning"],
+    },
+    {
+        "id": 32,
+        "topic": "에볼루션카지노 입출금 시스템: 안전한 자금 흐름 이해와 관리법",
+        "category": "자금 관리",
+        "pexels_queries": ["casino payment deposit withdraw", "online banking casino", "secure payment casino"],
+    },
+    {
+        "id": 33,
+        "topic": "손실 한도 설정 가이드: 에볼루션 플랫폼 내 자기 제한 기능 활용",
+        "category": "자금 관리",
+        "pexels_queries": ["casino loss limit setting", "responsible gambling limit", "casino self control budget"],
+    },
+    {
+        "id": 34,
+        "topic": "베팅 단위 설정법: 리스크 관리 관점에서 본 플레이 환경 구성",
+        "category": "자금 관리",
+        "pexels_queries": ["casino betting unit management", "casino chip betting strategy", "casino risk management"],
+    },
+    {
+        "id": 35,
+        "topic": "카지노 세션 관리: 플레이 시간과 예산을 효율적으로 구성하는 법",
+        "category": "자금 관리",
+        "pexels_queries": ["casino session time management", "casino playing time budget", "casino time limit setting"],
+    },
+
+    # ── 카테고리 8: 보안 및 라이선스 ──
+    {
+        "id": 36,
+        "topic": "에볼루션카지노 라이선스 완벽 분석: MGA, UKGC 인증 의미와 중요성",
+        "category": "보안 및 라이선스",
+        "pexels_queries": ["casino license security certificate", "official gambling regulation", "casino security trust"],
+    },
+    {
+        "id": 37,
+        "topic": "라이브 카지노 보안 시스템: 암호화 기술과 개인정보 보호 환경",
+        "category": "보안 및 라이선스",
+        "pexels_queries": ["casino cybersecurity encryption", "online security protection", "casino data privacy"],
+    },
+    {
+        "id": 38,
+        "topic": "에볼루션카지노 공정성 검증: RNG 시스템과 외부 감사 기관 역할",
+        "category": "보안 및 라이선스",
+        "pexels_queries": ["casino fairness audit certificate", "random number generator casino", "casino third party audit"],
+    },
+    {
+        "id": 39,
+        "topic": "안전한 카지노 플랫폼 선택 기준: 라이선스와 보안 환경 확인법",
+        "category": "보안 및 라이선스",
+        "pexels_queries": ["casino safety checklist security", "online casino verification", "casino trust badge"],
+    },
+    {
+        "id": 40,
+        "topic": "에볼루션카지노 고객센터 활용법: 문의 채널과 분쟁 해결 프로세스",
+        "category": "보안 및 라이선스",
+        "pexels_queries": ["casino customer support service", "online casino help center", "casino dispute resolution"],
+    },
+
+    # ── 카테고리 9: 모바일 최적화 ──
+    {
+        "id": 41,
+        "topic": "에볼루션카지노 모바일 환경 가이드: 앱과 브라우저 방식 비교",
+        "category": "모바일 최적화",
+        "pexels_queries": ["mobile casino smartphone app", "online casino mobile browser", "casino mobile interface"],
+    },
+    {
+        "id": 42,
+        "topic": "모바일 라이브 카지노 최적화: 끊김 없는 스트리밍 환경 구성법",
+        "category": "모바일 최적화",
+        "pexels_queries": ["mobile casino smartphone", "online casino mobile app", "smartphone gaming casino"],
+    },
+    {
+        "id": 43,
+        "topic": "iOS vs 안드로이드 카지노 환경: 플랫폼별 최적화 설정 가이드",
+        "category": "모바일 최적화",
+        "pexels_queries": ["ios android casino comparison", "mobile gaming platform casino", "smartphone casino setup"],
+    },
+    {
+        "id": 44,
+        "topic": "모바일 카지노 네트워크 설정: 와이파이와 5G 환경별 최적화 방법",
+        "category": "모바일 최적화",
+        "pexels_queries": ["mobile network wifi casino", "5G internet speed casino", "casino network connection"],
+    },
+    {
+        "id": 45,
+        "topic": "태블릿으로 즐기는 에볼루션카지노: 화면 크기 활용과 UI 최적화",
+        "category": "모바일 최적화",
+        "pexels_queries": ["tablet casino gaming interface", "ipad casino live game", "casino tablet screen"],
+    },
+
+    # ── 카테고리 10: 책임감 있는 게임 ──
+    {
+        "id": 46,
+        "topic": "책임감 있는 게임이란: 건전한 카지노 이용 환경의 기본 원칙",
+        "category": "책임감 있는 게임",
+        "pexels_queries": ["responsible gambling awareness", "casino healthy gaming", "gambling prevention education"],
+    },
+    {
+        "id": 47,
+        "topic": "에볼루션카지노 자기 제한 기능: 입금 한도와 플레이 시간 설정법",
+        "category": "책임감 있는 게임",
+        "pexels_queries": ["casino self exclusion limit", "casino time limit setting", "responsible gaming tools"],
+    },
+    {
+        "id": 48,
+        "topic": "도박 문제 인식과 예방: 건강한 게임 습관 형성을 위한 가이드",
+        "category": "책임감 있는 게임",
+        "pexels_queries": ["gambling addiction prevention", "casino problem awareness", "healthy gaming habits"],
+    },
+    {
+        "id": 49,
+        "topic": "라이브 딜러 에티켓: 건전한 게임 커뮤니티를 위한 행동 가이드",
+        "category": "책임감 있는 게임",
+        "pexels_queries": ["live casino dealer etiquette", "casino community friendly", "casino respectful gaming"],
+    },
+    {
+        "id": 50,
+        "topic": "에볼루션카지노 FAQ: 처음 이용자가 가장 많이 묻는 질문 10가지",
+        "category": "책임감 있는 게임",
+        "pexels_queries": ["casino FAQ questions answers", "customer support casino help", "online casino guide beginner"],
     },
 ]
 
@@ -192,12 +391,29 @@ INTERNAL_LINKS = [
 ]
 
 # ── 페르소나 시스템 지침 (공통) ───────────────────
-SYSTEM_INSTRUCTION = (
-    "당신은 10년 경력의 에볼루션카지노 전문 딜러 출신 SEO 컨설턴트입니다. "
-    "라이브 카지노 현장 경험을 바탕으로 독창적인 실전 노하우를 제공하며 "
-    "구글 E-E-A-T를 철저히 준수합니다. "
-    "뻔한 정보는 절대 쓰지 않고, 구체적인 수치와 현장 경험을 바탕으로 글을 작성합니다."
-)
+SYSTEM_INSTRUCTION = """
+당신은 라이브 카지노 UX 분석 및 플레이 환경 최적화 전문 콘텐츠 팀입니다.
+
+사용자 경험 중심의 인터페이스 활용 가이드와
+리스크 관리 관점의 정보를 제공합니다.
+
+Google E-E-A-T 및 Helpful Content 기준을 준수합니다.
+
+수치 보장, 승률 예측, 결과 보장, 과장형 표현,
+검증 불가능한 전문가 경력 설정은 절대 사용하지 않습니다.
+
+콘텐츠는 다음 관점을 중심으로 작성합니다:
+
+UX 분석
+플레이 환경
+인터페이스 활용
+환경 설정
+사용자 경험
+리스크 관리
+
+사실 기반 정보와 사용자 편의 중심으로
+중립적이고 설명형 문체를 유지합니다.
+"""
 
 # ─────────────────────────────────────────────────
 # 유틸리티 함수
@@ -353,13 +569,42 @@ def generate_titles_with_trending(client: genai.Client, topic: str) -> list:
 주제: {topic}
 
 조건:
-- "에볼루션카지노" 키워드 반드시 포함
-- 클릭하고 싶은 호기심 유발 제목
-- 구체적인 수치나 연도 포함 시 더 좋음
-- 각 제목은 서로 다른 앵글(초보자용 / 전략형 / 최신트렌드형)
 
-JSON 배열만 응답 (다른 텍스트 없이):
-["제목1", "제목2", "제목3"]
+"에볼루션카지노" 키워드 반드시 포함
+클릭하고 싶은 제목 작성
+단, 정보형·가이드형 톤 유지
+과장형·선정적 표현 금지
+최신 UI/업데이트 맥락일 경우에만 연도 포함 가능
+수치 보장·승률 예측·결과 보장 표현 절대 금지
+각 제목은 서로 다른 앵글로 작성
+(초보자용 / 플레이 환경 최적화형 /
+인터페이스 가이드형 / 리스크 관리형 등)
+
+제목 포맷 규칙:
+3개 중 1~2개는 아래 포맷 풀에서 골라 적용하고 나머지는 자연스러운 가이드형으로 작성
+포맷 풀: N가지 방법 / N가지 팁 / N가지 체크리스트 / N가지 비교 포인트 / N가지 설정 요소 / N가지 핵심 기능
+N은 3·4·5·6·7·10 중 주제에 맞게 자유 선택
+3개 제목 모두 같은 포맷 금지
+
+금지 표현:
+
+'10년 차 딜러'
+'전직 딜러'
+'현장 경험'
+'승률 XX%'
+'반드시'
+'충격'
+'99%'
+'돈 버는'
+'필승'
+'고수만 아는'
+'핵심 비밀'
+'아무도 모르는'
+
+출력 형식:
+JSON 배열만 출력
+예시: ["제목1", "제목2","제목3"]
+
 """
     result = safe_generate_content(client, prompt, use_search=True, retries=1)
     if isinstance(result, list) and result:
@@ -394,18 +639,18 @@ def generate_post_content(
 참고 이미지 키워드(영문): {", ".join(fixed_queries)}
 
 작성 규칙:
-1. 본문은 최소 1500자 이상
-2. H2 헤더(## )를 4~6개 포함
-3. 수치를 제시할 때는 반드시 "이론적 RTP 기준" 또는 "에볼루션 공식 가이드에 따르면" 등 출처/전제 조건을 붙여서 작성할 것.
-4. 10년 딜러 개인 경험임을 명시하여 주관적 노하우임을 강조할 것
-5. [도입부 필수] 반드시 "{intro_type}" 방식으로 첫 문단을 작성할 것
-6. 본문 중간에 마크다운 표(|컬럼|컬럼|) 반드시 1개 이상 포함
-7. FAQ 5개 포함 (실전 경험에서 나온 질문)
-8. SEO 최적화된 자연스러운 키워드 배치
-9. pexels_query 필드에 이 글에 딱 맞는 영문 이미지 검색어 1개를 제안
-10. [YMYL 방어 규칙]: RTP, 승률, 배당률 등 수치를 언급할 때는 반드시 '이론적 통계' 또는 '공식 가이드라인에 따른 수치'임을 명시할 것.
-11. 절대 '무조건', '필승', '수익 보장' 같은 단어를 사용하지 말고 '전략적 접근', '리스크 관리'라는 표현을 사용할 것.
-12. 모든 통계 데이터의 출처는 '에볼루션 공식 제공 정보'를 기반으로 한다고 언급할 것.
+1. 본문은 최소 1500자 이상 작성
+2. H2 헤더(##)를 4~6개 포함
+3. 사용자 경험 중심의 설명형 콘텐츠로 작성
+4. UX 분석·플레이 환경·인터페이스 활용 관점 유지
+5. 첫 문단 도입부 스타일: {intro_type}
+6. 본문 중간에 마크다운 표(|컬럼|컬럼|) 최소 1개 포함
+7. FAQ 5개 포함 (초보자 관점 질문 포함)
+8. SEO 키워드는 자연스럽게 배치
+9. pexels_query 필드에 적절한 영문 이미지 검색어 1개 생성
+10. RTP·배당률·확률 관련 내용은 설명형 정보로만 제한
+11. 수치 보장·승률 예측·결과 보장 표현 절대 금지
+12. 공식 제공 정보 기반의 일반 설명 형태 유지
 
 ⚠️ 슬러그 생성 규칙:
 - 아래 기존 슬러그 목록과 절대 겹치지 않게 생성
@@ -513,7 +758,7 @@ def main():
         category       = topic_data["category"]
         pexels_queries = topic_data["pexels_queries"]
 
-        print(f"\n📌 주제 [{topic_data['id']}/21]: {topic[:45]}...")
+        print(f"\n📌 주제 [{topic_data['id']}/50]: {topic[:45]}...")
         print(f"   카테고리: {category}")
 
         # Step 1 — 트렌드 키워드 반영 제목 3개 생성
