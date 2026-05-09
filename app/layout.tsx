@@ -12,25 +12,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// ✅ layout 역할: 공통 뼈대만
+// - title template (suffix 자동 부착)
+// - metadataBase (절대경로 기준점)
+// - robots (전체 동일)
+// - GSC verification
+// ❌ canonical, OG, twitter, keywords, description → 각 page.tsx에서 개별 설정
 export const metadata: Metadata = {
-  title: {
-    default: "에볼루션카지노 완벽 가이드 2026 | WOORIWIN",
-    template: "%s | WOORIWIN",
-  },
-  description:
-    "에볼루션카지노 바카라·블랙잭·룰렛·슬롯 완벽 가이드. 규칙·전략·RTP 완전 정리. 세계 1위 라이브카지노 에볼루션의 모든 것.",
-  keywords: [
-    "에볼루션카지노",
-    "에볼루션카지노 바카라",
-    "에볼루션카지노 블랙잭",
-    "에볼루션카지노 룰렛",
-    "에볼루션 라이브카지노",
-    "에볼루션카지노 전략",
-  ],
+  // title은 각 페이지에서 설정하여 로딩
+  // title: {
+  //  default: "에볼루션카지노 완벽 가이드 2026 | WOORIWIN",
+  //  template: "%s | WOORIWIN",
+  //},
   metadataBase: new URL("https://wooriwin.com"),
-  alternates: {
-    canonical: "https://wooriwin.com",
-  },
   robots: {
     index: true,
     follow: true,
@@ -42,34 +36,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    type: "website",
-    locale: "ko_KR",
-    url: "https://wooriwin.com",
     siteName: "WOORIWIN",
-    title: "에볼루션카지노 완벽 가이드 2026 | WOORIWIN",
-    description:
-      "에볼루션카지노 바카라·블랙잭·룰렛·슬롯 완벽 가이드. 규칙·전략·RTP 완전 정리.",
-    images: [
-      {
-        url: "https://wooriwin.com/images/og-main.jpg",
-        width: 1200,
-        height: 630,
-        alt: "에볼루션카지노 완벽 가이드 WOORIWIN",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "에볼루션카지노 완벽 가이드 2026 | WOORIWIN",
-    description:
-      "에볼루션카지노 바카라·블랙잭·룰렛·슬롯 완벽 가이드.",
-    images: ["https://wooriwin.com/images/og-main.jpg"],
+    locale: "ko_KR",
+    type: "website",
   },
   verification: {
-    google: "google-site-verification=nIE-kYgpwmgTKiQssndHTqWzLBBLBCECkbSVmSOR_Uk",
+    google: "nIE-kYgpwmgTKiQssndHTqWzLBBLBCECkbSVmSOR_Uk",
   },
 };
-
+// ✅ WebSite 스키마만 여기 선언 (사이트 전체 공통, 한 번만)
+// FAQPage → 메인 page.tsx
+// Article + FAQPage → blog/[slug]/page.tsx
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",

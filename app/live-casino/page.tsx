@@ -4,18 +4,20 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: '에볼루션 라이브카지노 완벽 가이드 2026 | WOORIWIN',
-  description:
-    '에볼루션 라이브카지노 총정리. 실제 딜러 HD 실시간 스트리밍, 바카라·블랙잭·룰렛·게임쇼 전 게임 안내. 에볼루션 라이브카지노 추천·가입방법·전략 완벽 공략.',
-  keywords: ['에볼루션 라이브카지노', '에볼루션카지노 추천', '라이브카지노', '에볼루션카지노 가입방법', '라이브 딜러 카지노'],
+  description: '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리. 바카라, 블랙잭, 룰렛, 게임쇼까지 모든 라이브 게임 총망라.',
+  keywords: ['에볼루션 라이브카지노', '에볼루션카지노 라이브', '라이브카지노', '라이브 딜러 카지노'],
   alternates: { canonical: 'https://wooriwin.com/live-casino' },
   openGraph: {
     title: '에볼루션 라이브카지노 완벽 가이드 2026 | WOORIWIN',
-    description: '에볼루션 라이브카지노 추천·가입방법·전략 완벽 정리.',
+    description: '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리.',
     url: 'https://wooriwin.com/live-casino',
-    siteName: 'WOORIWIN',
-    locale: 'ko_KR',
-    type: 'article',
     images: [{ url: 'https://wooriwin.com/images/live-casino.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '에볼루션 라이브카지노 완벽 가이드 2026 | WOORIWIN',
+    description: '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리.',
+    images: ['https://wooriwin.com/images/live-casino.jpg'],
   },
 }
 

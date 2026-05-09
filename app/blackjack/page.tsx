@@ -4,21 +4,22 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: '에볼루션카지노 블랙잭 완벽 가이드 2026 | WOORIWIN',
-  description:
-    '에볼루션카지노 블랙잭 규칙·전략·기본 전략표 완벽 정리. 인피니트 블랙잭, 스피드 블랙잭, 라이트닝 블랙잭 변형 게임 총망라. RTP 99.28% 블랙잭 완전 공략.',
-  keywords: ['에볼루션카지노 블랙잭', '에볼루션 블랙잭', '인피니트 블랙잭', '블랙잭 전략', '블랙잭 기본전략', '블랙잭 규칙'],
+  description: '에볼루션카지노 블랙잭 규칙·전략·베이직 스트래티지 완벽 정리...',
+  keywords: ['에볼루션카지노 블랙잭', '에볼루션 블랙잭', '블랙잭 전략', '블랙잭 규칙'],
   alternates: { canonical: 'https://wooriwin.com/blackjack' },
   openGraph: {
     title: '에볼루션카지노 블랙잭 완벽 가이드 2026 | WOORIWIN',
-    description: '에볼루션 블랙잭 규칙·전략·RTP 99.28% 완벽 정리.',
+    description: '에볼루션 블랙잭 규칙·전략·변형 게임 완벽 정리.',
     url: 'https://wooriwin.com/blackjack',
-    siteName: 'WOORIWIN',
-    locale: 'ko_KR',
-    type: 'article',
     images: [{ url: 'https://wooriwin.com/images/blackjack.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: '에볼루션카지노 블랙잭 완벽 가이드 2026 | WOORIWIN',
+    description: '에볼루션 블랙잭 규칙·전략·변형 게임 완벽 정리.',
+    images: ['https://wooriwin.com/images/blackjack.jpg'],
+  },
 }
-
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [

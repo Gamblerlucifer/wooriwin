@@ -3,19 +3,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '에볼루션카지노 룰렛 완벽 가이드 2026 | WOORIWIN',
-  description:
-    '에볼루션카지노 룰렛 종류·규칙·전략 완벽 정리. 라이트닝 룰렛 최대 500배, 이머시브 룰렛, 유럽식·아메리칸 룰렛까지. 룰렛 베팅 전략과 확률 완전 공략.',
-  keywords: ['에볼루션카지노 룰렛', '에볼루션 룰렛', '라이트닝 룰렛', '이머시브 룰렛', '룰렛 전략', '룰렛 규칙'],
-  alternates: { canonical: 'https://wooriwin.com/roulette' },
+  title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
+  description: '에볼루션카지노 슬롯 게임 종류·규칙·전략 완벽 정리. 넷엔트, 레드타이거 슬롯까지 에볼루션 그룹 전체 슬롯 총망라.',
+  keywords: ['에볼루션카지노 슬롯', '에볼루션 슬롯', '넷엔트 슬롯', '레드타이거 슬롯', '슬롯 전략'],
+  alternates: { canonical: 'https://wooriwin.com/slots' },
   openGraph: {
-    title: '에볼루션카지노 룰렛 완벽 가이드 2026 | WOORIWIN',
-    description: '라이트닝 룰렛 500배 배당부터 유럽식 룰렛까지 완벽 정리.',
-    url: 'https://wooriwin.com/roulette',
-    siteName: 'WOORIWIN',
-    locale: 'ko_KR',
-    type: 'article',
-    images: [{ url: 'https://wooriwin.com/images/roulette.jpg', width: 1200, height: 630 }],
+    title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
+    description: '에볼루션 슬롯 게임 종류·규칙·전략 완벽 정리.',
+    url: 'https://wooriwin.com/slots',
+    images: [{ url: 'https://wooriwin.com/images/slots.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
+    description: '에볼루션 슬롯 게임 종류·규칙·전략 완벽 정리.',
+    images: ['https://wooriwin.com/images/slots.jpg'],
   },
 }
 

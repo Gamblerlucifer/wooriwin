@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// ✅ layout에서 WebSite JSON-LD + robots + metadataBase 처리
+// 여기선 이 페이지 고유 메타만 설정
 export const metadata: Metadata = {
-  title: '에볼루션카지노 — 바카라·블랙잭·룰렛 완벽 가이드 | WOORIWIN',
+  title: '에볼루션카지노 완벽 가이드 2026 | WOORIWIN',
   description:
     '에볼루션카지노 공식 가이드. 바카라, 블랙잭, 룰렛, 슬롯 규칙과 전략부터 가입방법까지. 국내 최다 에볼루션카지노 정보를 WOORIWIN에서 확인하세요.',
   keywords: [
@@ -16,97 +18,101 @@ export const metadata: Metadata = {
     '에볼루션카지노 추천',
     '에볼루션카지노 규칙',
   ],
-  openGraph: {
-    title: '에볼루션카지노 완벽 가이드 | WOORIWIN',
-    description: '바카라, 블랙잭, 룰렛 전략부터 가입방법까지. WOORIWIN에서 확인하세요.',
-    url: 'https://wooriwin.com',
-    siteName: 'WOORIWIN',
-    locale: 'ko_KR',
-    type: 'website',
-    images: [{ url: 'https://wooriwin.com/images/og-main.jpg', width: 1200, height: 630 }],
+  // ✅ canonical: 메인 페이지는 루트
+  alternates: {
+    canonical: 'https://wooriwin.com',
   },
-  alternates: { canonical: 'https://wooriwin.com' },
+  // ✅ OG: 이 페이지 기준으로 개별 설정
+  openGraph: {
+    title: '에볼루션카지노 완벽 가이드 2026 | WOORIWIN',
+    description:
+      '바카라, 블랙잭, 룰렛 전략부터 가입방법까지. WOORIWIN에서 확인하세요.',
+    url: 'https://wooriwin.com',
+    images: [
+      {
+        url: 'https://wooriwin.com/images/og-main.jpg',
+        width: 1200,
+        height: 630,
+        alt: '에볼루션카지노 완벽 가이드 WOORIWIN',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '에볼루션카지노 완벽 가이드 2026 | WOORIWIN',
+    description: '바카라, 블랙잭, 룰렛 전략부터 가입방법까지.',
+    images: ['https://wooriwin.com/images/og-main.jpg'],
+  },
 }
 
-const jsonLd = {
+// ✅ FAQPage JSON-LD만 선언 (WebSite는 layout에서 처리)
+const faqJsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [
+  '@type': 'FAQPage',
+  mainEntity: [
     {
-      '@type': 'WebSite',
-      '@id': 'https://wooriwin.com/#website',
-      url: 'https://wooriwin.com',
-      name: 'WOORIWIN',
-      description: '에볼루션카지노 완벽 가이드',
-      inLanguage: 'ko-KR',
+      '@type': 'Question',
+      name: '에볼루션카지노란 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션카지노(Evolution Gaming)는 세계 최대 라이브 카지노 소프트웨어 제공업체입니다. 실제 딜러가 진행하는 바카라, 블랙잭, 룰렛, 슬롯 등 다양한 게임을 HD 스트리밍으로 제공하며, 전 세계 수천 개의 온라인 카지노에서 채택하고 있습니다.',
+      },
     },
     {
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노란 무엇인가요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '에볼루션카지노(Evolution Gaming)는 세계 최대 라이브 카지노 소프트웨어 제공업체입니다. 실제 딜러가 진행하는 바카라, 블랙잭, 룰렛, 슬롯 등 다양한 게임을 HD 스트리밍으로 제공하며, 전 세계 수천 개의 온라인 카지노에서 채택하고 있습니다.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노는 어떤 게임을 제공하나요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '에볼루션카지노는 라이브 바카라, 라이브 블랙잭, 라이브 룰렛, 라이브 슬롯, 게임쇼(크레이지타임, 라이트닝 룰렛 등) 등 수백 가지 게임을 제공합니다. 특히 라이트닝 바카라, 스피드 바카라 등 독자적인 변형 게임이 인기입니다.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노 가입은 어떻게 하나요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '에볼루션카지노는 B2B 소프트웨어 제공업체로 직접 가입은 불가능합니다. 에볼루션 게임을 제공하는 온라인 카지노 사이트에 회원가입 후 라이브 카지노 섹션에서 이용할 수 있습니다.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노 바카라 승률은 얼마인가요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '에볼루션 바카라의 RTP(환수율)는 약 98.94%입니다. 뱅커 베팅 승률은 약 45.86%, 플레이어 베팅은 약 44.62%이며 뱅커 베팅이 통계적으로 유리하지만 5% 커미션이 부과됩니다.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노를 모바일에서 이용할 수 있나요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '네, 에볼루션카지노의 모든 게임은 iOS와 Android 기기에서 완벽하게 최적화되어 있습니다. 별도 앱 설치 없이 모바일 브라우저에서 바로 HD 품질의 라이브 게임을 즐길 수 있습니다.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노 최소 베팅 금액은 얼마인가요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '에볼루션카지노의 최소 베팅 금액은 테이블마다 다르며, 일반적으로 바카라는 $1~$5부터 시작합니다. 스피드 바카라나 일반 테이블은 소액으로 시작 가능하며, VIP 살롱 프리베 테이블은 고액 베팅 전용입니다.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노와 일반 온라인 카지노의 차이점은 무엇인가요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '에볼루션카지노는 실제 딜러와 실제 카드·룰렛으로 진행되는 라이브 게임입니다. 일반 RNG(난수생성기) 카지노와 달리 실시간 HD 영상으로 진행되어 실제 카지노와 동일한 경험을 제공하며 조작 가능성이 없습니다.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노 라이트닝 바카라란 무엇인가요?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: '라이트닝 바카라는 에볼루션의 대표 변형 게임으로, 매 라운드마다 1~5장의 라이트닝 카드가 무작위로 선정되어 2x~8x 배율을 제공합니다. 기본 바카라에 슬롯 요소를 결합한 혁신적인 게임입니다.',
-          },
-        },
-      ],
+      '@type': 'Question',
+      name: '에볼루션카지노는 어떤 게임을 제공하나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션카지노는 라이브 바카라, 라이브 블랙잭, 라이브 룰렛, 라이브 슬롯, 게임쇼(크레이지타임, 라이트닝 룰렛 등) 등 수백 가지 게임을 제공합니다. 특히 라이트닝 바카라, 스피드 바카라 등 독자적인 변형 게임이 인기입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션카지노 가입은 어떻게 하나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션카지노는 B2B 소프트웨어 제공업체로 직접 가입은 불가능합니다. 에볼루션 게임을 제공하는 온라인 카지노 사이트에 회원가입 후 라이브 카지노 섹션에서 이용할 수 있습니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션카지노 바카라 승률은 얼마인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션 바카라의 RTP(환수율)는 약 98.94%입니다. 뱅커 베팅 승률은 약 45.86%, 플레이어 베팅은 약 44.62%이며 뱅커 베팅이 통계적으로 유리하지만 5% 커미션이 부과됩니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션카지노를 모바일에서 이용할 수 있나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '네, 에볼루션카지노의 모든 게임은 iOS와 Android 기기에서 완벽하게 최적화되어 있습니다. 별도 앱 설치 없이 모바일 브라우저에서 바로 HD 품질의 라이브 게임을 즐길 수 있습니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션카지노 최소 베팅 금액은 얼마인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션카지노의 최소 베팅 금액은 테이블마다 다르며, 일반적으로 바카라는 $1~$5부터 시작합니다. 스피드 바카라나 일반 테이블은 소액으로 시작 가능하며, VIP 살롱 프리베 테이블은 고액 베팅 전용입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션카지노와 일반 온라인 카지노의 차이점은 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션카지노는 실제 딜러와 실제 카드·룰렛으로 진행되는 라이브 게임입니다. 일반 RNG(난수생성기) 카지노와 달리 실시간 HD 영상으로 진행되어 실제 카지노와 동일한 경험을 제공하며 조작 가능성이 없습니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션카지노 라이트닝 바카라란 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '라이트닝 바카라는 에볼루션의 대표 변형 게임으로, 매 라운드마다 1~5장의 라이트닝 카드가 무작위로 선정되어 2x~8x 배율을 제공합니다. 기본 바카라에 슬롯 요소를 결합한 혁신적인 게임입니다.',
+      },
     },
   ],
 }
@@ -117,7 +123,8 @@ const games = [
     href: '/baccarat',
     desc: '에볼루션 대표 게임. 뱅커vs플레이어 승부로 RTP 98.94%의 높은 환수율.',
     img: '/images/baccarat.jpg',
-    alt: '에볼루션카지노 바카라 뱅커 플레이어 베팅 RTP 98.94% 라이브 딜러',
+    // ✅ alt 키워드 스터핑 제거 → 이미지 내용 설명으로 변경
+    alt: '에볼루션카지노 바카라 라이브 테이블',
     keyword: '에볼루션카지노 바카라',
   },
   {
@@ -125,7 +132,7 @@ const games = [
     href: '/blackjack',
     desc: '21을 향한 두뇌싸움. 인피니트 블랙잭, 스피드 블랙잭 등 다양한 변형 제공.',
     img: '/images/blackjack.jpg',
-    alt: '에볼루션카지노 블랙잭 인피니트 블랙잭 기본전략 RTP 99.28% 라이브 테이블',
+    alt: '에볼루션카지노 블랙잭 라이브 테이블',
     keyword: '에볼루션카지노 블랙잭',
   },
   {
@@ -133,7 +140,7 @@ const games = [
     href: '/roulette',
     desc: '라이트닝 룰렛, 이머시브 룰렛. 최대 500배 멀티플라이어 제공.',
     img: '/images/roulette.jpg',
-    alt: '에볼루션카지노 라이트닝 룰렛 500배 멀티플라이어 유럽식 룰렛 라이브',
+    alt: '에볼루션카지노 라이트닝 룰렛 라이브',
     keyword: '에볼루션카지노 룰렛',
   },
   {
@@ -141,7 +148,7 @@ const games = [
     href: '/slots',
     desc: '에볼루션 게임쇼. 크레이지타임, 모노폴리 라이브 등 인기 타이틀.',
     img: '/images/slots.jpg',
-    alt: '에볼루션카지노 크레이지타임 2만배 모노폴리 라이브 게임쇼',
+    alt: '에볼루션카지노 크레이지타임 게임쇼',
     keyword: '에볼루션카지노 슬롯',
   },
   {
@@ -149,7 +156,7 @@ const games = [
     href: '/live-casino',
     desc: '실제 딜러와 실시간 HD 스트리밍. 전 세계 최고 수준의 라이브 카지노.',
     img: '/images/live-casino.jpg',
-    alt: '에볼루션 라이브카지노 24시간 HD 스트리밍 UKGC MGA 라이선스',
+    alt: '에볼루션 라이브카지노 HD 스트리밍',
     keyword: '에볼루션 라이브카지노',
   },
   {
@@ -157,7 +164,7 @@ const games = [
     href: '/blog',
     desc: '에볼루션카지노 전략, 규칙, 팁을 전문가가 분석한 최신 가이드.',
     img: '/images/blog.jpg',
-    alt: '에볼루션카지노 바카라 블랙잭 룰렛 전략 규칙 팁 전문가 분석',
+    alt: '에볼루션카지노 전략 가이드 블로그',
     keyword: '에볼루션카지노 전략',
   },
 ]
@@ -182,13 +189,14 @@ const features = [
 ]
 
 export default function Home() {
-  const faqList = (jsonLd['@graph'][1] as any).mainEntity
+  const faqList = faqJsonLd.mainEntity
 
   return (
     <>
+      {/* ✅ FAQPage JSON-LD만 선언 */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <main className="min-h-screen bg-gray-900 text-white">
 
@@ -197,7 +205,7 @@ export default function Home() {
           <div className="absolute inset-0 z-0">
             <Image
               src="/images/hero.jpg"
-              alt="에볼루션카지노 세계 1위 라이브카지노 바카라 블랙잭 룰렛 HD 스트리밍"
+              alt="에볼루션카지노 라이브 딜러 테이블 전경"
               fill
               className="object-cover opacity-30"
               priority
@@ -327,7 +335,7 @@ export default function Home() {
         <section className="max-w-4xl mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-10 text-center">에볼루션카지노 자주 묻는 질문</h2>
           <div className="space-y-4">
-            {faqList.map((faq: any, i: number) => (
+            {faqList.map((faq, i) => (
               <details key={i} className="bg-gray-800 rounded-xl p-5 group cursor-pointer">
                 <summary className="font-semibold text-base text-white flex justify-between items-center list-none">
                   {faq.name}

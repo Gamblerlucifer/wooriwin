@@ -817,7 +817,7 @@ def main():
     print("\n" + "=" * 55)
     print(f"  완료: {success}개 포스트 생성")
     remaining = [t for t in TOPICS if t["id"] not in used_ids]
-    print(f"  사용된 주제: {len(used_ids)}/21 | 남은 주제: {len(remaining)}")
+    print(f"  사용된 주제: {len(used_ids)}/50 | 남은 주제: {len(remaining)}")
     print("=" * 55)
     print("\n✨ git add . && git commit -m 'auto: add posts' && git push")
 

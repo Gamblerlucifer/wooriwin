@@ -40,13 +40,12 @@ export async function generateMetadata({
     description: post.description,
     keywords: post.keywords,
     alternates: { canonical: `https://wooriwin.com/blog/${slug}` },
-    robots: { index: true, follow: true },
+    // ✅ robots 제거 → layout에서 전체 공통 처리
     openGraph: {
       title: post.title,
       description: post.description,
       url: `https://wooriwin.com/blog/${slug}`,
-      siteName: 'WOORIWIN',
-      locale: 'ko_KR',
+      // ✅ siteName, locale 제거 → layout 상속
       type: 'article',
       images: [{ url: finalImageUrl, width: 1200, height: 630 }],
     },
@@ -124,7 +123,7 @@ export default async function BlogPost({
 
         {/* Hero */}
         <section className="relative h-64 md:h-80 overflow-hidden">
-          <Image src={finalImageUrl} alt={post.title} fill className="object-cover opacity-40" priority />
+          <Image src={finalImageUrl} alt={post.imageAlt || post.title} fill className="object-cover opacity-40" priority />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 max-w-4xl mx-auto px-4 pb-8">
             <nav className="text-sm text-gray-400 mb-3">
@@ -153,15 +152,20 @@ export default async function BlogPost({
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  table: (props) => (
+                  // ✅ node prop 제거: 구조분해로 node를 분리하고 나머지만 DOM에 전달
+                  table: ({ node, ...props }) => (
                     <div className="overflow-x-auto my-6">
                       <table className="w-full border-collapse text-sm" {...props} />
                     </div>
                   ),
-                  thead: (props) => <thead className="bg-gray-700" {...props} />,
-                  th: (props) => <th className="border border-gray-600 px-4 py-2 text-yellow-400 text-left" {...props} />,
-                  td: (props) => <td className="border border-gray-600 px-4 py-2 text-gray-300" {...props} />,
-                  tr: (props) => <tr className="even:bg-gray-800" {...props} />,
+                  thead: ({ node, ...props }) => <thead className="bg-gray-700" {...props} />,
+                  th: ({ node, ...props }) => (
+                    <th className="border border-gray-600 px-4 py-2 text-yellow-400 text-left" {...props} />
+                  ),
+                  td: ({ node, ...props }) => (
+                    <td className="border border-gray-600 px-4 py-2 text-gray-300" {...props} />
+                  ),
+                  tr: ({ node, ...props }) => <tr className="even:bg-gray-800" {...props} />,
                 }}
               >
                 {post.content}

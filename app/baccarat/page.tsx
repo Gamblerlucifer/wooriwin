@@ -12,11 +12,14 @@ export const metadata: Metadata = {
     title: '에볼루션카지노 바카라 완벽 가이드 2026 | WOORIWIN',
     description: '에볼루션 바카라 규칙·전략·변형 게임 완벽 정리.',
     url: 'https://wooriwin.com/baccarat',
-    siteName: 'WOORIWIN',
-    locale: 'ko_KR',
-    type: 'article',
     images: [{ url: 'https://wooriwin.com/images/baccarat.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: '에볼루션카지노 바카라 완벽 가이드 2026 | WOORIWIN',
+    description: '에볼루션 바카라 규칙·전략·변형 게임 완벽 정리.',
+    images: ['https://wooriwin.com/images/baccarat.jpg'],
+},
 }
 
 const jsonLd = {
