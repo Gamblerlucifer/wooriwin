@@ -172,7 +172,29 @@ INTERNAL_LINKS = [
     {"slug": "live-casino", "title": "에볼루션 라이브카지노 완벽 가이드",  "anchor": "에볼루션 라이브카지노"},
 ]
 
-# ─────────────────────────────────────────────────
+# ── [추가된 유틸리티 함수] ────────────────────────
+
+def clean_json_response(text: str) -> str:
+    """제미나이 응답에서 순수 JSON만 추출 (안정성 강화)"""
+    text = text.strip()
+    if "```json" in text:
+        text = text.split("```json")[1].split("```")[0]
+    elif "```" in text:
+        text = text.split("```")[1].split("```")[0]
+    return text.strip()
+
+def get_weighted_related_posts(category: str) -> list:
+    """핵심 페이지(바카라/블랙잭 등)에 우선순위를 둔 내부 링크 생성"""
+    high_value_slugs = ["baccarat", "blackjack", "live-casino"]
+    cat_map = {"바카라": "baccarat", "블랙잭": "blackjack", "룰렛": "roulette", "슬롯/게임쇼": "slots", "가이드": "live-casino"}
+    current_cat_slug = cat_map.get(category, "")
+    
+    candidates = [l for l in INTERNAL_LINKS if l["slug"] != current_cat_slug]
+    # 핵심 페이지를 리스트 앞으로 보내 가중치 부여
+    candidates.sort(key=lambda x: x["slug"] in high_value_slugs, reverse=True)
+    return random.sample(candidates[:4], min(3, len(candidates)))
+
+# ── [수정된 핵심 로직 함수] ────────────────────────
 
 def setup_gemini():
     return genai.Client(api_key=GEMINI_API_KEY)
