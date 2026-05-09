@@ -3,21 +3,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
-  description: '에볼루션카지노 슬롯 게임 종류·규칙·전략 완벽 정리. 넷엔트, 레드타이거 슬롯까지 에볼루션 그룹 전체 슬롯 총망라.',
-  keywords: ['에볼루션카지노 슬롯', '에볼루션 슬롯', '넷엔트 슬롯', '레드타이거 슬롯', '슬롯 전략'],
-  alternates: { canonical: 'https://wooriwin.com/slots' },
+  title: '에볼루션카지노 룰렛 완벽 가이드 2026 | WOORIWIN',
+  description: '에볼루션카지노 룰렛 규칙·전략·배팅 방법 완벽 정리. 라이트닝 룰렛, 임머시브 룰렛, 유럽식·미국식 룰렛까지 변형 게임 총망라.',
+  keywords: ['에볼루션카지노 룰렛', '에볼루션 룰렛', '라이트닝 룰렛', '룰렛 전략', '룰렛 규칙'],
+  alternates: { canonical: 'https://wooriwin.com/roulette' },
   openGraph: {
-    title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
-    description: '에볼루션 슬롯 게임 종류·규칙·전략 완벽 정리.',
-    url: 'https://wooriwin.com/slots',
-    images: [{ url: 'https://wooriwin.com/images/slots.jpg', width: 1200, height: 630 }],
+    title: '에볼루션카지노 룰렛 완벽 가이드 2026 | WOORIWIN',
+    description: '에볼루션 룰렛 규칙·전략·변형 게임 완벽 정리.',
+    url: 'https://wooriwin.com/roulette',
+    images: [{ url: 'https://wooriwin.com/images/roulette.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
-    description: '에볼루션 슬롯 게임 종류·규칙·전략 완벽 정리.',
-    images: ['https://wooriwin.com/images/slots.jpg'],
+    title: '에볼루션카지노 룰렛 완벽 가이드 2026 | WOORIWIN',
+    description: '에볼루션 룰렛 규칙·전략·변형 게임 완벽 정리.',
+    images: ['https://wooriwin.com/images/roulette.jpg'],
   },
 }
 
@@ -37,42 +37,37 @@ const jsonLd = {
         {
           '@type': 'Question',
           name: '에볼루션카지노 룰렛 RTP는 얼마인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '유럽식 룰렛(싱글 제로)의 RTP는 97.30%, 아메리칸 룰렛(더블 제로)은 94.74%입니다. 라이트닝 룰렛은 기본 RTP 97.30%에 멀티플라이어가 적용되는 구조로, 일반 룰렛보다 변동성이 큽니다. 유럽식 룰렛이 가장 유리합니다.' },
+          acceptedAnswer: { '@type': 'Answer', text: '유럽식 룰렛(싱글 제로)의 RTP는 97.30%, 아메리칸 룰렛(더블 제로)은 94.74%입니다. 라이트닝 룰렛은 기본 RTP 97.30%에 멀티플라이어가 적용되는 구조로, 일반 룰렛보다 변동성이 큽니다.' },
         },
         {
           '@type': 'Question',
           name: '라이트닝 룰렛 멀티플라이어는 어떻게 작동하나요?',
-          acceptedAnswer: { '@type': 'Answer', text: '라이트닝 룰렛은 매 스핀마다 1~5개의 번호에 50x·100x·200x·300x·500x 멀티플라이어가 무작위로 적용됩니다. 해당 번호에 스트레이트업 베팅(단일 번호)이 맞으면 멀티플라이어 배당을 받습니다. 단, 멀티플라이어가 없는 번호의 스트레이트업 당첨은 29:1로 일반 룰렛(35:1)보다 낮습니다.' },
+          acceptedAnswer: { '@type': 'Answer', text: '라이트닝 룰렛은 매 스핀마다 1~5개의 번호에 50x·100x·200x·300x·500x 멀티플라이어가 무작위로 적용됩니다. 해당 번호에 스트레이트업 베팅이 맞으면 멀티플라이어 배당을 받습니다. 단, 멀티플라이어가 없는 번호의 스트레이트업 당첨은 29:1로 일반 룰렛(35:1)보다 낮습니다.' },
         },
         {
           '@type': 'Question',
           name: '유럽식 룰렛과 아메리칸 룰렛의 차이는?',
-          acceptedAnswer: { '@type': 'Answer', text: '유럽식 룰렛은 0~36번 총 37개 칸(싱글 제로), 아메리칸 룰렛은 0·00·1~36 총 38개 칸(더블 제로)입니다. 더블 제로 때문에 아메리칸 룰렛의 하우스 엣지는 5.26%로 유럽식(2.70%)의 두 배입니다. 에볼루션에서는 유럽식 룰렛을 선택하는 것이 유리합니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '룰렛 마틴게일 전략은 효과가 있나요?',
-          acceptedAnswer: { '@type': 'Answer', text: '마틴게일 전략은 질 때마다 베팅을 두 배로 올려 한 번 이기면 손실을 회복하는 방식입니다. 단기적으로 작동할 수 있지만 장기적으로는 하우스 엣지를 극복할 수 없습니다. 또한 연속 패배 시 베팅 한도 초과 위험이 있습니다. 자금 관리를 철저히 해야 합니다.' },
+          acceptedAnswer: { '@type': 'Answer', text: '유럽식 룰렛은 0~36번 총 37개 칸(싱글 제로), 아메리칸 룰렛은 0·00·1~36 총 38개 칸(더블 제로)입니다. 더블 제로 때문에 아메리칸 룰렛의 하우스 엣지는 5.26%로 유럽식(2.70%)의 두 배입니다.' },
         },
         {
           '@type': 'Question',
           name: '이머시브 룰렛이란 무엇인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '이머시브 룰렛(Immersive Roulette)은 HD 멀티캠 카메라로 볼이 떨어지는 순간을 슬로우 모션으로 보여주는 시각적 몰입감에 특화된 룰렛입니다. 규칙과 RTP는 유럽식 룰렛과 동일하며, 화려한 연출이 특징입니다.' },
+          acceptedAnswer: { '@type': 'Answer', text: '이머시브 룰렛(Immersive Roulette)은 HD 멀티캠 카메라로 볼이 떨어지는 순간을 슬로우 모션으로 보여주는 시각적 몰입감에 특화된 룰렛입니다. 규칙과 RTP는 유럽식 룰렛과 동일합니다.' },
         },
         {
           '@type': 'Question',
-          name: '룰렛 앙 프리종(En Prison) 룰이란?',
-          acceptedAnswer: { '@type': 'Answer', text: '프렌치 룰렛의 앙 프리종 룰은 이븐머니 베팅(레드/블랙, 홀/짝 등) 시 볼이 0에 떨어지면 베팅이 몰수되지 않고 다음 스핀에 그대로 유지되는 유리한 규칙입니다. 이 규칙 덕분에 프렌치 룰렛의 이븐머니 베팅 RTP는 98.65%로 매우 높습니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 룰렛 최소 베팅은 얼마인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션 룰렛의 최소 베팅은 테이블에 따라 $0.10~$1 수준입니다. 이너 베팅(스트레이트업 등)과 아우터 베팅(레드/블랙 등)의 최소 베팅이 다를 수 있습니다. 라이트닝 룰렛 등 인기 테이블은 최소 $0.20부터 시작합니다.' },
+          name: '프렌치 룰렛 앙 프리종 룰이란?',
+          acceptedAnswer: { '@type': 'Answer', text: '앙 프리종 룰은 이븐머니 베팅 시 볼이 0에 떨어지면 베팅이 몰수되지 않고 다음 스핀에 유지되는 규칙입니다. 덕분에 프렌치 룰렛의 이븐머니 베팅 RTP는 98.65%로 매우 높습니다.' },
         },
         {
           '@type': 'Question',
           name: '더블볼 룰렛이란 무엇인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '더블볼 룰렛(Double Ball Roulette)은 한 스핀에 두 개의 볼을 동시에 사용하는 에볼루션 독점 변형 게임입니다. 두 볼 모두 같은 번호에 떨어지면 스트레이트업 베팅이 1,300:1 배당을 받습니다. 독특한 게임성이 특징입니다.' },
+          acceptedAnswer: { '@type': 'Answer', text: '더블볼 룰렛은 한 스핀에 두 개의 볼을 동시에 사용하는 에볼루션 독점 변형 게임입니다. 두 볼 모두 같은 번호에 떨어지면 스트레이트업 베팅이 1,300:1 배당을 받습니다.' },
+        },
+        {
+          '@type': 'Question',
+          name: '에볼루션 룰렛 최소 베팅은 얼마인가요?',
+          acceptedAnswer: { '@type': 'Answer', text: '에볼루션 룰렛의 최소 베팅은 테이블에 따라 $0.10~$1 수준입니다. 라이트닝 룰렛은 최소 $0.20부터 시작합니다.' },
         },
       ],
     },
@@ -104,6 +99,7 @@ export default function RoulettePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
+        {/* Hero */}
         <section className="relative flex flex-col items-center justify-center min-h-[55vh] text-center px-4 py-20 overflow-hidden">
           <div className="absolute inset-0 z-0">
             <Image src="/images/roulette.jpg" alt="에볼루션카지노 룰렛 라이브 게임" fill className="object-cover opacity-25" priority />
@@ -123,6 +119,7 @@ export default function RoulettePage() {
           </div>
         </section>
 
+        {/* 본문 */}
         <section className="max-w-4xl mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-6 text-yellow-400">에볼루션카지노 룰렛이란?</h2>
           <div className="text-gray-300 space-y-5 leading-relaxed text-base md:text-lg">
@@ -135,47 +132,35 @@ export default function RoulettePage() {
               룰렛의 기본 규칙은 딜러가 휠을 돌리고 볼을 던져 볼이 멈추는 번호와 색상을 맞추는 게임입니다.
               베팅은 크게 <strong className="text-white">이너 베팅(Inner Bet)</strong>과
               <strong className="text-white"> 아우터 베팅(Outer Bet)</strong>으로 나뉩니다.
-              이너 베팅은 특정 번호나 번호 그룹에 베팅하며 배당이 높고, 아우터 베팅은
-              레드/블랙·홀/짝·1-18/19-36 등 넓은 범위에 베팅하며 확률이 높습니다.
             </p>
             <p>
               에볼루션의 가장 인기 있는 룰렛 게임은 단연 <strong className="text-white">라이트닝 룰렛(Lightning Roulette)</strong>입니다.
               매 스핀마다 1~5개의 번호에 50x·100x·200x·300x·500x의 멀티플라이어가 무작위로 적용됩니다.
-              해당 번호에 스트레이트업 베팅이 맞으면 멀티플라이어 배당을 받아 최대 500배까지 당첨금을 받을 수 있습니다.
-              단, 멀티플라이어가 없는 번호의 스트레이트업 당첨은 29:1(일반 35:1 대비 낮음)이므로 이 점을 감안해야 합니다.
+              해당 번호에 스트레이트업 베팅이 맞으면 최대 500배까지 당첨금을 받을 수 있습니다.
             </p>
             <p>
               가장 높은 RTP를 원한다면 <strong className="text-white">프렌치 룰렛</strong>을 선택하세요.
-              이븐머니 베팅(레드/블랙 등) 시 볼이 0에 떨어지면 베팅을 몰수하지 않고 다음 스핀에 유지하는
-              '앙 프리종(En Prison)' 룰이 적용되어 이븐머니 베팅의 RTP가 98.65%에 달합니다.
-              장기 플레이에서 가장 유리한 선택입니다.
-            </p>
-            <p>
-              룰렛에서 자주 사용되는 전략들이 있습니다. <strong className="text-white">마틴게일 전략</strong>은
-              질 때마다 베팅을 두 배로 올려 한 번 이기면 손실을 회복하는 방식입니다. 단기적으로 유효하지만
-              연속 패배 시 베팅 한도를 초과할 위험이 있습니다. <strong className="text-white">D'Alembert 전략</strong>은
-              마틴게일보다 완만하게 조정하는 방식으로 리스크가 낮습니다. 어떤 전략도 장기적으로 하우스 엣지를
-              극복할 수 없으므로, 자금 관리와 손절 기준 설정이 가장 중요합니다.
+              이븐머니 베팅 시 볼이 0에 떨어지면 베팅을 몰수하지 않고 다음 스핀에 유지하는
+              앙 프리종(En Prison) 룰이 적용되어 이븐머니 베팅의 RTP가 98.65%에 달합니다.
             </p>
             <p>
               <strong className="text-white">이머시브 룰렛</strong>은 HD 멀티캠 카메라 시스템으로
               볼이 떨어지는 순간을 슬로우 모션으로 포착하여 극적인 시각적 경험을 제공합니다.
-              규칙과 RTP는 유럽식 룰렛과 동일하지만, 연출의 몰입감이 압도적입니다.
               처음 라이브 룰렛을 경험하는 플레이어에게 추천하는 입문 게임입니다.
             </p>
             <p>
               에볼루션의 독점 변형 게임 <strong className="text-white">더블볼 룰렛</strong>은
               한 스핀에 두 개의 볼을 동시에 사용합니다. 두 볼이 모두 같은 번호에 멈추면
-              스트레이트업 베팅이 1,300:1의 엄청난 배당을 제공합니다. 아우터 베팅의 경우
-              두 볼 모두 해당 조건을 만족해야 당첨되므로 확률이 낮지만 배당도 그에 맞게 조정됩니다.
+              스트레이트업 베팅이 1,300:1의 배당을 제공합니다.
             </p>
             <p>
               WOORIWIN에서는 에볼루션 룰렛의 모든 변형 게임 비교, 베팅 전략 분석, 확률 계산을
-              블로그를 통해 상세히 제공합니다. 어떤 룰렛 게임을 선택할지 고민이라면 WOORIWIN 블로그를 확인하세요.
+              블로그를 통해 상세히 제공합니다.
             </p>
           </div>
         </section>
 
+        {/* 변형 게임 카드 */}
         <section className="bg-gray-800 py-16 px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-3">에볼루션 룰렛 변형 게임</h2>
@@ -192,6 +177,7 @@ export default function RoulettePage() {
           </div>
         </section>
 
+        {/* FAQ */}
         <section className="max-w-4xl mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-10 text-center">에볼루션카지노 룰렛 FAQ</h2>
           <div className="space-y-4">
@@ -207,6 +193,7 @@ export default function RoulettePage() {
           </div>
         </section>
 
+        {/* Footer */}
         <footer className="bg-gray-950 py-10 px-4 text-center">
           <p className="text-gray-500 text-sm mb-4">관련 에볼루션카지노 가이드</p>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
