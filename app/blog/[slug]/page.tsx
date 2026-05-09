@@ -3,6 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { readFileSync, readdirSync, existsSync } from 'fs'
 import { join } from 'path'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 const POSTS_DIR = join(process.cwd(), 'data', 'posts')
 
@@ -86,8 +88,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ],
   }
 
-  const paragraphs = post.content.trim().split('\n\n').filter(Boolean)
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -129,18 +129,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {/* 본문 */}
           <article className="flex-1 min-w-0">
             <div className="text-gray-300 space-y-5 leading-relaxed text-base md:text-lg">
-              {paragraphs.map((para: string, i: number) => {
-                if (para.startsWith('## ')) {
-                  return <h2 key={i} className="text-2xl font-bold text-yellow-400 mt-10 mb-4">{para.replace('## ', '')}</h2>
-                }
-                if (para.startsWith('### ')) {
-                  return <h3 key={i} className="text-xl font-bold text-white mt-6 mb-3">{para.replace('### ', '')}</h3>
-                }
-                if (para.startsWith('**') && para.endsWith('**')) {
-                  return <p key={i} className="font-bold text-white">{para.replace(/\*\*/g, '')}</p>
-                }
-                return <p key={i}>{para}</p>
-              })}
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  table: (props) => (
+                    <div className="overflow-x-auto my-6">
+                      <table className="w-full border-collapse text-sm" {...props} />
+                    </div>
+                  ),
+                  thead: (props) => <thead className="bg-gray-700" {...props} />,
+                  th: (props) => <th className="border border-gray-600 px-4 py-2 text-yellow-400 text-left" {...props} />,
+                  td: (props) => <td className="border border-gray-600 px-4 py-2 text-gray-300" {...props} />,
+                  tr: (props) => <tr className="even:bg-gray-800" {...props} />,
+                }}
+              >
+                {post.content}
+              </ReactMarkdown>
             </div>
 
             {/* FAQ */}
