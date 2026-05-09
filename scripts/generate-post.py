@@ -2,67 +2,141 @@ import os
 import json
 import time
 import requests
+from dotenv import load_dotenv
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env.local'))
 from datetime import datetime, timedelta
 from google import genai
+import random  # ← 이 줄 추가
 
 # ── API 키 설정 ──────────────────────────────────
-GEMINI_API_KEY = "AIzaSyAUCWk-YmLtIm_YezhCgXEQUWOy2D74Xq0"
-PEXELS_API_KEY = "LpH7rG8vxTvK9ypMDBndRtyAOn56g32hUX5KM35vnulm0XotSFTR7tQW"
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
 
 # ── 경로 설정 ─────────────────────────────────────
 BASE_DIR = os.path.join(os.path.dirname(__file__), "..")
 POSTS_DIR = os.path.join(BASE_DIR, "data", "posts")
+KEYWORDS_CACHE = os.path.join(BASE_DIR, "data", "keywords.json")
 POSTS_PER_RUN = 3
+MAX_DEPTH = 3  # 파생 깊이
 
-# ── 키워드 목록 ───────────────────────────────────
-KEYWORDS = [
-    {"slug": "evolution-baccarat-banker-commission", "title": "에볼루션 바카라 뱅커 커미션 완벽 이해 — 5% 커미션의 진실", "category": "바카라", "image_query": "baccarat casino cards dealer", "image_alt": "에볼루션 바카라 뱅커 커미션 5% 완벽 이해 라이브 딜러"},
-    {"slug": "evolution-speed-baccarat-guide", "title": "에볼루션 스피드 바카라 완벽 가이드 — 27초 완료 빠른 게임", "category": "바카라", "image_query": "fast card game casino table", "image_alt": "에볼루션 스피드 바카라 27초 빠른 게임 라이브 카지노"},
-    {"slug": "evolution-lightning-baccarat-multiplier", "title": "에볼루션 라이트닝 바카라 멀티플라이어 전략 — 최대 8배 공략", "category": "바카라", "image_query": "lightning baccarat live casino", "image_alt": "에볼루션 라이트닝 바카라 멀티플라이어 최대 8배 전략"},
-    {"slug": "evolution-squeeze-baccarat-guide", "title": "에볼루션 스퀴즈 바카라란? — VIP 느낌의 카드 공개 방식", "category": "바카라", "image_query": "baccarat squeeze card casino", "image_alt": "에볼루션 스퀴즈 바카라 VIP 카드 공개 방식"},
-    {"slug": "evolution-no-commission-baccarat", "title": "에볼루션 노커미션 바카라 — 커미션 없는 바카라의 장단점", "category": "바카라", "image_query": "baccarat no commission casino", "image_alt": "에볼루션 노커미션 바카라 커미션 없는 바카라"},
-    {"slug": "evolution-blackjack-infinite-guide", "title": "에볼루션 인피니트 블랙잭 완벽 가이드 — 무제한 착석의 비밀", "category": "블랙잭", "image_query": "blackjack infinite players casino", "image_alt": "에볼루션 인피니트 블랙잭 무제한 착석 라이브 테이블"},
-    {"slug": "evolution-blackjack-double-down", "title": "블랙잭 더블다운 완벽 가이드 — 언제 두 배를 걸어야 하나", "category": "블랙잭", "image_query": "blackjack double down cards", "image_alt": "블랙잭 더블다운 전략 최적 타이밍 에볼루션카지노"},
-    {"slug": "evolution-blackjack-split-guide", "title": "블랙잭 스플릿 완벽 가이드 — AA와 88은 항상 스플릿하라", "category": "블랙잭", "image_query": "blackjack split pair cards", "image_alt": "블랙잭 스플릿 AA 88 페어 에볼루션카지노 전략"},
-    {"slug": "evolution-roulette-french-guide", "title": "에볼루션 프렌치 룰렛 완벽 가이드 — 앙 프리종 룰의 모든 것", "category": "룰렛", "image_query": "french roulette wheel casino", "image_alt": "에볼루션 프렌치 룰렛 앙 프리종 룰 RTP 98.65%"},
-    {"slug": "evolution-roulette-american-vs-european", "title": "유럽식 vs 아메리칸 룰렛 — 어느 쪽이 더 유리한가", "category": "룰렛", "image_query": "roulette wheel green zero", "image_alt": "유럽식 아메리칸 룰렛 비교 하우스엣지 에볼루션카지노"},
-    {"slug": "evolution-immersive-roulette-guide", "title": "에볼루션 이머시브 룰렛 완벽 가이드 — 슬로우모션의 몰입감", "category": "룰렛", "image_query": "roulette ball slow motion", "image_alt": "에볼루션 이머시브 룰렛 슬로우모션 HD 멀티캠"},
-    {"slug": "evolution-crazy-time-wheel-guide", "title": "크레이지타임 휠 구성 완벽 분석 — 64칸의 확률 계산", "category": "슬롯/게임쇼", "image_query": "game show wheel spin colorful", "image_alt": "크레이지타임 휠 64칸 확률 분석 에볼루션 게임쇼"},
-    {"slug": "evolution-monopoly-live-guide", "title": "에볼루션 모노폴리 라이브 완벽 가이드 — 3D 보드게임의 흥분", "category": "슬롯/게임쇼", "image_query": "monopoly board game colorful", "image_alt": "에볼루션 모노폴리 라이브 3D 보드게임 라이브쇼"},
-    {"slug": "evolution-mega-ball-guide", "title": "에볼루션 메가볼 완벽 가이드 — 100만배 멀티플라이어의 비밀", "category": "슬롯/게임쇼", "image_query": "lottery balls bingo numbers", "image_alt": "에볼루션 메가볼 100만배 멀티플라이어 복권 게임"},
-    {"slug": "evolution-casino-mobile-guide", "title": "에볼루션카지노 모바일 완벽 가이드 — 앱 없이 즐기는 방법", "category": "가이드", "image_query": "mobile phone casino app", "image_alt": "에볼루션카지노 모바일 앱 없이 브라우저 플레이"},
-    {"slug": "evolution-casino-vip-salon-prive", "title": "에볼루션 살롱 프리베 완벽 가이드 — VIP 전용 테이블의 모든 것", "category": "가이드", "image_query": "luxury vip casino private room", "image_alt": "에볼루션 살롱 프리베 VIP 전용 프라이빗 테이블"},
-    {"slug": "evolution-casino-rtp-guide", "title": "에볼루션카지노 RTP 완벽 정리 — 게임별 환수율 비교", "category": "가이드", "image_query": "casino statistics chart analysis", "image_alt": "에볼루션카지노 RTP 환수율 게임별 비교 바카라 블랙잭"},
-    {"slug": "evolution-casino-deposit-guide", "title": "에볼루션카지노 입금방법 완벽 가이드 — 암호화폐·카드·전자지갑", "category": "가이드", "image_query": "cryptocurrency bitcoin casino deposit", "image_alt": "에볼루션카지노 입금방법 암호화폐 비트코인 카드"},
-    {"slug": "evolution-baccarat-tie-bet-analysis", "title": "바카라 타이 베팅 분석 — 14% 하우스엣지의 함정", "category": "바카라", "image_query": "baccarat tie bet casino", "image_alt": "바카라 타이 베팅 하우스엣지 14% 분석 에볼루션"},
-    {"slug": "evolution-blackjack-surrender-guide", "title": "블랙잭 서렌더 완벽 가이드 — 언제 포기하는 게 유리한가", "category": "블랙잭", "image_query": "blackjack surrender strategy cards", "image_alt": "블랙잭 서렌더 전략 포기 타이밍 에볼루션카지노"},
+# ── 시드 키워드 ───────────────────────────────────
+SEED_KEYWORDS = [
+    "에볼루션카지노",
+    "에볼루션카지노 바카라",
+    "에볼루션카지노 블랙잭",
+    "에볼루션카지노 룰렛",
+    "에볼루션카지노 슬롯",
+    "에볼루션카지노 가입방법",  # ← 추가
+    "에볼루션카지노 추천",      # ← 추가
+    "라이트닝 바카라",          # ← 추가
+    "인피니트 블랙잭",          # ← 추가
+    "크레이지타임",             # ← 추가
 ]
+
+# ────────────────────────────────────────────────
+
+def collect_keywords_with_search(client, seed: str, used: list) -> list:
+    used_str = ", ".join(used[-20:]) if used else "없음"
+    prompt = f"""
+'{seed}' 관련 한국인이 구글에 많이 검색하는 롱테일 키워드 15개.
+조건: 한국어, 에볼루션카지노 포함, 제외: {used_str}
+JSON 배열만: ["키워드1", "키워드2", ...]
+"""
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.1-flash-lite",
+            contents=prompt,
+            config={"tools": [{"google_search": {}}]}
+        )
+        text = response.text.strip()
+        if "```" in text:
+            text = text.split("```")[1]
+            if text.startswith("json"): text = text[4:]
+        return [k for k in json.loads(text.strip()) if isinstance(k, str) and len(k) > 3]
+    except Exception as e:
+        print(f"  ⚠️ 키워드 수집 오류: {e}")
+        return []
+
+
+def load_keywords_cache() -> dict:
+    """키워드 캐시 로드"""
+    if os.path.exists(KEYWORDS_CACHE):
+        with open(KEYWORDS_CACHE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"keywords": [], "used": []}
+
+def save_keywords_cache(cache: dict):
+    """키워드 캐시 저장"""
+    os.makedirs(os.path.dirname(KEYWORDS_CACHE), exist_ok=True)
+    with open(KEYWORDS_CACHE, "w", encoding="utf-8") as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+def get_existing_slugs() -> set:
+    """이미 생성된 슬러그 목록"""
+    if not os.path.exists(POSTS_DIR):
+        return set()
+    return {f.replace(".json", "") for f in os.listdir(POSTS_DIR) if f.endswith(".json")}
+
+def keyword_to_slug(keyword: str) -> str:
+    """키워드를 슬러그로 변환"""
+    import re
+    slug = keyword.lower()
+    slug = re.sub(r'[^\w\s-]', '', slug)
+    slug = re.sub(r'[\s_]+', '-', slug)
+    slug = re.sub(r'-+', '-', slug)
+    return slug.strip('-')
+
+def get_category(keyword: str) -> str:
+    """키워드에서 카테고리 추출"""
+    if any(w in keyword for w in ['바카라', 'baccarat']):
+        return '바카라'
+    elif any(w in keyword for w in ['블랙잭', 'blackjack']):
+        return '블랙잭'
+    elif any(w in keyword for w in ['룰렛', 'roulette']):
+        return '룰렛'
+    elif any(w in keyword for w in ['슬롯', '크레이지타임', '게임쇼', 'slot']):
+        return '슬롯/게임쇼'
+    else:
+        return '가이드'
+
+def get_image_query(keyword: str) -> tuple[str, str]:
+    """키워드에서 이미지 검색어와 alt 텍스트 생성"""
+    category = get_category(keyword)
+    queries = {
+        '바카라': ('baccarat casino cards dealer', f'{keyword} 라이브 딜러 카지노'),
+        '블랙잭': ('blackjack casino table cards', f'{keyword} 라이브 테이블'),
+        '룰렛': ('roulette wheel casino', f'{keyword} 라이브 게임'),
+        '슬롯/게임쇼': ('casino game show wheel', f'{keyword} 게임쇼'),
+        '가이드': ('casino guide strategy', f'{keyword} 완벽 가이드'),
+    }
+    return queries.get(category, ('casino live dealer', f'{keyword}'))
 
 # ── Gemini 설정 ───────────────────────────────────
 def setup_gemini():
     client = genai.Client(api_key=GEMINI_API_KEY)
     return client
 
-# ── 본문 생성 ─────────────────────────────────────
-def generate_post_content(client, keyword: dict) -> dict:
+def generate_post_content(client, keyword: str, category: str) -> dict:
+    """Gemini API로 포스트 콘텐츠 생성"""
     prompt = f"""
 당신은 에볼루션카지노 전문 SEO 콘텐츠 라이터입니다.
-아래 주제로 한국어 블로그 포스트를 작성해주세요.
+아래 키워드로 한국어 블로그 포스트를 작성해주세요.
 
-제목: {keyword['title']}
-카테고리: {keyword['category']}
-이미지 설명: {keyword['image_alt']}
+키워드: {keyword}
+카테고리: {category}
 
 요구사항:
-1. 본문은 최소 1500자 이상
-2. H2 헤더(## )를 4~6개 포함
-3. 구체적인 수치와 통계 포함
-4. 초보자도 이해할 수 있는 쉬운 설명
-5. FAQ 3개 포함
-6. SEO 최적화된 자연스러운 키워드 배치
+1. 제목은 키워드를 포함한 매력적인 제목
+2. 본문은 최소 1500자 이상
+3. H2 헤더(## )를 4~6개 포함
+4. 구체적인 수치와 통계 포함
+5. 초보자도 이해할 수 있는 쉬운 설명
+6. FAQ 3개 포함
+7. SEO 최적화된 자연스러운 키워드 배치
 
 다음 JSON 형식으로만 응답하세요 (다른 텍스트 없이):
 {{
+  "title": "포스트 제목 (키워드 포함)",
   "description": "포스트 설명 (150자 이내)",
   "keywords": ["키워드1", "키워드2", "키워드3", "키워드4"],
   "content": "본문 내용 (마크다운 형식, 1500자 이상)",
@@ -88,8 +162,8 @@ def generate_post_content(client, keyword: dict) -> dict:
         print(f"  ❌ Gemini 생성 오류: {e}")
         return None
 
-# ── Pexels 이미지 URL ─────────────────────────────
 def fetch_pexels_image_url(query: str) -> str:
+    """Pexels 이미지 URL 반환"""
     url = "https://api.pexels.com/v1/search"
     headers = {"Authorization": PEXELS_API_KEY}
     params = {"query": query, "per_page": 3, "orientation": "landscape"}
@@ -105,42 +179,26 @@ def fetch_pexels_image_url(query: str) -> str:
         print(f"  ❌ 이미지 오류: {e}")
         return "https://images.pexels.com/photos/1871508/pexels-photo-1871508.jpeg"
 
-# ── 관련 포스트 ───────────────────────────────────
-def get_related_posts(current_slug: str, category: str) -> list:
-    related = []
-    for kw in KEYWORDS:
-        if kw["slug"] != current_slug and kw["category"] == category:
-            related.append({"slug": kw["slug"], "title": kw["title"]})
-        if len(related) >= 3:
-            break
-    return related
-
-# ── 포스트 저장 ───────────────────────────────────
-def save_post(slug: str, keyword: dict, content_data: dict, image_url: str, date: str):
+def save_post(slug: str, content_data: dict, image_url: str, image_alt: str, category: str, date: str):
+    """포스트 JSON 저장"""
     post = {
         "slug": slug,
-        "title": keyword["title"],
+        "title": content_data["title"],
         "description": content_data["description"],
-        "category": keyword["category"],
+        "category": category,
         "date": date,
         "readTime": f"{max(5, len(content_data['content']) // 300)}분",
         "keywords": content_data["keywords"],
         "image": image_url,
-        "imageAlt": keyword["image_alt"],
+        "imageAlt": image_alt,
         "content": content_data["content"],
         "faq": content_data["faq"],
-        "relatedPosts": get_related_posts(slug, keyword["category"]),
+        "relatedPosts": [],
     }
     filepath = os.path.join(POSTS_DIR, f"{slug}.json")
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(post, f, ensure_ascii=False, indent=2)
     print(f"  ✅ 포스트 저장: {slug}.json")
-
-# ── 기존 슬러그 확인 ──────────────────────────────
-def get_existing_slugs() -> set:
-    if not os.path.exists(POSTS_DIR):
-        return set()
-    return {f.replace(".json", "") for f in os.listdir(POSTS_DIR) if f.endswith(".json")}
 
 # ── 메인 ─────────────────────────────────────────
 def main():
@@ -149,35 +207,71 @@ def main():
     print("=" * 55)
 
     os.makedirs(POSTS_DIR, exist_ok=True)
+
+    # 1. 키워드 캐시 로드
+    cache = load_keywords_cache()
+    existing_slugs = get_existing_slugs()
+
+    # 2. 키워드 부족하면 구글에서 새로 수집
+    available = [k for k in cache["keywords"] if k not in cache["used"]]
+    if len(available) < POSTS_PER_RUN:
+        print("\n🔍 Gemini 구글 검색으로 새 키워드 수집 중...")
+        client_temp = setup_gemini()
+        seed = random.choice(SEED_KEYWORDS)
+        print(f"  시드: '{seed}'")
+        new_keywords = collect_keywords_with_search(client_temp, seed, cache["used"])
+        existing_set = set(cache["keywords"])
+        added = 0
+        for kw in new_keywords:
+            if kw not in existing_set:
+                cache["keywords"].append(kw)
+                existing_set.add(kw)
+                added += 1
+        save_keywords_cache(cache)
+        available = [k for k in cache["keywords"] if k not in cache["used"]]
+        print(f"  ✅ {added}개 추가 (총 {len(available)}개 가능)")
+        time.sleep(1)
+
+    # 3. 포스트 생성
     client = setup_gemini()
-    existing = get_existing_slugs()
-    pending = [kw for kw in KEYWORDS if kw["slug"] not in existing]
-
-    if not pending:
-        print("✅ 모든 포스트가 이미 생성되어 있습니다.")
-        return
-
     today = datetime.now()
     success = 0
 
-    for i, keyword in enumerate(pending[:POSTS_PER_RUN]):
+    for i, keyword in enumerate(available[:POSTS_PER_RUN]):
+        slug = keyword_to_slug(keyword)
+
+        # 이미 생성된 슬러그면 스킵
+        if slug in existing_slugs:
+            cache["used"].append(keyword)
+            continue
+
         date = (today - timedelta(days=i)).strftime("%Y-%m-%d")
-        print(f"\n📝 [{i+1}/{POSTS_PER_RUN}] {keyword['title'][:40]}...")
+        category = get_category(keyword)
+        image_query, image_alt = get_image_query(keyword)
+
+        print(f"\n📝 [{i+1}/{POSTS_PER_RUN}] {keyword[:40]}...")
+        print(f"  카테고리: {category}")
 
         print("  🤖 Gemini 본문 생성 중...")
-        content_data = generate_post_content(client, keyword)
+        content_data = generate_post_content(client, keyword, category)
         if not content_data:
             continue
 
         print("  📸 Pexels 이미지 URL 가져오는 중...")
-        image_url = fetch_pexels_image_url(keyword["image_query"])
+        image_url = fetch_pexels_image_url(image_query)
 
-        save_post(keyword["slug"], keyword, content_data, image_url, date)
+        save_post(slug, content_data, image_url, image_alt, category, date)
+
+        # 사용된 키워드 표시
+        cache["used"].append(keyword)
+        save_keywords_cache(cache)
+
         success += 1
         time.sleep(2)
 
     print("\n" + "=" * 55)
     print(f"  완료: {success}개 포스트 생성")
+    print(f"  남은 키워드: {len([k for k in cache['keywords'] if k not in cache['used']])}개")
     print("=" * 55)
     print("\n✨ 이제 'git add . && git commit -m \"feat: add posts\" && git push' 로 배포하세요!")
 
