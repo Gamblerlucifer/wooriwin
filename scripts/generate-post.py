@@ -136,6 +136,7 @@ def generate_post_content(client, keyword: str, category: str) -> dict:
 
 다음 JSON 형식으로만 응답하세요 (다른 텍스트 없이):
 {{
+  "slug": "키워드를 영문으로 번역한 슬러그 (예: evolution-baccarat-strategy-guide)",
   "title": "포스트 제목 (키워드 포함)",
   "description": "포스트 설명 (150자 이내)",
   "keywords": ["키워드1", "키워드2", "키워드3", "키워드4"],
@@ -238,13 +239,6 @@ def main():
     success = 0
 
     for i, keyword in enumerate(available[:POSTS_PER_RUN]):
-        slug = keyword_to_slug(keyword)
-
-        # 이미 생성된 슬러그면 스킵
-        if slug in existing_slugs:
-            cache["used"].append(keyword)
-            continue
-
         date = (today - timedelta(days=i)).strftime("%Y-%m-%d")
         category = get_category(keyword)
         image_query, image_alt = get_image_query(keyword)
@@ -255,6 +249,14 @@ def main():
         print("  🤖 Gemini 본문 생성 중...")
         content_data = generate_post_content(client, keyword, category)
         if not content_data:
+            continue
+
+        slug = content_data.get("slug", keyword_to_slug(keyword))
+
+        # 이미 생성된 슬러그면 스킵
+        if slug in existing_slugs:
+            cache["used"].append(keyword)
+            save_keywords_cache(cache)
             continue
 
         print("  📸 Pexels 이미지 URL 가져오는 중...")
