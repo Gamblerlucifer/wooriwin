@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         datePublished: `${post.date}T00:00:00+09:00`,
         dateModified: `${post.date}T00:00:00+09:00`,
         image: post.image.startsWith('http') ? post.image : `https://wooriwin.com${post.image}`,
-        author: { '@type': 'Organization', name: 'WOORIWIN' },
+        author: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
         publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
       },
       {
