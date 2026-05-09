@@ -9,16 +9,15 @@ OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "public", "images")
 # 다운로드할 이미지 목록
 # { 파일명: 검색 키워드 }
 IMAGES = {
-    "hero.jpg":       "luxury casino live dealer",
-    "baccarat.jpg":   "baccarat card game casino table",
-    "blackjack.jpg":  "blackjack casino table cards",
-    "roulette.jpg":   "roulette wheel casino",
-    "slots.jpg":      "casino slot machine colorful",
-    "live-casino.jpg":"live casino dealer studio",
-    "blog.jpg":       "casino strategy guide book",
-    "og-main.jpg":    "luxury casino interior elegant",
+    "hero.jpg":       "casino interior luxury chandelier",
+    "baccarat.jpg":   "baccarat playing cards hands",
+    "blackjack.jpg":  "blackjack cards ace king table",
+    "blog.jpg":       "strategy notebook pen planning",
+    "live-casino.jpg":"television studio broadcast camera",
+    "roulette.jpg":   "roulette wheel spinning close up",
+    "slots.jpg":      "slot machine colorful lights jackpot",
+    "og-main.jpg":    "casino chips gold luxury",
 }
-
 # 이미지 크기 설정 (large2x = 원본급 고해상도)
 IMAGE_SIZE = "large2x"
 # ────────────────────────────────────────────────
