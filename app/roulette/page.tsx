@@ -47,7 +47,7 @@ const jsonLdArticle = {
   inLanguage: 'ko-KR',
   datePublished: '2026-01-01',
   dateModified: '2026-05-10',
-  author: { '@type': 'Person', name: 'Gambler Lucifer', url: 'https://wooriwin.com/about' },
+  author: { '@type': 'Person', name: 'Lucifer', url: 'https://wooriwin.com/about' },
   publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
 }
 
@@ -118,7 +118,7 @@ const jsonLdFaq = {
 const variants: Variant[] = [
   { name: '라이트닝 룰렛', desc: '최대 500배 멀티플라이어. 에볼루션 룰렛 최고 인기 타이틀.', rtp: '최대 500x 배당' },
   { name: '이머시브 룰렛', desc: 'HD 멀티캠 슬로우모션. 시각적 몰입감 극대화.', rtp: 'RTP 97.30%' },
-  { name: '유럽식 룰렛', desc: '싱글 제로 37칸. 하우스 엣지 2.70%로 가장 유리.', rtp: 'RTP 97.30%' },
+  { name: '유럽식 룰렛', desc: '싱글 제로 37칸. 하우스 엣지 2.70%.', rtp: 'RTP 97.30%' },
   { name: '프렌치 룰렛', desc: '앙 프리종 룰 적용. 이븐머니 베팅 RTP 98.65%.', rtp: 'RTP 98.65%' },
   { name: '아메리칸 룰렛', desc: '더블 제로 38칸. 미국식 전통 룰렛 경험.', rtp: 'RTP 94.74%' },
   { name: '더블볼 룰렛', desc: '두 볼 동시 사용. 더블 스트레이트업 1,300:1 배당.', rtp: '최대 1,300:1' },
@@ -169,7 +169,7 @@ export default function RoulettePage() {
             {/* E-E-A-T: 저자 */}
             <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
               <span>작성자</span>
-              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Gambler Lucifer</Link>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Lucifer</Link>
               <span>·</span>
               <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
             </div>
@@ -192,7 +192,7 @@ export default function RoulettePage() {
                 룰렛을 처음 접하는 플레이어가 가장 많이 하는 실수는 <strong>'특정 번호가 연속으로 나오지 않으면 곧 나온다'</strong>고 믿는 것입니다. 이는 도박사의 오류(Gambler's Fallacy)입니다. 룰렛의 각 스핀은 완전히 독립적입니다. 이전 결과가 다음 결과에 영향을 주지 않습니다.
               </p>
               <p>
-                유럽 룰렛(싱글 제로)의 하우스 엣지는 <strong>2.70%</strong>, 아메리칸 룰렛(더블 제로)은 <strong>5.26%</strong>입니다. 처음부터 유럽 또는 프렌치 룰렛을 선택하는 것만으로도 장기적으로 수익률이 크게 달라집니다. 공정성 검증은{' '}
+                유럽 룰렛(싱글 제로)의 하우스 엣지는 <strong>2.70%</strong>, 아메리칸 룰렛(더블 제로)은 <strong>5.26%</strong>입니다. 유럽 또는 프렌치 룰렛은 아메리칸 룰렛 대비 하우스 엣지가 낮습니다. 공정성 검증은{' '}
                 <a href="https://ecogra.org" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:underline">eCOGRA</a> 등 국제 공인기관이 정기 감사를 통해 보장합니다.
               </p>
             </article>
@@ -220,7 +220,7 @@ export default function RoulettePage() {
                 </div>
               </div>
               <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400 mb-4">
-                "아메리칸 룰렛(RTP 94.74%)은 절대 피하세요. 더블 제로 하나가 하우스 엣지를 2배로 만듭니다. 같은 베팅을 해도 유럽 룰렛 대비 장기적으로 수익률 차이가 극명하게 벌어집니다."
+                ""아메리칸 룰렛(RTP 94.74%)은 더블 제로로 인해 하우스 엣지가 5.26%입니다. 유럽 룰렛(2.70%), 프렌치 룰렛(앙 프리종 적용 시 1.35%)과 수치 차이가 있습니다.""
               </blockquote>
               {/* YMYL: RTP 출처 */}
               <p className="text-xs text-gray-600 mb-4">

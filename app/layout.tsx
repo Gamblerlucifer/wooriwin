@@ -40,9 +40,10 @@ export const metadata: Metadata = {
 const relatedLinks = [
   { href: '/', label: '에볼루션카지노 메인' },
   { href: '/baccarat', label: '에볼루션카지노 바카라' },
+  { href: '/blackjack', label: '에볼루션카지노 블랙잭' },
   { href: '/roulette', label: '에볼루션카지노 룰렛' },
   { href: '/live-casino', label: '에볼루션 라이브카지노' },
-  { href: '/blog', label: '블랙잭 전략 블로그' },
+  { href: '/blog', label: '전략 블로그' },
 ]
 const jsonLd = {
   "@context": "https://schema.org",

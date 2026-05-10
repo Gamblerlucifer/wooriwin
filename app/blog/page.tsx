@@ -49,7 +49,7 @@ const jsonLd = {
   dateModified: '2026-05-10',
   author: {
     '@type': 'Organization',
-    name: 'Gambler Lucifer',
+    name: 'Lucifer',
     url: 'https://wooriwin.com/about',
   },
   publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
@@ -135,7 +135,7 @@ export default function BlogPage() {
                   에볼루션카지노에서 가장 인기 있는 게임인 <strong className="text-white">바카라</strong>는
                   뱅커·플레이어 베팅 승률부터 라이트닝 바카라 멀티플라이어 전략까지 다양한 콘텐츠로 다룹니다.
                   RTP 98.94%를 자랑하는 바카라에서 뱅커 베팅 승률 45.86%의 통계적 의미와
-                  실전에서 활용 가능한 마틴게일·파롤리·1-3-2-6 베팅 시스템을 비교 분석합니다.
+                  마틴게일·파롤리·1-3-2-6 베팅 시스템의 구조와 하우스 엣지를 비교 분석합니다.
                 </p>
                 <p>
                   특히 <strong className="text-white">라이트닝 바카라 vs 일반 바카라</strong>의 수학적 차이,
@@ -159,7 +159,7 @@ export default function BlogPage() {
                 <p>
                   <strong className="text-white">라이트닝 블랙잭</strong>의 무작위 멀티플라이어 메커니즘 이해부터
                   딜러 업카드별 최적 플레이 결정까지, 전문가가 실제 현장에서 검증한 전략을 공유합니다.
-                  기본 전략만 제대로 적용해도 하우스 엣지를 0.5% 이하로 낮출 수 있습니다.
+                  기본 전략을 따를 경우 하우스 엣지는 약 0.5% 수준입니다.
                 </p>
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function BlogPage() {
                   게임쇼 카테고리에서는 단순한 규칙 설명을 넘어
                   <strong className="text-white">실제 RTP 데이터</strong>와 보너스 트리거 확률,
                   각 세그먼트별 기대값 계산법을 제공합니다.
-                  어떤 베팅이 장기적으로 가장 유리한지 수학적으로 접근합니다.
+                  각 베팅의 장기 기대값을 수학적으로 분석합니다.
                 </p>
               </div>
             </div>

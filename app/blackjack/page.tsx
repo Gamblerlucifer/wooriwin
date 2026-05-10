@@ -56,7 +56,7 @@ const jsonLdArticle = {
   dateModified: '2026-05-10',
   author: {
     '@type': 'Organization',
-    name: 'Gambler Lucifer',
+    name: 'Lucifer',
     url: 'https://wooriwin.com/about',
   },
   publisher: {
@@ -80,7 +80,7 @@ const jsonLdFaq = {
       acceptedAnswer: {
         '@type': 'Answer',
         // ① SEO/YMYL: 출처 표기
-        text: '에볼루션 블랙잭의 RTP는 기본 전략 사용 시 약 99.28%입니다. 카지노 게임 중 가장 높은 환수율에 속하며, 기본 전략(Basic Strategy)을 완벽히 따를 경우 하우스 엣지를 0.5% 수준으로 낮출 수 있습니다. (출처: Evolution Gaming 공식 게임 수학 문서)',
+        text: '에볼루션 블랙잭의 RTP는 기본 전략 사용 시 약 99.28%입니다. 카지노 게임 중 가장 높은 환수율에 속하며, 기본 전략(Basic Strategy)을 따를 경우 하우스 엣지는 약 0.5% 수준입니다. (출처: Evolution Gaming 공식 게임 수학 문서)',
       },
     },
     {
@@ -104,7 +104,7 @@ const jsonLdFaq = {
       name: '블랙잭에서 언제 더블다운을 해야 하나요?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '기본 전략에 따르면, 플레이어 핸드가 11점일 때는 딜러 업카드에 상관없이 더블다운이 유리합니다. 10점 핸드는 딜러가 9 이하일 때, 9점 핸드는 딜러가 3~6일 때 더블다운을 권장합니다. 소프트 핸드(A 포함)는 별도 규칙이 적용됩니다.',
+        text: '기본 전략에 따르면, 플레이어 핸드가 11점일 때는 딜러 업카드에 상관없이 더블다운 확률이 높습니다. 10점 핸드는 딜러가 9 이하일 때, 9점 핸드는 딜러가 3~6일 때 더블다운을 고려할 수 있습니다. 소프트 핸드(A 포함)는 별도 규칙이 적용됩니다.',
       },
     },
     {
@@ -192,7 +192,7 @@ export default function BlackjackPage() {
             {/* E-E-A-T: 저자 */}
             <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
               <span>작성자</span>
-              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Gambler Lucifer</Link>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Lucifer</Link>
               <span>·</span>
               <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
             </div>
@@ -200,7 +200,7 @@ export default function BlackjackPage() {
               에볼루션 블랙잭: <span className="text-yellow-400 text-xl md:text-2xl">0.5%의 하우스 엣지에 도전하는 기술</span>
             </h2>
             <p className="text-xl text-gray-400 leading-relaxed">
-              단순한 운에 맡기는 베팅은 이제 그만하십시오. 에볼루션 블랙잭은 수학적 근거를 바탕으로 플레이어가 딜러를 상대로 우위를 점할 수 있는 유일한 영역입니다. 99% 이상의 RTP를 현실로 만드는 마스터 가이드를 공개합니다.
+              에볼루션 블랙잭은 수학적 확률 구조를 이해하고 게임에 접근할 수 있는 라이브 카지노 타이틀입니다.
             </p>
           </header>
 
@@ -292,7 +292,7 @@ export default function BlackjackPage() {
                 <div className="bg-black/40 p-6 rounded-2xl border border-gray-700 hover:border-yellow-400 transition-colors">
                   <h4 className="text-white font-bold text-lg mb-3">스플릿(Split) 전략</h4>
                   <p className="text-sm text-gray-400">
-                    수학적으로 <strong>AA와 88은 무조건 스플릿</strong>해야 합니다. 반면, 10-10(20점)은 이미 최상위 승률을 가진 핸드이므로 절대 나누지 않는 것이 정석입니다. 에볼루션은 스플릿 후 리스플릿 기능을 통해 전략적 유연성을 더해줍니다.
+                    기본 전략상 <strong>AA와 88은 스플릿</strong>선택지가 높습니다. 반면, 10-10(20점)은 일반적으로 스플릿하지 않는 것으로 안내됩니다. 에볼루션은 스플릿 후 리스플릿 기능을 통해 전략적 유연성을 더해줍니다.
                   </p>
                 </div>
               </div>

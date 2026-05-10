@@ -27,8 +27,6 @@ export const metadata: Metadata = {
     description:
       '크레이지타임·모노폴리 라이브 등 에볼루션 슬롯·게임쇼 완벽 정리. NetEnt·Red Tiger 슬롯까지 총망라.',
     url: 'https://wooriwin.com/slots',
-    siteName: 'WOORIWIN',
-    locale: 'ko_KR',
     type: 'article',
     images: [{ url: 'https://wooriwin.com/images/slots.jpg', width: 1200, height: 630 }],
   },
@@ -50,7 +48,7 @@ const jsonLdArticle = {
   inLanguage: 'ko-KR',
   datePublished: '2026-01-01',
   dateModified: '2026-05-10',
-  author: { '@type': 'Person', name: 'Gambler Lucifer', url: 'https://wooriwin.com/about' },
+  author: { '@type': 'Person', name: 'Lucifer', url: 'https://wooriwin.com/about' },
   publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
 }
 
@@ -180,7 +178,7 @@ export default function SlotsPage() {
             {/* E-E-A-T: 저자 */}
             <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
               <span>작성자</span>
-              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Gambler Lucifer</Link>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Lucifer</Link>
               <span>·</span>
               <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
             </div>
@@ -188,7 +186,7 @@ export default function SlotsPage() {
               에볼루션 슬롯: <span className="text-yellow-400 text-xl md:text-2xl">게임쇼와 슬롯의 경계를 허물다</span>
             </h2>
             <p className="text-xl text-gray-400 leading-relaxed mb-6">
-              단순히 릴을 돌리는 슬롯의 시대는 끝났습니다. 에볼루션은 라이브 딜러·대형 세트장·멀티플라이어를 결합한 완전히 새로운 카테고리를 창조했습니다. 크레이지타임 한 번의 보너스가 인생을 바꿀 수 있습니다.
+              단순히 릴을 돌리는 슬롯의 시대는 끝났습니다. 에볼루션은 라이브 딜러·대형 세트장·멀티플라이어를 결합한 완전히 새로운 카테고리를 창조했습니다. 크레이지타임은 이론상 최대 20,000배 이상의 보너스 당첨이 가능한 게임입니다.
             </p>
           </header>
 
@@ -203,7 +201,7 @@ export default function SlotsPage() {
                 에볼루션 슬롯을 처음 접하는 플레이어가 가장 많이 혼동하는 것은 <strong>라이브 게임쇼와 RNG 슬롯의 차이</strong>입니다. 라이브 게임쇼는 실제 딜러와 대형 세트장에서 실시간으로 진행되는 반면, RNG 슬롯은 난수생성기 기반의 전통적인 슬롯 머신입니다. 에볼루션은 NetEnt·Red Tiger·Nolimit City 인수로 두 세계를 모두 장악했습니다.
               </p>
               <p>
-                선택 기준은 명확합니다. <strong>엔터테인먼트와 대형 당첨</strong>을 원한다면 라이브 게임쇼, <strong>안정적인 RTP와 다양한 테마</strong>를 원한다면 NetEnt·Red Tiger 슬롯이 적합합니다. 모든 게임의 공정성은{' '}
+                라이브 게임쇼는 엔터테인먼트 요소와 높은 배당 변동성을 제공하며, NetEnt·Red Tiger 슬롯은 안정적인 RTP와 다양한 테마를 특징으로 합니다. 모든 게임의 공정성은{' '}
                 <a href="https://ecogra.org" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:underline">eCOGRA</a> 등 국제 공인기관의 정기 감사를 통해 검증됩니다.
               </p>
             </article>

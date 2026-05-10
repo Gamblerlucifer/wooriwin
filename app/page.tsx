@@ -73,7 +73,7 @@ const jsonLdArticle = {
   dateModified: '2026-05-10',
   author: {
     '@type': 'Organization',
-    name: 'Gambler Lucifer',
+    name: 'Lucifer',
     url: 'https://wooriwin.com/about',
   },
   publisher: {
@@ -167,7 +167,7 @@ const featuredGame: Game = {
 const blogCard: Game = {
   name: '블로그', href: '/blog', img: '/images/blog.jpg',
   alt: '에볼루션카지노 전략 가이드 블로그', keyword: '에볼루션카지노 전략', rtp: '',
-  desc: '에볼루션카지노 전략, 규칙, 팁을 전문가가 분석한 최신 가이드입니다. 초보자부터 전략적 베팅을 원하는 고수까지 모두에게 유용한 바카라·블랙잭·룰렛 공략법을 상세히 안내합니다.',
+  desc: '에볼루션카지노 전략, 규칙, 팁을 전문가가 분석한 최신 가이드입니다. 초보자부터 심층 분석을 원하는 고수까지 모두에게 유용한 바카라·블랙잭·룰렛 공략법을 상세히 안내합니다.',
 }
 
 const seoBlocks: SeoBlock[] = [

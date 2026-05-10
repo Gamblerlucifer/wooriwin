@@ -48,7 +48,7 @@ const jsonLdArticle = {
   inLanguage: 'ko-KR',
   datePublished: '2026-01-01',
   dateModified: '2026-05-10',
-  author: { '@type': 'Person', name: 'Gambler Lucifer', url: 'https://wooriwin.com/about' },
+  author: { '@type': 'Person', name: 'Lucifer', url: 'https://wooriwin.com/about' },
   publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
 }
 
@@ -69,7 +69,7 @@ const jsonLdFaq = {
       name: '에볼루션 라이브카지노 가입방법은?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '에볼루션은 B2B 소프트웨어 제공사로 직접 가입이 불가합니다. 에볼루션 라이선스를 보유한 합법적인 온라인 카지노(WOORIWIN 추천 카지노)에 회원가입 후 입금하면 에볼루션 라이브 로비에 입장할 수 있습니다. 가입은 보통 5분 이내에 완료됩니다.',
+        text: '에볼루션은 B2B 소프트웨어 제공사로 직접 가입이 불가합니다. 에볼루션 라이선스를 보유한 합법적인 온라인 카지노에 회원가입 후 입금하면 에볼루션 라이브 로비에 입장할 수 있습니다. 가입은 보통 5분 이내에 완료됩니다.',
       },
     },
     {
@@ -178,7 +178,7 @@ export default function LiveCasinoPage() {
             {/* E-E-A-T: 저자 */}
             <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
               <span>작성자</span>
-              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Gambler Lucifer</Link>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Lucifer</Link>
               <span>·</span>
               <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
             </div>
@@ -229,7 +229,7 @@ export default function LiveCasinoPage() {
                 </div>
               </div>
               <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400 mb-4">
-                "게임 선택이 곧 전략입니다. 장기적인 수익을 추구한다면 RTP가 높은 바카라·블랙잭이 유리하고, 단기 고배당을 노린다면 라이트닝 룰렛·크레이지타임이 적합합니다."
+                ""RTP 수치는 게임별 하우스 엣지를 이해하는 지표입니다. 바카라·블랙잭은 상대적으로 낮은 하우스 엣지를, 라이트닝 룰렛·크레이지타임은 높은 배당 변동성을 가집니다.""
               </blockquote>
               {/* YMYL: RTP 출처 */}
               <p className="text-xs text-gray-600 mb-4">

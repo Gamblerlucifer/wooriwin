@@ -51,7 +51,7 @@ const jsonLdArticle = {
   dateModified: '2026-05-10',
   author: {
     '@type': 'Organization',
-    name: 'Gambler Lucifer',
+    name: 'Lucifer',
     url: 'https://wooriwin.com/about',
   },
   publisher: {
@@ -195,7 +195,7 @@ export default function BaccaratPage() {
             {/* E-E-A-T: 저자 */}
             <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
               <span>작성자</span>
-              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Gambler Lucifer</Link>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Lucifer</Link>
               <span>·</span>
               <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
             </div>
@@ -274,7 +274,6 @@ export default function BaccaratPage() {
             {/* 섹션 3: 3대 변형 게임 */}
             <article className="space-y-8">
               <h3 className="text-2xl font-bold text-white mb-6">시대를 앞서가는 3대 변형 게임</h3>
-
               <div className="space-y-6">
                 <div className="group bg-gray-900/50 p-6 rounded-lg hover:bg-gray-800 transition">
                   <h4 className="text-yellow-400 font-bold text-xl mb-2">01. 라이트닝 바카라 (Lightning Baccarat)</h4>
@@ -283,7 +282,7 @@ export default function BaccaratPage() {
                     {/* ② 콘텐츠 정확성: FAQ와 수치 통일 */}
                     매 라운드 번개와 함께 선정되는 1~5장의 라이트닝 카드는 카드당 2x~8x 배율을 제공하며,
                     배율이 중첩 적용되어 최대 512배에 달하는 폭발적인 배당을 제공합니다.
-                    이는 단순한 도박이 아닌, 하나의 게임 쇼에 참여하는 듯한 경험을 선사합니다.
+                    하나의 게임 쇼에 참여하는 듯한 몰입감을 제공합니다.
                   </p>
                 </div>
 
@@ -292,7 +291,7 @@ export default function BaccaratPage() {
                   <p>
                     효율성을 중시하는 한국인 플레이어에게 최적화되었습니다. 일반 게임이 48초 내외라면, 스피드 모드는 단 27초 만에
                     한 라운드를 종료합니다. 빠른 호흡 속에서도 에볼루션의 기술력은 끊김 없는 스트리밍을 보장하며,
-                    짧은 시간에 최적의 승률 데이터를 뽑아내고자 하는 전문가들에게 필수 코스입니다.
+                    짧은 시간에 게임 데이터를 확인하고자 하는 플레이어들에게 적합한 변형 게임입니다.
                   </p>
                 </div>
 
@@ -303,7 +302,7 @@ export default function BaccaratPage() {
                     뱅커 승리 시 5%의 수수료가 아쉬웠던 플레이어들을 위한 모드입니다.
                     뱅커가 6점으로 이기는 경우(Super 6)에만 배당이 0.5:1로 줄어들며,
                     그 외 모든 뱅커 승리 시 1:1 배당을 그대로 가져갑니다.
-                    직관적인 자금 계산과 빠른 베팅 회전율을 선호하는 이들에게 강력 추천합니다.
+                    직관적인 자금 계산을 선호하는 플레이어에게 적합한 방식입니다.
                   </p>
                 </div>
               </div>
