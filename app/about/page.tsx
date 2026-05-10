@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'WOORIWIN 소개 | About',
-  robots: { index: false, follow: false },
+robots: { index: true, follow: true },
 }
 
 const values = [
