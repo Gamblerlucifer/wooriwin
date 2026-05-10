@@ -68,9 +68,10 @@ const jsonLdArticle = {
   headline: '에볼루션카지노 완벽 가이드 2026',
   description: '에볼루션카지노 라이브 게임 전략 및 플레이 가이드를 제공하는 건전한 게임 문화 정보형 콘텐츠 플랫폼',
   url: 'https://wooriwin.com',
+  image: 'https://wooriwin.com/images/og-main.jpg',
   inLanguage: 'ko-KR',
-  datePublished: '2026-05-01',
-  dateModified: '2026-05-10',
+  datePublished: '2026-05-01T09:00:00+09:00',
+  dateModified: '2026-05-10T09:00:00+09:00',
   author: {
     '@type': 'Organization',
     name: 'Lucifer',
