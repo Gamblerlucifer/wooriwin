@@ -747,7 +747,7 @@ def fetch_pexels_image(queries: list) -> str:
     return fallback
 
 
-def save_post(slug, content_data, image_url, category, date, related_posts):
+def save_post(slug, content_data, image_url, category, date):
     """E-E-A-T 책임감 있는 게임 문구 하드코딩 후 JSON 저장."""
     content_with_eeat = content_data["content"] + RESPONSIBLE_GAMBLING_TEXT
 
@@ -763,7 +763,6 @@ def save_post(slug, content_data, image_url, category, date, related_posts):
         "imageAlt": content_data.get("imageAlt", content_data["title"]),
         "content": content_with_eeat,
         "faq": content_data.get("faq", []),
-        "relatedPosts": related_posts,
     }
     os.makedirs(POSTS_DIR, exist_ok=True)
     filepath = os.path.join(POSTS_DIR, f"{slug}.json")
@@ -849,12 +848,9 @@ def main():
         print("  📸 Pexels 이미지 검색 중...")
         image_url = fetch_pexels_image(image_queries)
 
-        # Step 4 — 가중치 적용된 내부 링크
-        related_posts = get_weighted_related_posts(category)
-
-        # Step 5 — 저장ㄹ
-        content_data["slug"] = slug  # ensure_unique_slug 결과 반영
-        save_post(slug, content_data, image_url, category, date, related_posts)
+        # Step 4 — 저장
+        content_data["slug"] = slug
+        save_post(slug, content_data, image_url, category, date)
 
         used_ids.append(topic_data["id"])
         save_used_topics(used_ids)
