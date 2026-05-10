@@ -475,16 +475,28 @@ def get_available_topics(used_ids: list) -> list:
 
 
 def get_weighted_related_posts(category: str) -> list:
-    """핵심 페이지에 우선순위를 둔 내부 링크 3개 반환."""
-    high_value_slugs = ["baccarat", "blackjack", "live-casino"]
-    cat_map = {
-        "바카라": "baccarat", "블랙잭": "blackjack",
-        "룰렛": "roulette", "슬롯/게임쇼": "slots", "가이드": "live-casino",
-    }
-    current_cat_slug = cat_map.get(category, "")
-    candidates = [l for l in INTERNAL_LINKS if l["slug"] != current_cat_slug]
-    candidates.sort(key=lambda x: x["slug"] in high_value_slugs, reverse=True)
-    return random.sample(candidates[:4], min(3, len(candidates)))
+    """같은 카테고리 포스트 우선, 없으면 최신 포스트 3개 반환."""
+    if not os.path.exists(POSTS_DIR):
+        return []
+    
+    all_files = [f for f in os.listdir(POSTS_DIR) if f.endswith(".json")]
+    posts = []
+    for f in all_files:
+        try:
+            with open(os.path.join(POSTS_DIR, f), "r", encoding="utf-8") as fp:
+                p = json.load(fp)
+                posts.append({"slug": p["slug"], "title": p["title"], "category": p.get("category", ""), "date": p.get("date", "")})
+        except:
+            continue
+
+    same_cat = [p for p in posts if p["category"] == category]
+    other = [p for p in posts if p["category"] != category]
+
+    same_cat.sort(key=lambda x: x["date"], reverse=True)
+    other.sort(key=lambda x: x["date"], reverse=True)
+
+    candidates = same_cat + other
+    return [{"slug": p["slug"], "title": p["title"]} for p in candidates[:3]]
 
 
 # ─────────────────────────────────────────────────
