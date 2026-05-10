@@ -48,8 +48,20 @@ const jsonLdArticle = {
   inLanguage: 'ko-KR',
   datePublished: '2026-05-01T09:00:00+09:00',
   dateModified: '2026-05-10T09:00:00+09:00',
-  author: { '@type': 'Person', name: 'Lucifer', url: 'https://wooriwin.com/about' },
-  publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
+  author: {
+    '@type': 'Organization',
+    name: 'WOORIWIN 팀',
+    url: 'https://wooriwin.com/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'WOORIWIN',
+    url: 'https://wooriwin.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://wooriwin.com/images/logo.png',
+    },
+  },
 }
 
 const jsonLdFaq = {

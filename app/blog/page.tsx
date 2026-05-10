@@ -50,10 +50,18 @@ const jsonLd = {
   dateModified: '2026-05-10T09:00:00+09:00',
   author: {
     '@type': 'Organization',
-    name: 'Lucifer',
+    name: 'WOORIWIN 팀',
     url: 'https://wooriwin.com/about',
   },
-  publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'WOORIWIN',
+    url: 'https://wooriwin.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://wooriwin.com/images/logo.png',
+    },
+  },
 }
 
 

@@ -97,7 +97,7 @@ export default async function BlogPost({
     image: finalImageUrl,
     author: {
       '@type': 'Organization',
-      name: 'Lucifer',
+      name: 'WOORIWIN 팀',
       url: 'https://wooriwin.com/about',
     },
     publisher: {

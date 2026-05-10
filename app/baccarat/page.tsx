@@ -52,7 +52,7 @@ const jsonLdArticle = {
   dateModified: '2026-05-10T09:00:00+09:00',
   author: {
     '@type': 'Organization',
-    name: 'Lucifer',
+    name: 'WOORIWIN 팀',
     url: 'https://wooriwin.com/about',
   },
   publisher: {
