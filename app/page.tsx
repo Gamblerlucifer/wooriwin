@@ -350,7 +350,7 @@ export default function Home() {
               {[...games, featuredGame, blogCard].map((game) => (
                 <Link key={game.href} href={game.href} className="group block bg-[#111118] border border-gray-800 rounded-xl overflow-hidden hover:border-[#C9A84C] transition-all">
                   <div className="relative h-48 overflow-hidden">
-                    <Image src={game.img} alt={game.alt} fill className="object-cover opacity-70 group-hover:scale-105 transition-transform" />
+                    <Image src={game.img} alt={game.alt} fill className="object-cover opacity-70 group-hover:scale-105 transition-transform" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                   </div>
                   <div className="p-6">
                     <h3 className="font-bold mb-3" style={{ color: '#F5F0E8' }}>{game.keyword}</h3>
