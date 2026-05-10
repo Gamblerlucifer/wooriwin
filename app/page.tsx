@@ -360,7 +360,7 @@ export default function Home() {
         {/* 4. SEO 상세 내용 섹션 */}
         <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)' }}>
           <div className="max-w-5xl mx-auto px-6 py-28">
-            <h2 className="font-bold mb-16" style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontFamily: 'Georgia, serif' }}>
+            <h2 className="font-bold mb-16 text-center" style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontFamily: 'Georgia, serif' }}>
               에볼루션카지노 <span style={{ color: '#C9A84C' }}>게임별 심층 분석</span>
             </h2>
             <div className="flex flex-col gap-px bg-gray-800">
