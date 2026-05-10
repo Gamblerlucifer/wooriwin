@@ -26,6 +26,9 @@ function getImageUrl(image: string) {
   return image.startsWith('http') ? image : `https://wooriwin.com${image}`
 }
 
+// ✅ ISR: 1시간마다 자동 재생성 (새 포스트 추가/수정 시 재배포 없이 반영)
+export const revalidate = 3600
+
 export async function generateMetadata({
   params,
 }: {
@@ -97,7 +100,7 @@ export default async function BlogPost({
     image: finalImageUrl,
     author: {
       '@type': 'Organization',
-      name: 'WOORIWIN 팀',
+      name: 'WOORIWIN 편집팀',
       url: 'https://wooriwin.com/about',
     },
     publisher: {
@@ -153,7 +156,10 @@ export default async function BlogPost({
         <div className="max-w-6xl mx-auto px-4 py-12 flex gap-10">
           <article className="flex-1 min-w-0">
             {/* ① SEO: 정보 최신성 고지 */}
-            <p className="text-xs text-gray-500 mb-8 text-right">본 정보는 2026년 5월 기준이며, 실제 게임 수치는 운영사 정책에 따라 변동될 수 있습니다.</p>
+            <p className="text-xs text-gray-500 mb-8 text-right">
+              본 정보는 2026년 5월 기준이며, 실제 게임 수치는 운영사 정책에 따라 변동될 수 있습니다.
+            </p>
+
             <div className="text-gray-300 space-y-5 leading-relaxed text-base md:text-lg">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -195,6 +201,30 @@ export default async function BlogPost({
                 </div>
               </section>
             )}
+
+            {/* ✅ 저자 프로필 (E-E-A-T: 작성 주체 신뢰 신호) */}
+            <div className="mt-16 pt-8 border-t border-gray-700">
+              <div className="flex items-center gap-4 bg-gray-800/50 rounded-xl p-5 border border-gray-700">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-xl font-bold"
+                  style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.3)', color: '#C9A84C' }}>
+                  W
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-bold text-white text-sm">WOORIWIN 편집팀</p>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공
+                  </p>
+                </div>
+                <Link
+                  href="/about"
+                  className="shrink-0 text-xs px-3 py-1.5 rounded-lg transition hover:text-yellow-300"
+                  style={{ border: '1px solid rgba(201,168,76,0.3)', color: '#C9A84C' }}
+                >
+                  소개 보기
+                </Link>
+              </div>
+            </div>
+
           </article>
 
           {/* Sidebar */}
