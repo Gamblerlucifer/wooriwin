@@ -218,7 +218,7 @@ export default function Home() {
         {/* 1. HERO 섹션 (제휴 안내 복구) */}
         <section className="relative flex flex-col items-center justify-center min-h-screen text-center px-6 py-24 overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <Image src="/images/hero.jpg" alt="에볼루션카지노 라이브 딜러" fill className="object-cover" style={{ opacity: 0.18 }} priority sizes="100vw" />
+            <Image src="/images/hero.jpg" alt="에볼루션카지노 라이브 딜러" fill className="object-cover" style={{ opacity: 0.18 }} priority fetchPriority="high" sizes="100vw" />
           </div>
           
           <div className="relative z-10 max-w-4xl mx-auto">
