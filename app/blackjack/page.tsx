@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 // ─── JSON-LD (① SEO 개선: author/datePublished/dateModified 추가, 스키마 분리) ─
 const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'TechArticle',
   headline: '에볼루션카지노 블랙잭 완벽 가이드 2026',
   description: '에볼루션카지노 블랙잭 규칙, 전략, 변형 게임 완벽 정리',
   url: 'https://wooriwin.com/blackjack',
@@ -69,6 +69,15 @@ const jsonLdArticle = {
       url: 'https://wooriwin.com/images/logo.png',
     },
   },
+}
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '블랙잭', item: 'https://wooriwin.com/blackjack' },
+  ],
 }
 
 const jsonLdFaq = {
@@ -160,6 +169,7 @@ export default function BlackjackPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         <section className="relative flex flex-col items-center justify-center min-h-[55vh] text-center px-4 py-20 overflow-hidden">
@@ -254,7 +264,7 @@ export default function BlackjackPage() {
                   <div className="bg-black/40 p-5 rounded-xl text-center border border-gray-600">
                     <p className="text-gray-400 text-sm mb-2">애니 페어 (Any Pair)</p>
                     <p className="text-3xl font-black text-red-400">95.90%</p>
-                    <p className="text-xs mt-2 text-red-500">하우스 엣지 4.10</p>
+                    <p className="text-xs mt-2 text-red-500">하우스 엣지 4.10%</p>
                   </div>
               </div>
               <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400 mb-4">
@@ -270,7 +280,7 @@ export default function BlackjackPage() {
               </p>
               {/* YMYL: 손실 위험 경고 */}
               <div className="bg-red-950/40 border border-red-800/50 rounded-lg px-5 py-3 text-xs text-red-300">
-                ⚠️ <strong>손실 위험 안내:</strong> 모든 카지노 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. RTP가 높은 게임도 단기 손실을 보장하지 않습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
+                <span aria-hidden="true">⚠️</span> <strong>손실 위험 안내:</strong> 모든 카지노 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. RTP가 높은 게임도 단기 손실을 보장하지 않습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
               </div>
             </article>
 
@@ -296,6 +306,14 @@ export default function BlackjackPage() {
                     기본 전략상 <strong>AA와 88은 스플릿</strong>선택지가 높습니다. 반면, 10-10(20점)은 일반적으로 스플릿하지 않는 것으로 안내됩니다. 에볼루션은 스플릿 후 리스플릿 기능을 통해 전략적 유연성을 더해줍니다.
                   </p>
                 </div>
+              </div>
+
+              {/* YMYL: 독립 시행 경고 */}
+              <div className="rounded-xl p-5 mt-6" style={{ background: 'rgba(120,20,20,0.2)', border: '1px solid rgba(180,30,30,0.3)' }}>
+                <p className="text-sm" style={{ color: '#fca5a5' }}>
+                  기본 전략은 장기적으로 하우스 엣지를 최소화하지만, 단기 손실을 완전히 방지하지는 않습니다.
+                  각 핸드는 독립 시행이며, 이전 결과는 다음 결과에 영향을 주지 않습니다.
+                </p>
               </div>
             </article>
 

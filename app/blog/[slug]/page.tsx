@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { readFileSync, readdirSync, existsSync } from 'fs'
 import { join } from 'path'
 import ReactMarkdown from 'react-markdown'
@@ -19,6 +20,20 @@ function getAllSlugs(): string[] {
   return readdirSync(POSTS_DIR)
     .filter((f) => f.endsWith('.json'))
     .map((f) => f.replace('.json', ''))
+}
+
+function getRelatedPosts(currentSlug: string, currentCategory: string, count = 3) {
+  const slugs = getAllSlugs().filter((s) => s !== currentSlug)
+  const posts = slugs.map((s) => {
+    const p = getPost(s)
+    return { slug: s, title: p?.title || '', date: p?.date || '', category: p?.category || '' }
+  })
+  // 동일 카테고리 우선, 그 다음 날짜순
+  const sameCategory = posts.filter((p) => p.category === currentCategory)
+    .sort((a, b) => b.date.localeCompare(a.date))
+  const others = posts.filter((p) => p.category !== currentCategory)
+    .sort((a, b) => b.date.localeCompare(a.date))
+  return [...sameCategory, ...others].slice(0, count)
 }
 
 function getImageUrl(image: string) {
@@ -73,20 +88,10 @@ export default async function BlogPost({
   const { slug } = await params
   const post = getPost(slug)
 
-  if (!post) {
-    return (
-      <main className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">Post not found</h1>
-          <Link href="/blog" className="text-yellow-400 hover:text-yellow-300">
-            블로그로 이동
-          </Link>
-        </div>
-      </main>
-    )
-  }
+  if (!post) notFound()
 
   const finalImageUrl = getImageUrl(post.image)
+  const relatedPosts = getRelatedPosts(slug, post.category)
 
   const jsonLdArticle = {
     '@context': 'https://schema.org',
@@ -96,11 +101,11 @@ export default async function BlogPost({
     url: `https://wooriwin.com/blog/${slug}`,
     inLanguage: 'ko-KR',
     datePublished: `${post.date}T09:00:00+09:00`,
-    dateModified: `${post.date}T09:00:00+09:00`,
+    dateModified: `${post.updatedAt || post.date}T09:00:00+09:00`,
     image: finalImageUrl,
     author: {
-      '@type': 'Organization',
-      name: 'WOORIWIN 편집팀',
+      '@type': post.author ? 'Person' : 'Organization',
+      name: post.author || 'WOORIWIN 편집팀',
       url: 'https://wooriwin.com/about',
     },
     publisher: {
@@ -121,11 +126,22 @@ export default async function BlogPost({
     })),
   }
 
+  const jsonLdBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+      { '@type': 'ListItem', position: 2, name: '블로그', item: 'https://wooriwin.com/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://wooriwin.com/blog/${slug}` },
+    ],
+  }
+
   return (
     <>
-      {/* ① SEO: Article·FAQPage 스키마 분리 */}
+      {/* ① SEO: Article·FAQPage·BreadcrumbList 스키마 분리 */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -207,10 +223,10 @@ export default async function BlogPost({
               <div className="flex items-center gap-4 bg-gray-800/50 rounded-xl p-5 border border-gray-700">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-xl font-bold"
                   style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.3)', color: '#C9A84C' }}>
-                  W
+                  {post.author ? post.author[0].toUpperCase() : 'W'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-bold text-white text-sm">WOORIWIN 편집팀</p>
+                  <p className="font-bold text-white text-sm">{post.author || 'WOORIWIN 편집팀'}</p>
                   <p className="text-xs text-gray-400 mt-0.5">
                     에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공
                   </p>
@@ -230,11 +246,11 @@ export default async function BlogPost({
           {/* Sidebar */}
           <aside className="w-full lg:w-64 shrink-0 mt-12 lg:mt-0">
             <div className="sticky top-8 space-y-6">
-              {(post.relatedPosts || []).length > 0 && (
+              {relatedPosts.length > 0 && (
                 <div className="bg-gray-800 rounded-xl p-5 border border-gray-700">
                   <h3 className="text-yellow-400 font-bold mb-4">관련 포스트</h3>
                   <ul className="space-y-3">
-                    {post.relatedPosts.map((r: { slug: string; title: string }) => (
+                    {relatedPosts.map((r: { slug: string; title: string }) => (
                       <li key={r.slug}>
                         <Link href={`/blog/${r.slug}`} className="text-gray-400 text-sm hover:text-yellow-400 transition leading-snug block">
                           → {r.title}

@@ -43,6 +43,7 @@ const jsonLdArticle = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: '에볼루션카지노 룰렛 완벽 가이드 2026',
+  description: '에볼루션카지노 룰렛 규칙·전략·변형 게임 완벽 정리. 라이트닝 룰렛, 이머시브 룰렛, 유럽식·미국식 룰렛 RTP 비교 분석.',
   url: 'https://wooriwin.com/roulette',
   image: 'https://wooriwin.com/images/roulette.jpg',
   inLanguage: 'ko-KR',
@@ -127,6 +128,16 @@ const jsonLdFaq = {
   ] satisfies FAQItem[],
 }
 
+// ─── BreadcrumbList JSON-LD ──────────────────────────────────
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '룰렛', item: 'https://wooriwin.com/roulette' },
+  ],
+}
+
 // ─── 데이터 ──────────────────────────────────────────────────
 const variants: Variant[] = [
   { name: '라이트닝 룰렛', desc: '최대 500배 멀티플라이어. 에볼루션 룰렛 최고 인기 타이틀.', rtp: '최대 500x 배당' },
@@ -145,6 +156,7 @@ export default function RoulettePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -233,7 +245,7 @@ export default function RoulettePage() {
                 </div>
               </div>
               <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400 mb-4">
-                ""아메리칸 룰렛(RTP 94.74%)은 더블 제로로 인해 하우스 엣지가 5.26%입니다. 유럽 룰렛(2.70%), 프렌치 룰렛(앙 프리종 적용 시 1.35%)과 수치 차이가 있습니다.""
+                "아메리칸 룰렛(RTP 94.74%)은 더블 제로로 인해 하우스 엣지가 5.26%입니다. 유럽 룰렛(2.70%), 프렌치 룰렛(앙 프리종 적용 시 1.35%)과 수치 차이가 있습니다."
               </blockquote>
               {/* YMYL: RTP 출처 */}
               <p className="text-xs text-gray-600 mb-4">
@@ -245,7 +257,7 @@ export default function RoulettePage() {
               </p>
               {/* YMYL: 손실 위험 경고 */}
               <div className="bg-red-950/40 border border-red-800/50 rounded-lg px-5 py-3 text-xs text-red-300">
-                ⚠️ <strong>손실 위험 안내:</strong> 모든 룰렛 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. 라이트닝 룰렛의 멀티플라이어는 기대값을 높이지 않으며 변동성만 증가시킵니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
+                <span aria-hidden="true">⚠️</span> <strong>손실 위험 안내:</strong> 모든 룰렛 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. 라이트닝 룰렛의 멀티플라이어는 기대값을 높이지 않으며 변동성만 증가시킵니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
               </div>
             </article>
 
@@ -300,10 +312,10 @@ export default function RoulettePage() {
               <div className="bg-black/50 p-6 rounded-xl border border-gray-800">
                 <h4 className="text-white font-bold mb-4">룰렛 플레이어 체크리스트</h4>
                 <ul className="grid md:grid-cols-2 gap-3 text-xs md:text-sm">
-                  <li className="flex items-center text-gray-400">✔ 아메리칸 룰렛(더블 제로) 대신 유럽·프렌치 룰렛 선택</li>
-                  <li className="flex items-center text-gray-400">✔ 이븐머니 베팅(레드/블랙)의 RTP가 가장 높음</li>
-                  <li className="flex items-center text-gray-400">✔ 마틴게일 시스템: 베팅 한도와 뱅크롤 반드시 확인</li>
-                  <li className="flex items-center text-gray-400">✔ 라이트닝 룰렛 스트레이트업은 기본 배당 30:1 유의</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;아메리칸 룰렛(더블 제로) 대신 유럽·프렌치 룰렛 선택</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;이븐머니 베팅(레드/블랙)의 RTP가 가장 높음</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;마틴게일 시스템: 베팅 한도와 뱅크롤 반드시 확인</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;라이트닝 룰렛 스트레이트업은 기본 배당 30:1 유의</li>
                 </ul>
               </div>
             </article>

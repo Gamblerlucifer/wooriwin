@@ -19,7 +19,7 @@ type GameShow = {
 export const metadata: Metadata = {
   title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
   description:
-    '에볼루션카지노 슬롯 게임 총정리. 크레이지타임, 모노폴리 라이브, 딜 오어 노딜 등 게임쇼 완벽 정리. NetEnt·Red Tiger 슬롯까지 에볼루션 슬롯 완전 공략. 초보자도 쉽게 이해하는 가이드.',
+    '에볼루션카지노 슬롯·게임쇼 완벽 가이드. NetEnt·Red Tiger 슬롯 RTP 비교부터 크레이지타임·모노폴리 라이브 게임쇼 공략까지 총망라. 초보자도 쉽게 이해하는 가이드.',
   keywords: ['에볼루션카지노 슬롯', '에볼루션 슬롯', '크레이지타임', '모노폴리 라이브', '에볼루션 게임쇼', '라이브 슬롯'],
   alternates: { canonical: 'https://wooriwin.com/slots' },
   openGraph: {
@@ -44,6 +44,7 @@ const jsonLdArticle = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: '에볼루션카지노 슬롯 완벽 가이드 2026',
+  description: '에볼루션카지노 슬롯·게임쇼 완벽 가이드. NetEnt·Red Tiger 슬롯 RTP 비교, 크레이지타임·모노폴리 라이브 공략.',
   url: 'https://wooriwin.com/slots',
   image: 'https://wooriwin.com/images/slots.jpg',
   inLanguage: 'ko-KR',
@@ -136,6 +137,16 @@ const jsonLdFaq = {
   ] satisfies FAQItem[],
 }
 
+// ─── BreadcrumbList JSON-LD ──────────────────────────────────
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '슬롯', item: 'https://wooriwin.com/slots' },
+  ],
+}
+
 // ─── 데이터 ──────────────────────────────────────────────────
 const gameShows: GameShow[] = [
   { name: '크레이지타임', desc: '에볼루션 최고 인기 게임쇼. 최대 2만배+ 보너스 당첨.', rtp: 'RTP 96.08%' },
@@ -154,6 +165,7 @@ export default function SlotsPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -211,7 +223,7 @@ export default function SlotsPage() {
                 <span className="text-yellow-400 mr-3">#01</span> 에볼루션 슬롯의 두 가지 세계
               </h3>
               <p className="mb-4">
-                에볼루션 슬롯을 처음 접하는 플레이어가 가장 많이 혼동하는 것은 <strong>라이브 게임쇼와 RNG 슬롯의 차이</strong>입니다. 라이브 게임쇼는 실제 딜러와 대형 세트장에서 실시간으로 진행되는 반면, RNG 슬롯은 난수생성기 기반의 전통적인 슬롯 머신입니다. 에볼루션은 NetEnt·Red Tiger·Nolimit City 인수로 두 세계를 모두 장악했습니다.
+                에볼루션 슬롯을 처음 접하는 플레이어가 가장 많이 혼동하는 것은 <strong>라이브 게임쇼와 RNG 슬롯의 차이</strong>입니다. 라이브 게임쇼는 실제 딜러와 대형 세트장에서 실시간으로 진행되는 반면, RNG 슬롯은 난수생성기 기반의 전통적인 슬롯 머신입니다. 에볼루션은 NetEnt·Red Tiger·Nolimit City 인수로 두 세계를 모두 장악했습니다. Nolimit City는 xNudge·xWays 등 독자 메카닉을 앞세운 고변동성 슬롯 전문 브랜드로, 대형 당첨을 노리는 플레이어에게 특히 인기입니다.
               </p>
               <p>
                 라이브 게임쇼는 엔터테인먼트 요소와 높은 배당 변동성을 제공하며, NetEnt·Red Tiger 슬롯은 안정적인 RTP와 다양한 테마를 특징으로 합니다. 모든 게임의 공정성은{' '}
@@ -254,7 +266,7 @@ export default function SlotsPage() {
               </p>
               {/* YMYL: 손실 위험 경고 */}
               <div className="bg-red-950/40 border border-red-800/50 rounded-lg px-5 py-3 text-xs text-red-300">
-                ⚠️ <strong>손실 위험 안내:</strong> 모든 슬롯 및 게임쇼는 장기적으로 하우스 엣지가 존재하며 손실이 발생할 수 있습니다. 크레이지타임 등 고변동성 게임은 당첨 빈도가 낮고 단기 손실이 클 수 있습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
+                <span aria-hidden="true">⚠️</span> <strong>손실 위험 안내:</strong> 모든 슬롯 및 게임쇼는 장기적으로 하우스 엣지가 존재하며 손실이 발생할 수 있습니다. 크레이지타임 등 고변동성 게임은 당첨 빈도가 낮고 단기 손실이 클 수 있습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
               </div>
             </article>
 
@@ -309,10 +321,10 @@ export default function SlotsPage() {
               <div className="bg-black/50 p-6 rounded-xl border border-gray-800">
                 <h4 className="text-white font-bold mb-4">슬롯 선택 체크리스트</h4>
                 <ul className="grid md:grid-cols-2 gap-3 text-xs md:text-sm">
-                  <li className="flex items-center text-gray-400">✔ RTP 96% 이상 슬롯 우선 선택</li>
-                  <li className="flex items-center text-gray-400">✔ 뱅크롤 적을 때는 저변동성 선택</li>
-                  <li className="flex items-center text-gray-400">✔ 보너스 구매 기능은 추가 하우스 엣지 유의</li>
-                  <li className="flex items-center text-gray-400">✔ 메가웨이즈 슬롯은 고변동성 대형 당첨 노릴 때</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;RTP 96% 이상 슬롯 우선 선택</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;뱅크롤 적을 때는 저변동성 선택</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;보너스 구매 기능은 추가 하우스 엣지 유의</li>
+                  <li className="flex items-center text-gray-400"><span aria-hidden="true">✔</span>&nbsp;메가웨이즈 슬롯은 고변동성 대형 당첨 노릴 때</li>
                 </ul>
               </div>
             </article>

@@ -19,7 +19,7 @@ function getAllPosts() {
 export const metadata: Metadata = {
   title: '에볼루션카지노 전략 블로그 | WOORIWIN',
   description:
-    '에볼루션카지노 바카라·블랙잭·룰렛 전략, 규칙, 팁을 전문가가 매일 분석. 롱테일 키워드 기반 심층 가이드. 초보자부터 고수까지 필독 에볼루션카지노 블로그.',
+    '에볼루션카지노 바카라·블랙잭·룰렛 전략, 규칙, 팁을 전문가가 심층 분석. 롱테일 키워드 기반 심층 가이드. 초보자부터 고수까지 에볼루션카지노 전략 블로그.',
   keywords: ['에볼루션카지노 전략', '에볼루션카지노 규칙', '에볼루션카지노 팁', '바카라 전략', '블랙잭 전략', '룰렛 전략'],
   alternates: { canonical: 'https://wooriwin.com/blog' },
   openGraph: {
@@ -65,6 +65,16 @@ const jsonLd = {
 }
 
 
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '블로그', item: 'https://wooriwin.com/blog' },
+  ],
+}
+
+
 const categories = ['전체', '에볼루션 가이드', '바카라 가이드', '블랙잭 가이드', '게임쇼 분석', '룰렛 & 포커', '최신 트렌드', '자금 관리', '보안 및 라이선스', '모바일 최적화', '책임감 있는 게임']
 
 
@@ -74,6 +84,7 @@ export default function BlogPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -86,13 +97,13 @@ export default function BlogPage() {
             <nav aria-label="breadcrumb" className="text-sm text-gray-400 mb-6">
               <Link href="/" className="hover:text-yellow-400">홈</Link> &rsaquo; <span className="text-white" aria-current="page">블로그</span>
             </nav>
-            <p className="text-sm text-yellow-400 font-semibold tracking-widest uppercase mb-4">매일 업데이트 · 전문가 분석</p>
+            <p className="text-sm text-yellow-400 font-semibold tracking-widest uppercase mb-4">전문가 심층 분석 · 에볼루션카지노 가이드</p>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
               에볼루션카지노<br />
               <span className="text-yellow-400">전략 블로그</span>
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              바카라·블랙잭·룰렛 전략부터 가입방법·규칙까지. 에볼루션카지노의 모든 정보를 매일 업데이트합니다.
+              바카라·블랙잭·룰렛 전략부터 가입방법·규칙까지. 에볼루션카지노의 모든 정보를 전문가가 심층 분석합니다.
             </p>
           </div>
         </section>
@@ -111,7 +122,7 @@ export default function BlogPage() {
                 <p>
                   WOORIWIN 에볼루션카지노 전략 블로그는 <strong className="text-white">바카라·블랙잭·룰렛·슬롯·게임쇼</strong>를 포함한
                   에볼루션카지노 모든 게임의 전략, 규칙, 팁을 전문가 수준으로 분석합니다.
-                  10년 경력 딜러 출신 전문가의 실전 노하우와 최신 트렌드를 매일 업데이트합니다.
+                  라이브카지노 전문 애널리스트의 실전 노하우와 최신 트렌드를 정리해 제공합니다.
                   초보자부터 고수까지, 에볼루션카지노에 관한 모든 정보를 한 곳에서 확인하세요.
                 </p>
               </div>
@@ -119,7 +130,7 @@ export default function BlogPage() {
 
             {/* 1. 에볼루션 가이드 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">📘 에볼루션 가이드</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">📘</span> 에볼루션 가이드</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   <strong className="text-white">에볼루션카지노(Evolution Gaming)</strong>는 2006년 설립된 세계 최대 라이브 카지노
@@ -138,7 +149,7 @@ export default function BlogPage() {
 
             {/* 2. 바카라 가이드 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">🃏 바카라 가이드</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">🃏</span> 바카라 가이드</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   에볼루션카지노에서 가장 인기 있는 게임인 <strong className="text-white">바카라</strong>는
@@ -157,7 +168,7 @@ export default function BlogPage() {
 
             {/* 3. 블랙잭 가이드 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">🎴 블랙잭 가이드</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">🎴</span> 블랙잭 가이드</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   카지노 게임 중 <strong className="text-white">RTP 99% 이상</strong>을 달성할 수 있는 유일한 게임,
@@ -175,7 +186,7 @@ export default function BlogPage() {
 
             {/* 4. 게임쇼 분석 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">🎡 게임쇼 분석</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">🎡</span> 게임쇼 분석</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   에볼루션의 혁신적인 라이브 게임쇼는 기존 카지노의 한계를 완전히 뛰어넘었습니다.
@@ -194,7 +205,7 @@ export default function BlogPage() {
 
             {/* 5. 룰렛 & 포커 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">🎰 룰렛 &amp; 포커</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">🎰</span> 룰렛 &amp; 포커</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   에볼루션 룰렛의 꽃, <strong className="text-white">라이트닝 룰렛</strong>의 번개 번호 메커니즘을
@@ -212,7 +223,7 @@ export default function BlogPage() {
 
             {/* 6. 최신 트렌드 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">📡 최신 트렌드</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">📡</span> 최신 트렌드</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   에볼루션카지노는 매 분기 새로운 게임을 출시하며 업계 트렌드를 선도합니다.
@@ -230,7 +241,7 @@ export default function BlogPage() {
 
             {/* 7. 자금 관리 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">💰 자금 관리</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">💰</span> 자금 관리</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   장기적으로 에볼루션카지노를 즐기기 위한 핵심은 <strong className="text-white">철저한 자금 관리</strong>입니다.
@@ -247,7 +258,7 @@ export default function BlogPage() {
 
             {/* 8. 보안 및 라이선스 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">🔒 보안 및 라이선스</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">🔒</span> 보안 및 라이선스</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   에볼루션카지노는 <strong className="text-white">MGA(몰타 게임청)</strong>,
@@ -265,7 +276,7 @@ export default function BlogPage() {
 
             {/* 9. 모바일 최적화 */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">📱 모바일 최적화</h3>
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300"><span aria-hidden="true">📱</span> 모바일 최적화</h3>
               <div className="text-gray-300 space-y-4 leading-relaxed text-base">
                 <p>
                   에볼루션카지노 전체 트래픽의 <strong className="text-white">60% 이상이 모바일</strong>에서 발생합니다.

@@ -55,7 +55,7 @@ export default function Disclaimer() {
       <div className="max-w-3xl mx-auto px-6 py-16 space-y-10">
         {/* 강조 박스 */}
         <div className="rounded-xl p-5 text-sm" style={{ background: 'rgba(120,20,20,0.25)', border: '1px solid rgba(180,30,30,0.4)', color: '#fca5a5' }}>
-          ⚠️ 본 사이트는 정보 제공만을 목적으로 하며, 도박 참여를 권유하지 않습니다. 모든 게임에는 손실 위험이 따릅니다.
+          <span aria-hidden="true">⚠️</span> 본 사이트는 정보 제공만을 목적으로 하며, 도박 참여를 권유하지 않습니다. 모든 게임에는 손실 위험이 따릅니다.
         </div>
 
         {sections.map((s) => (
@@ -64,6 +64,9 @@ export default function Disclaimer() {
             <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: '#8A8A9A' }}>{s.content}</p>
           </div>
         ))}
+
+        {/* 최종 수정일 */}
+        <p className="text-xs" style={{ color: '#8A8A9A' }}>마지막 업데이트: 2026년 5월 1일</p>
       </div>
     </main>
   )

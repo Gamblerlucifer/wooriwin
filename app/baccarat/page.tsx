@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 // ─── JSON-LD (① SEO 개선: author/datePublished/dateModified 추가, 스키마 분리) ─
 const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'TechArticle',
   headline: '에볼루션카지노 바카라 완벽 가이드 2026',
   description: '에볼루션카지노 바카라 규칙, 전략, 변형 게임 완벽 정리',
   url: 'https://wooriwin.com/baccarat',
@@ -64,6 +64,15 @@ const jsonLdArticle = {
       url: 'https://wooriwin.com/images/logo.png',
     },
   },
+}
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '바카라', item: 'https://wooriwin.com/baccarat' },
+  ],
 }
 
 const jsonLdFaq = {
@@ -157,9 +166,10 @@ export default function BaccaratPage() {
 
   return (
     <>
-      {/* ① SEO: Article·FAQPage 스키마 분리 */}
+      {/* ① SEO: Article·FAQPage·BreadcrumbList 스키마 분리 */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
 
       <main className="min-h-screen bg-gray-900 text-white">
 
@@ -268,7 +278,7 @@ export default function BaccaratPage() {
               </p>
               {/* YMYL: 손실 위험 경고 */}
               <div className="bg-red-950/40 border border-red-800/50 rounded-lg px-5 py-3 text-xs text-red-300">
-                ⚠️ <strong>손실 위험 안내:</strong> 모든 카지노 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. RTP가 높은 게임도 단기 손실을 보장하지 않습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
+                <span aria-hidden="true">⚠️</span> <strong>손실 위험 안내:</strong> 모든 카지노 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. RTP가 높은 게임도 단기 손실을 보장하지 않습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
               </div>
             </article>
 

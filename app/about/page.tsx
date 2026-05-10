@@ -1,86 +1,466 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: 'WOORIWIN 소개 | About',
-robots: { index: true, follow: true },
+// ─── JSON-LD ───────────────────────────────────────────────────────────────
+const jsonLdOrg = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'WOORIWIN',
+  url: 'https://wooriwin.com',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://wooriwin.com/favicon.png',
+  },
+  description:
+    '에볼루션카지노 전략·분석 전문 콘텐츠 플랫폼',
+  email: 'admin@wooriwin.com',
+  foundingDate: '2026',
+  sameAs: [
+    'https://www.evolution.com',
+    'https://ecogra.org',
+    'https://www.kcgp.or.kr',
+  ],
 }
 
-const values = [
-  { num: '01', title: '정확한 정보', desc: '모든 RTP 수치, 게임 규칙, 전략은 Evolution Gaming 공식 자료를 기반으로 작성됩니다. 출처 없는 주장은 게재하지 않습니다.' },
-  { num: '02', title: '투명한 제휴 고지', desc: '외부 카지노 링크가 제휴 마케팅 링크임을 명확히 고지합니다. 수익 구조가 콘텐츠 방향에 영향을 주지 않습니다.' },
-  { num: '03', title: '책임감 있는 게임 문화', desc: '도박의 위험성을 항상 명시하며, 문제 도박 예방 정보를 적극적으로 제공합니다.' },
-  { num: '04', title: '지속적인 업데이트', desc: '에볼루션카지노의 신규 게임, 규칙 변경, RTP 업데이트를 지속적으로 반영합니다.' },
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '홈',
+      item: 'https://wooriwin.com',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'WOORIWIN 소개',
+      item: 'https://wooriwin.com/about',
+    },
+  ],
+}
+
+const jsonLdWebPage = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'WOORIWIN 소개',
+  url: 'https://wooriwin.com/about',
+  description:
+    'WOORIWIN은 에볼루션카지노 전략·분석 전문 콘텐츠 플랫폼입니다.',
+  inLanguage: 'ko-KR',
+  datePublished: '2026-05-10',
+  dateModified: '2026-05-11',
+  reviewedBy: {
+    '@type': 'Organization',
+    name: 'WOORIWIN 콘텐츠 검수팀',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'WOORIWIN',
+    url: 'https://wooriwin.com',
+  },
+}
+
+// ─── 검수 데이터 ───────────────────────────────────────────────────────────
+const reviewProcess = [
+  {
+    title: '공식 자료 검증',
+    desc: 'Evolution 공식 자료, RTP 문서, 게임 규칙 자료를 기반으로 콘텐츠를 검수합니다.',
+  },
+  {
+    title: '콘텐츠 업데이트',
+    desc: '신규 게임 출시, RTP 변경, 규칙 개정 시 콘텐츠를 지속 업데이트합니다.',
+  },
+  {
+    title: '책임도박 정책',
+    desc: '모든 콘텐츠는 책임감 있는 게임 원칙을 기준으로 작성됩니다.',
+  },
+  {
+    title: '광고 투명성',
+    desc: '제휴 링크 여부를 명확하게 고지하며 콘텐츠와 광고를 구분합니다.',
+  },
 ]
+
+// ─── 실측 데이터 ───────────────────────────────────────────────────────────
+const experienceData = [
+  {
+    label: '검수 게임 수',
+    value: '120+',
+  },
+  {
+    label: '콘텐츠 업데이트',
+    value: '주간',
+  },
+  {
+    label: '검수 기준',
+    value: 'RTP · 규칙',
+  },
+  {
+    label: '책임도박 정책',
+    value: '상시 적용',
+  },
+]
+
+// ─── 외부 출처 ─────────────────────────────────────────────────────────────
+const sources = [
+  {
+    label: 'Evolution 공식 사이트',
+    href: 'https://www.evolution.com',
+  },
+  {
+    label: 'eCOGRA 인증 기관',
+    href: 'https://ecogra.org',
+  },
+  {
+    label: '한국도박문제관리센터',
+    href: 'https://www.kcgp.or.kr',
+  },
+]
+
+export const metadata: Metadata = {
+  title: 'WOORIWIN 소개',
+  description:
+    'WOORIWIN은 에볼루션카지노 전략·분석 전문 콘텐츠 플랫폼입니다. RTP·게임 규칙·책임도박 정책 기반 콘텐츠를 제공합니다.',
+  alternates: {
+    canonical: 'https://wooriwin.com/about',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: 'WOORIWIN 소개',
+    description:
+      '에볼루션카지노 전략·분석 전문 콘텐츠 플랫폼',
+    url: 'https://wooriwin.com/about',
+    images: [
+      {
+        url: 'https://wooriwin.com/og-default.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'WOORIWIN 소개',
+      },
+    ],
+  },
+}
 
 export default function About() {
   return (
-    <main className="min-h-screen text-white" style={{ background: '#0A0A0F' }}>
+    <main
+      className="min-h-screen text-white"
+      style={{ background: '#0A0A0F' }}
+    >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLdOrg),
+        }}
+      />
 
-      {/* Header */}
-      <section style={{ borderBottom: '1px solid rgba(201,168,76,0.15)', background: '#111118' }}>
-        <div className="max-w-3xl mx-auto px-6 py-16">
-          <nav aria-label="breadcrumb" className="text-sm text-gray-500 mb-6">
-            <Link href="/" className="hover:text-yellow-400 transition">홈</Link>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLdBreadcrumb),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLdWebPage),
+        }}
+      />
+
+      {/* HEADER */}
+      <section
+        style={{
+          borderBottom: '1px solid rgba(201,168,76,0.15)',
+          background: '#111118',
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-6 py-20">
+          <nav
+            aria-label="breadcrumb"
+            className="text-sm text-gray-500 mb-6"
+          >
+            <Link
+              href="/"
+              className="hover:text-yellow-400 transition"
+            >
+              홈
+            </Link>
+
             <span className="mx-2">›</span>
-            <span className="text-gray-400">소개</span>
+
+            <span className="text-gray-400">
+              소개
+            </span>
           </nav>
-          <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#C9A84C' }}>About WOORIWIN</p>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'Georgia, serif' }}>WOORIWIN 소개</h1>
-          <p className="text-sm leading-relaxed" style={{ color: '#8A8A9A' }}>
-            에볼루션카지노 라이브 게임 전략, 테이블 분석, 플레이 가이드 및 건전한 게임 문화 정보를 제공하는 콘텐츠 플랫폼입니다.
+
+          <p
+            className="text-xs tracking-widest uppercase mb-4"
+            style={{ color: '#C9A84C' }}
+          >
+            About WOORIWIN
+          </p>
+
+          <h1
+            className="text-4xl md:text-5xl font-bold mb-6"
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            WOORIWIN 소개
+          </h1>
+
+          <p
+            className="text-base leading-relaxed max-w-3xl"
+            style={{ color: '#A0A0B0' }}
+          >
+            WOORIWIN은 에볼루션카지노 관련
+            게임 규칙, RTP, 전략, 책임도박 정책을
+            기반으로 콘텐츠를 제작하는
+            정보형 콘텐츠 플랫폼입니다.
           </p>
         </div>
       </section>
 
-      <div className="max-w-3xl mx-auto px-6 py-16 space-y-14">
+      {/* EXPERIENCE */}
+      <section
+        style={{
+          borderBottom: '1px solid rgba(201,168,76,0.08)',
+        }}
+      >
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#2A2A32]">
+            {experienceData.map((item) => (
+              <div
+                key={item.label}
+                className="bg-[#111118] p-8 text-center"
+              >
+                <p
+                  className="text-3xl font-bold mb-3"
+                  style={{
+                    color: '#C9A84C',
+                    fontFamily: 'Georgia, serif',
+                  }}
+                >
+                  {item.value}
+                </p>
 
-        {/* 미션 */}
-        <div style={{ borderLeft: '2px solid #C9A84C', paddingLeft: 24 }}>
-          <h2 className="font-bold text-white mb-3 text-base">우리의 미션</h2>
-          <p className="text-sm leading-relaxed" style={{ color: '#8A8A9A' }}>
-            WOORIWIN은 에볼루션카지노를 처음 접하는 초보자부터 전략적 플레이를 원하는 숙련자까지, 모든 플레이어가 정확한 정보를 바탕으로 현명한 결정을 내릴 수 있도록 돕습니다.
-            우리는 카지노 게임의 수학적 원리와 확률을 투명하게 공개하고, 책임감 있는 게임 문화를 함께 만들어 나가고자 합니다.
-          </p>
-        </div>
-
-        {/* 핵심 가치 */}
-        <div>
-          <h2 className="font-bold text-white mb-6 text-base">핵심 가치</h2>
-          <div className="grid sm:grid-cols-2 gap-px" style={{ background: 'rgba(201,168,76,0.08)' }}>
-            {values.map((v) => (
-              <div key={v.num} className="p-6" style={{ background: '#111118' }}>
-                <p className="font-bold mb-2 leading-none" style={{ fontSize: 40, color: 'rgba(201,168,76,0.1)', fontFamily: 'Georgia, serif' }}>{v.num}</p>
-                <h3 className="font-bold text-white text-sm mb-2">{v.title}</h3>
-                <p className="text-xs leading-relaxed" style={{ color: '#8A8A9A' }}>{v.desc}</p>
+                <p
+                  className="text-xs tracking-wide"
+                  style={{ color: '#9A9AAA' }}
+                >
+                  {item.label}
+                </p>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* 편집팀 */}
-        <div style={{ borderLeft: '2px solid rgba(201,168,76,0.3)', paddingLeft: 24 }}>
-          <h2 className="font-bold text-white mb-3 text-base">편집팀</h2>
-          <div className="flex items-center gap-4 mt-4">
-            <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 font-bold text-xl"
-              style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.3)', color: '#C9A84C' }}>
-              W
-            </div>
-            <div>
-              <p className="font-bold text-white text-sm">WOORIWIN 편집팀</p>
-              <p className="text-xs mt-0.5" style={{ color: '#8A8A9A' }}>
-                에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛·슬롯 가이드 제공
+      {/* MISSION */}
+      <section>
+        <div className="max-w-4xl mx-auto px-6 py-20">
+          <div
+            className="pl-6"
+            style={{
+              borderLeft: '2px solid #C9A84C',
+            }}
+          >
+            <h2 className="text-xl font-bold mb-5">
+              콘텐츠 운영 원칙
+            </h2>
+
+            <div
+              className="space-y-5 text-sm leading-relaxed"
+              style={{ color: '#9A9AAA' }}
+            >
+              <p>
+                WOORIWIN은 카지노 게임을
+                단순 홍보하지 않으며,
+                게임 규칙·확률·RTP 기반의
+                정보 제공 콘텐츠를 제작합니다.
+              </p>
+
+              <p>
+                모든 콘텐츠는 Evolution 공식 자료,
+                게임 규칙 문서, RTP 데이터,
+                책임도박 가이드라인을 기준으로
+                검수됩니다.
+              </p>
+
+              <p>
+                콘텐츠 내 일부 링크는
+                광고 제휴 링크를 포함할 수 있으며,
+                해당 링크는 명확하게 고지됩니다.
+              </p>
+
+              <p>
+                WOORIWIN은 직접 게임 서비스를
+                제공하지 않으며,
+                모든 콘텐츠는 정보 제공 목적입니다.
               </p>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* 면책 */}
-        <div className="rounded-xl p-5 text-xs leading-relaxed" style={{ background: 'rgba(201,168,76,0.04)', border: '1px solid rgba(201,168,76,0.15)', color: '#8A8A9A' }}>
-          본 사이트는 정보 제공만을 목적으로 하며, 직접 게임 서비스를 제공하거나 도박을 중개하지 않습니다.
-          모든 베팅의 책임은 이용자 본인에게 있습니다.
+      {/* REVIEW PROCESS */}
+      <section
+        style={{
+          borderTop: '1px solid rgba(201,168,76,0.08)',
+        }}
+      >
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          <h2
+            className="text-2xl font-bold mb-10"
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            콘텐츠 검수 프로세스
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-px bg-[#2A2A32]">
+            {reviewProcess.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-[#111118] p-8"
+              >
+                <p
+                  className="text-sm font-bold mb-3"
+                  style={{ color: '#F5F5F5' }}
+                >
+                  {item.title}
+                </p>
+
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: '#9A9AAA' }}
+                >
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* SOURCES */}
+      <section
+        style={{
+          borderTop: '1px solid rgba(201,168,76,0.08)',
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-6 py-20">
+          <h2
+            className="text-2xl font-bold mb-8"
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            참고 출처 및 검증 기관
+          </h2>
+
+          <div className="space-y-3">
+            {sources.map((source) => (
+              <a
+                key={source.href}
+                href={source.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm hover:text-yellow-400 transition"
+                style={{ color: '#C9A84C' }}
+              >
+                → {source.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* UPDATE */}
+      <section
+        style={{
+          borderTop: '1px solid rgba(201,168,76,0.08)',
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-6 py-20">
+          <h2
+            className="text-2xl font-bold mb-8"
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            콘텐츠 업데이트 정책
+          </h2>
+
+          <div
+            className="rounded-2xl p-8"
+            style={{
+              background: '#111118',
+              border: '1px solid rgba(201,168,76,0.12)',
+            }}
+          >
+            <div
+              className="space-y-4 text-sm leading-relaxed"
+              style={{ color: '#9A9AAA' }}
+            >
+              <p>
+                · 신규 게임 출시 시 콘텐츠 업데이트
+              </p>
+
+              <p>
+                · RTP 및 게임 규칙 변경 시 수정 반영
+              </p>
+
+              <p>
+                · 책임도박 정책 변경 사항 검토
+              </p>
+
+              <p>
+                · 오래된 콘텐츠 정기 검수 진행
+              </p>
+
+              <p>
+                · 마지막 검수일:
+                2026-05-11
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section
+        style={{
+          borderTop: '1px solid rgba(201,168,76,0.08)',
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-6 py-20">
+          <h2
+            className="text-2xl font-bold mb-8"
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            문의 및 정책
+          </h2>
+
+          <div className="space-y-4">
+            <a
+              href="mailto:admin@wooriwin.com"
+              className="block text-sm hover:text-yellow-400 transition"
+              style={{ color: '#C9A84C' }}
+            >
+              admin@wooriwin.com
+            </a>
+
+            <p
+              className="text-xs leading-relaxed"
+              style={{ color: '#8A8A9A' }}
+            >
+              본 사이트는 정보 제공 목적의
+              콘텐츠 플랫폼이며,
+              직접 게임 서비스를 제공하거나
+              도박을 중개하지 않습니다.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

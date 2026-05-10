@@ -6,32 +6,41 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-const sections = [
+type Section = {
+  title: string
+  content?: string
+  list?: string[]
+  footer?: string
+}
+
+const sections: Section[] = [
   {
     title: '1. 수집하는 개인정보',
-    content: `본 사이트(WOORIWIN)는 별도의 회원가입 없이 이용 가능한 정보 제공형 웹사이트입니다. 사용자가 직접 제공하는 개인정보는 수집하지 않습니다. 다만, 웹사이트 운영 과정에서 다음과 같은 정보가 자동으로 수집될 수 있습니다.
-
-• 접속 IP 주소
-• 방문 일시 및 이용 기록
-• 브라우저 종류 및 운영체제
-• 유입 경로(리퍼러)`,
+    content: `본 사이트(WOORIWIN)는 별도의 회원가입 없이 이용 가능한 정보 제공형 웹사이트입니다. 사용자가 직접 제공하는 개인정보는 수집하지 않습니다. 다만, 웹사이트 운영 과정에서 다음과 같은 정보가 자동으로 수집될 수 있습니다.`,
+    list: [
+      '접속 IP 주소',
+      '방문 일시 및 이용 기록',
+      '브라우저 종류 및 운영체제',
+      '유입 경로(리퍼러)',
+    ],
   },
   {
     title: '2. 개인정보의 수집 및 이용 목적',
-    content: `자동 수집되는 정보는 다음의 목적으로만 활용됩니다.
-
-• 웹사이트 운영 및 서비스 품질 개선
-• 접속 통계 분석 (Google Analytics 등 제3자 도구 활용)
-• 보안 및 서비스 안정성 유지`,
+    content: '자동 수집되는 정보는 다음의 목적으로만 활용됩니다.',
+    list: [
+      '웹사이트 운영 및 서비스 품질 개선',
+      '접속 통계 분석 (Google Analytics 등 제3자 도구 활용)',
+      '보안 및 서비스 안정성 유지',
+    ],
   },
   {
     title: '3. 쿠키(Cookie) 사용',
-    content: `본 사이트는 서비스 개선을 위해 쿠키를 사용할 수 있습니다. 쿠키는 사용자의 브라우저에 저장되는 소량의 데이터 파일로, 브라우저 설정을 통해 거부하거나 삭제할 수 있습니다.
-
-• Google Analytics: 방문자 통계 분석 목적
-• 광고 파트너 쿠키: 제휴 마케팅 성과 측정 목적
-
-브라우저에서 쿠키를 비활성화해도 사이트 이용에는 지장이 없습니다.`,
+    content: '본 사이트는 서비스 개선을 위해 쿠키를 사용할 수 있습니다. 쿠키는 사용자의 브라우저에 저장되는 소량의 데이터 파일로, 브라우저 설정을 통해 거부하거나 삭제할 수 있습니다.',
+    list: [
+      'Google Analytics: 방문자 통계 분석 목적',
+      '광고 파트너 쿠키: 제휴 마케팅 성과 측정 목적',
+    ],
+    footer: '브라우저에서 쿠키를 비활성화해도 사이트 이용에는 지장이 없습니다.',
   },
   {
     title: '4. 제3자 링크 및 광고',
@@ -43,13 +52,12 @@ const sections = [
   },
   {
     title: '6. 이용자의 권리',
-    content: `이용자는 언제든지 본 사이트의 정보 수집에 대해 문의하거나 관련 요청을 할 수 있습니다. 문의사항은 하단의 연락처를 통해 접수해 주시기 바랍니다.`,
+    content: `이용자는 언제든지 본 사이트의 정보 수집에 대해 문의하거나 관련 요청을 할 수 있습니다. 문의사항은 아래 연락처를 통해 접수해 주시기 바랍니다.`,
   },
   {
     title: '7. 개인정보처리방침 변경',
-    content: `본 방침은 법령 또는 서비스 변경에 따라 수정될 수 있습니다. 변경 시 웹사이트를 통해 공지하며, 변경된 방침은 게시 즉시 효력이 발생합니다.
-
-최종 업데이트: 2026년 5월 1일`,
+    content: `본 방침은 법령 또는 서비스 변경에 따라 수정될 수 있습니다. 변경 시 웹사이트를 통해 공지하며, 변경된 방침은 게시 즉시 효력이 발생합니다.`,
+    footer: '최종 업데이트: 2026년 5월 1일',
   },
 ]
 
@@ -61,7 +69,7 @@ export default function PrivacyPolicy() {
 function PolicyPage({ title, subtitle, sections }: {
   title: string
   subtitle: string
-  sections: { title: string; content: string }[]
+  sections: Section[]
 }) {
   return (
     <main className="min-h-screen text-white" style={{ background: '#0A0A0F' }}>
@@ -83,9 +91,39 @@ function PolicyPage({ title, subtitle, sections }: {
         {sections.map((s) => (
           <div key={s.title} style={{ borderLeft: '2px solid rgba(201,168,76,0.3)', paddingLeft: 24 }}>
             <h2 className="font-bold text-white mb-3 text-base">{s.title}</h2>
-            <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: '#8A8A9A' }}>{s.content}</p>
+            {s.content && (
+              <p className="text-sm leading-relaxed mb-3" style={{ color: '#8A8A9A' }}>{s.content}</p>
+            )}
+            {s.list && (
+              <ul className="text-sm space-y-1 mb-3 list-none" style={{ color: '#8A8A9A' }}>
+                {s.list.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span aria-hidden="true" style={{ color: 'rgba(201,168,76,0.6)' }}>—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {s.footer && (
+              <p className="text-sm leading-relaxed" style={{ color: '#8A8A9A' }}>{s.footer}</p>
+            )}
           </div>
         ))}
+
+        {/* 연락처 */}
+        <div style={{ borderLeft: '2px solid rgba(201,168,76,0.3)', paddingLeft: 24 }}>
+          <h2 className="font-bold text-white mb-3 text-base">문의처</h2>
+          <p className="text-sm mb-2" style={{ color: '#8A8A9A' }}>
+            개인정보 관련 문의사항은 아래 이메일로 연락해 주시기 바랍니다.
+          </p>
+          <a
+            href="mailto:admin@wooriwin.com"
+            className="text-sm inline-block hover:opacity-80 transition"
+            style={{ color: '#C9A84C' }}
+          >
+            admin@wooriwin.com
+          </a>
+        </div>
       </div>
     </main>
   )

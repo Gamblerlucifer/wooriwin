@@ -29,7 +29,7 @@ interface SeoBlock {
 export const metadata: Metadata = {
   title: '에볼루션카지노 완벽 가이드 2026 | WOORIWIN',
   description:
-    '에볼루션카지노 라이브 게임 전략, 테이블 분석, 플레이 가이드 및 건전한 게임 문화 정보를 제공합니다.',
+    '에볼루션카지노 바카라·블랙잭·룰렛·슬롯 완벽 가이드. RTP 수치, 변형 게임 분석, 베팅 전략까지 WOORIWIN이 직접 검증한 정보를 제공합니다.',
   keywords: [
     '에볼루션카지노',
     '에볼루션카지노 바카라',
@@ -64,19 +64,13 @@ export const metadata: Metadata = {
 // ─── JSON-LD ───────────────────────────────────────────────────────────────
 const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: '에볼루션카지노 완벽 가이드 2026',
-  description: '에볼루션카지노 라이브 게임 전략 및 플레이 가이드를 제공하는 건전한 게임 문화 정보형 콘텐츠 플랫폼',
+  '@type': 'WebPage',
+  name: '에볼루션카지노 완벽 가이드 2026',
+  description: '에볼루션카지노 바카라·블랙잭·룰렛·슬롯 완벽 가이드. RTP 수치, 변형 게임 분석, 베팅 전략까지 WOORIWIN이 직접 검증한 정보를 제공합니다.',
   url: 'https://wooriwin.com',
   image: 'https://wooriwin.com/images/og-main.jpg',
   inLanguage: 'ko-KR',
-  datePublished: '2026-05-01T09:00:00+09:00',
-  dateModified: '2026-05-10T09:00:00+09:00',
-  author: {
-    '@type': 'Organization',
-    name: 'WOORIWIN 팀',
-    url: 'https://wooriwin.com/about',
-  },
+  lastReviewed: '2026-05-10T09:00:00+09:00',
   publisher: {
     '@type': 'Organization',
     name: 'WOORIWIN',
@@ -178,7 +172,7 @@ const seoBlocks: SeoBlock[] = [
     paras: [
       '에볼루션카지노 바카라는 아시아 시장에서 가장 인기 있는 라이브 카지노 게임입니다. 기본 규칙은 뱅커(Banker)와 플레이어(Player) 중 합이 9에 가까운 쪽에 베팅하는 방식으로, 진행 속도가 빠르고 규칙이 간단해 초보자도 쉽게 즐길 수 있습니다.',
       '에볼루션이 제공하는 바카라 종류는 다양합니다. 스피드 바카라는 한 라운드가 27초 내에 완료되며, 라이트닝 바카라는 카드당 2×~8× 멀티플라이어가 중첩 적용되어 최대 512배 배당이 가능합니다. 스퀴즈 바카라는 딜러가 직접 카드를 천천히 뒤집는 긴장감을 제공하며, No Commission 바카라는 뱅커 베팅 시 커미션 5%가 없어 실질 환수율이 높습니다.',
-      '통계적으로 뱅커 베팅 승률은 약 45.86%, 플레이어 베팅은 44.62%, 타이는 9.52%입니다. RTP(환수율) 기준으로 뱅커 베팅은 98.94%, 플레이어 베팅은 98.76%이며, 어떤 베팅을 선택하든 하우스 엣지가 존재하므로 손실 가능성을 항상 인식하십시오.',
+      '통계적으로 뱅커 베팅 승률은 약 45.86%, 플레이어 베팅은 44.62%, 타이는 9.52%입니다. RTP(환수율) 기준으로 뱅커 베팅은 98.94%, 플레이어 베팅은 98.76%이며, 어떤 베팅을 선택하든 하우스 엣지가 존재하므로 손실 가능성을 항상 인식하십시오. (출처: Evolution Gaming 공식 게임 수학 문서)',
     ],
   },
   {
@@ -234,10 +228,10 @@ export default function Home() {
             </div>
 
             <h1 className="font-bold leading-none mb-3" style={{ fontSize: 'clamp(52px, 9vw, 110px)', fontFamily: 'Georgia, serif' }}>
-              EVOLUTION
+              에볼루션카지노
             </h1>
             <p className="font-bold mb-8" style={{ fontSize: 'clamp(26px, 4vw, 50px)', color: '#C9A84C', fontFamily: 'Georgia, serif' }}>
-              에볼루션카지노 완벽 가이드
+              완벽 가이드 2026
             </p>
             <p className="mb-12 leading-relaxed" style={{ color: '#AAAABC', maxWidth: 560, margin: '0 auto 48px' }}>
               바카라, 블랙잭, 룰렛 전략부터 가입방법까지.<br />
@@ -262,7 +256,7 @@ export default function Home() {
               </Link>
               
               <p className="text-xs" style={{ color: 'rgba(201,168,76,0.45)' }}>
-                ✓ eCOGRA 인증 파트너 · 안전한 광고제휴
+                <span aria-hidden="true">✓</span> <a href="https://ecogra.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-yellow-400 transition">eCOGRA 인증</a> 파트너 · 안전한 광고제휴
               </p>
 
               <Link
@@ -373,13 +367,27 @@ export default function Home() {
               {seoBlocks.map((block) => (
                 <div key={block.title} className="bg-[#111118] p-10">
                   <h3 className="font-bold text-lg mb-6 flex items-center gap-3" style={{ color: '#F5F0E8' }}>
-                    <span>{block.icon}</span> {block.title}
+                    <span aria-hidden="true">{block.icon}</span> {block.title}
                   </h3>
                   <div className="space-y-4">
                     {block.paras.map((para, i) => (
                       <p key={i} className="text-sm leading-relaxed" style={{ color: '#AAAABC' }}>{para}</p>
                     ))}
                   </div>
+                  {block.title.includes('바카라') && (
+                    <p className="text-xs mt-4" style={{ color: 'rgba(201,168,76,0.6)' }}>
+                      출처:{' '}
+                      <a href="https://www.evolutiongaming.com" target="_blank" rel="noopener noreferrer"
+                        className="underline hover:text-yellow-400 transition">
+                        Evolution Gaming 공식 사이트
+                      </a>
+                      {' '}·{' '}
+                      <a href="https://ecogra.org" target="_blank" rel="noopener noreferrer"
+                        className="underline hover:text-yellow-400 transition">
+                        eCOGRA 인증 기관
+                      </a>
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -397,7 +405,7 @@ export default function Home() {
                 <details key={faq.name} className="group border-b border-gray-800">
                   <summary className="flex justify-between items-center py-6 cursor-pointer list-none font-medium text-sm hover:text-yellow-400" style={{ color: '#F5F0E8' }}>
                     {faq.name}
-                    <span className="text-[#C9A84C] group-open:rotate-45 transition-transform">+</span>
+                    <span aria-hidden="true" className="text-[#C9A84C] group-open:rotate-45 transition-transform">+</span>
                   </summary>
                   <div className="pb-6 pl-5 border-l-2 border-[#C9A84C]">
                     <p className="text-sm leading-relaxed" style={{ color: '#AAAABC' }}>{faq.acceptedAnswer.text}</p>

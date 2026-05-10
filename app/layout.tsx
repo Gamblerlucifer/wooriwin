@@ -20,9 +20,17 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    title: "WOORIWIN — 에볼루션카지노 완벽 가이드",
+    description: "에볼루션카지노 라이브 게임 전략, 테이블 분석, 플레이 가이드 및 건전한 게임 문화 정보를 제공합니다.",
+    images: [{ url: "https://wooriwin.com/og-default.jpg", width: 1200, height: 630, alt: "WOORIWIN 에볼루션카지노 가이드" }],
     siteName: "WOORIWIN",
     locale: "ko_KR",
     type: "website",
+  },
+
+  alternates: {
+    canonical: "https://wooriwin.com",
+    languages: { "ko-KR": "https://wooriwin.com" },
   },
 
   verification: {
@@ -42,8 +50,16 @@ const relatedLinks = [
   { href: '/baccarat', label: '에볼루션카지노 바카라' },
   { href: '/blackjack', label: '에볼루션카지노 블랙잭' },
   { href: '/roulette', label: '에볼루션카지노 룰렛' },
+  { href: '/slots', label: '에볼루션카지노 슬롯' },
   { href: '/live-casino', label: '에볼루션 라이브카지노' },
   { href: '/blog', label: '전략 블로그' },
+]
+const policyLinks = [
+  { href: 'privacy-policy', label: '개인정보처리방침' },
+  { href: 'terms', label: '이용약관' },
+  { href: 'disclaimer', label: '면책조항' },
+  { href: 'about', label: '소개' },
+  { href: 'responsible-gaming', label: '책임감 있는 게임' },
 ]
 const jsonLd = {
   "@context": "https://schema.org",
@@ -80,7 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* 1. 최상단 정책 배너: 구글 정책 준수 (고정형) */}
         <div className="bg-black/95 text-[10px] md:text-xs text-gray-500 py-2 border-b border-gray-800 text-center sticky top-0 z-[100] backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-x-4 gap-y-1">
-            <span className="text-red-500 font-bold">🔞 만 18세 미만 이용 불가</span>
+            <span className="text-red-500 font-bold"><span aria-hidden="true">🔞</span> 만 18세 미만 이용 불가</span>
             <span className="hidden md:inline text-gray-800">|</span>
             <span>본 사이트는 제휴 마케팅 링크를 포함하며 정보 제공만을 목적으로 합니다.</span>
             <span className="hidden md:inline text-gray-800">|</span>
@@ -117,7 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <ul className="space-y-2">
                     {['잃어도 되는 금액만 베팅하세요', '감정적 베팅은 손실을 키웁니다'].map((tip) => (
                       <li key={tip} className="flex items-start gap-2 text-xs text-gray-400">
-                        <span style={{ color: '#C9A84C' }}>✓</span> {tip}
+                        <span aria-hidden="true" style={{ color: '#C9A84C' }}>✓</span> {tip}
                       </li>
                     ))}
                   </ul>
@@ -128,13 +144,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="rounded-xl p-5" style={{ background: 'rgba(120,20,20,0.2)', border: '1px solid rgba(180,30,30,0.3)' }}>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="text-sm space-y-1 text-gray-400">
-                  <p className="font-bold text-red-400 mb-2 flex items-center gap-2 text-xs md:text-sm">⚠️ 문제 도박 예방 안내</p>
+                  <p className="font-bold text-red-400 mb-2 flex items-center gap-2 text-xs md:text-sm"><span aria-hidden="true">⚠️</span> 문제 도박 예방 안내</p>
                   <p className="text-xs">· 도박은 오락 목적으로만 이용하시고, <span className="text-white underline">만 18세 미만은 이용하실 수 없습니다.</span></p>
                 </div>
-                <a href="https://www.kcgp.or.kr" target="_blank" rel="noopener noreferrer"
-                  className="shrink-0 inline-flex items-center gap-2 text-sm font-semibold px-5 py-3 rounded-lg bg-red-900/30 text-red-300 hover:bg-red-900/50 transition border border-red-800/50">
-                  📞 도박문제관리센터 · 1336 <span className="text-[10px] opacity-70">(24시간 무료)</span>
-                </a>
+                <div className="shrink-0 inline-flex items-center gap-2 text-sm font-semibold px-5 py-3 rounded-lg bg-red-900/30 text-red-300 border border-red-800/50">
+                  <span aria-hidden="true">📞</span>
+                  <a href="https://www.kcgp.or.kr" target="_blank" rel="noopener noreferrer"
+                    className="hover:text-red-200 transition">
+                    도박문제관리센터
+                  </a>
+                  ·
+                  <a href="tel:1336" className="underline hover:text-red-200 transition">1336</a>
+                  <span className="text-[10px] opacity-70">(24시간 무료)</span>
+                </div>
               </div>
             </div>
           </div>
@@ -144,7 +166,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="bg-[#050507] py-12 border-t border-gray-900 mt-auto">
           <div className="max-w-6xl mx-auto px-6 text-center">
             <p className="text-[#C9A84C] font-bold text-2xl mb-4 font-serif tracking-widest">WOORIWIN</p>
-            <p className="text-[#C9A84C] font-bold text-2xl text-sm mb-4">관련 에볼루션카지노 가이드</p>
+            <p className="text-[#C9A84C] font-bold text-sm mb-4">관련 에볼루션카지노 가이드</p>
             <div className="flex flex-wrap justify-center gap-4 mb-4 text-sm">
               {relatedLinks.map((l) => (
                 <Link key={l.href} href={l.href} className="text-gray-400 hover:text-yellow-400 transition">{l.label}</Link>
@@ -156,10 +178,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <p className="text-[10px] md:text-[11px] text-gray-600 max-w-3xl mx-auto leading-relaxed mb-4">
               모든 배팅의 책임은 이용자 본인에게 있으며, 당사는 이용 결과에 대한 법적 책임을 지지 않습니다.
             </p>
-            <div className="flex justify-center flex-wrap gap-x-6 gap-y-3 text-[10px] md:text-[11px] text-gray-500 mb-8 uppercase">
-              {['privacy-policy', 'terms', 'disclaimer', 'about', 'responsible-gaming'].map((link) => (
-                <Link key={link} href={`/${link}`} className="hover:text-yellow-500 transition-colors">
-                  {link.replace('-', ' ')}
+            <div className="flex justify-center flex-wrap gap-x-6 gap-y-3 text-[10px] md:text-[11px] text-gray-500 mb-8">
+              {policyLinks.map(({ href, label }) => (
+                <Link key={href} href={`/${href}`} className="hover:text-yellow-500 transition-colors">
+                  {label}
                 </Link>
               ))}
             </div>

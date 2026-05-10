@@ -44,6 +44,7 @@ const jsonLdArticle = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: '에볼루션 라이브카지노 완벽 가이드 2026',
+  description: '에볼루션카지노 라이브카지노 완벽 가이드. 바카라·블랙잭·룰렛·게임쇼 라인업, RTP, 모바일 호환성 분석.',
   url: 'https://wooriwin.com/live-casino',
   image: 'https://wooriwin.com/images/live-casino.jpg',
   inLanguage: 'ko-KR',
@@ -136,6 +137,16 @@ const jsonLdFaq = {
   ] satisfies FAQItem[],
 }
 
+// ─── BreadcrumbList JSON-LD ──────────────────────────────────
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '라이브카지노', item: 'https://wooriwin.com/live-casino' },
+  ],
+}
+
 // ─── 데이터 ──────────────────────────────────────────────────
 const features: Feature[] = [
   { icon: '🎬', title: 'HD 실시간 스트리밍', desc: '전문 스튜디오에서 실제 딜러가 24/7 HD 품질로 진행. 지연 없는 라이브 경험.' },
@@ -154,6 +165,7 @@ export default function LiveCasinoPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -242,7 +254,7 @@ export default function LiveCasinoPage() {
                 </div>
               </div>
               <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400 mb-4">
-                ""RTP 수치는 게임별 하우스 엣지를 이해하는 지표입니다. 바카라·블랙잭은 상대적으로 낮은 하우스 엣지를, 라이트닝 룰렛·크레이지타임은 높은 배당 변동성을 가집니다.""
+                "RTP 수치는 게임별 하우스 엣지를 이해하는 지표입니다. 바카라·블랙잭은 상대적으로 낮은 하우스 엣지를, 라이트닝 룰렛·크레이지타임은 높은 배당 변동성을 가집니다."
               </blockquote>
               {/* YMYL: RTP 출처 */}
               <p className="text-xs text-gray-600 mb-4">
@@ -254,7 +266,7 @@ export default function LiveCasinoPage() {
               </p>
               {/* YMYL: 손실 위험 경고 */}
               <div className="bg-red-950/40 border border-red-800/50 rounded-lg px-5 py-3 text-xs text-red-300">
-                ⚠️ <strong>손실 위험 안내:</strong> 모든 카지노 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. RTP가 높은 게임도 단기 손실을 보장하지 않습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
+                <span aria-hidden="true">⚠️</span> <strong>손실 위험 안내:</strong> 모든 카지노 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. RTP가 높은 게임도 단기 손실을 보장하지 않습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
               </div>
             </article>
 
@@ -304,7 +316,7 @@ export default function LiveCasinoPage() {
                 <span className="text-yellow-400 mr-3">#04</span> 모바일 최적화: 언제 어디서나 HD 품질
               </h3>
               <p className="mb-6">
-                에볼루션 라이브카지노 전체 트래픽의 <strong>60% 이상이 모바일</strong>에서 발생합니다. HTML5 기반으로 iOS·Android 모든 기기에서 별도 앱 설치 없이 모바일 브라우저로 이용 가능합니다. 세로 모드에서도 완벽하게 최적화된 UI를 제공하며, 터치 인터페이스로 베팅·채팅·게임 기록 확인이 모두 가능합니다.
+                에볼루션 라이브카지노는 모바일 이용 비율이 높습니다. HTML5 기반으로 iOS·Android 모든 기기에서 별도 앱 설치 없이 모바일 브라우저로 이용 가능합니다. 세로 모드에서도 완벽하게 최적화된 UI를 제공하며, 터치 인터페이스로 베팅·채팅·게임 기록 확인이 모두 가능합니다.
               </p>
               <div className="bg-black/50 p-6 rounded-xl border border-gray-800">
                 <h4 className="text-white font-bold mb-4">모바일 최적 환경 체크리스트</h4>
@@ -327,7 +339,7 @@ export default function LiveCasinoPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {features.map((f) => (
                 <div key={f.title} className="bg-gray-900 rounded-xl p-5 border border-gray-700 hover:border-yellow-400 transition">
-                  <div className="text-3xl mb-3">{f.icon}</div>
+                  <div className="text-3xl mb-3" aria-hidden="true">{f.icon}</div>
                   <h3 className="text-yellow-400 font-bold text-base mb-2">{f.title}</h3>
                   <p className="text-gray-400 text-sm">{f.desc}</p>
                 </div>
