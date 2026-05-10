@@ -7,11 +7,18 @@ from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env.local'))
 from datetime import datetime, timedelta
 from google import genai
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 import random
 
 # ── API 키 ────────────────────────────────────────
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
+
+# ── Google Indexing API ───────────────────────────
+SITE_URL           = os.environ.get("SITE_URL", "https://wooriwin.com")  # 실제 도메인으로 변경
+SERVICE_ACCOUNT_FILE = os.path.join(os.path.dirname(__file__), "service_account.json")
+INDEXING_SCOPES    = ["https://www.googleapis.com/auth/indexing"]
 
 # ── 경로 ──────────────────────────────────────────
 BASE_DIR      = os.path.join(os.path.dirname(__file__), "..")
@@ -761,6 +768,34 @@ def save_post(slug, content_data, image_url, category, date, related_posts):
 
 
 # ─────────────────────────────────────────────────
+# Google Indexing API — 색인 요청
+# ─────────────────────────────────────────────────
+
+def request_google_indexing(slug: str):
+    """
+    Google Indexing API로 새 포스트 URL 색인 요청.
+    service_account.json 파일이 scripts/ 폴더에 있어야 함.
+    """
+    if not os.path.exists(SERVICE_ACCOUNT_FILE):
+        print(f"  ⚠️ service_account.json 없음 → 색인 요청 스킵")
+        return
+
+    url = f"{SITE_URL}/blog/{slug}"
+    try:
+        credentials = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=INDEXING_SCOPES
+        )
+        service = build("indexing", "v3", credentials=credentials, cache_discovery=False)
+        response = service.urlNotifications().publish(
+            body={"url": url, "type": "URL_UPDATED"}
+        ).execute()
+        print(f"  ✅ Google 색인 요청 완료: {url}")
+        print(f"     응답: {response.get('urlNotificationMetadata', {}).get('latestUpdate', {})}")
+    except Exception as e:
+        print(f"  ⚠️ Google 색인 요청 실패: {e}")
+
+
+# ─────────────────────────────────────────────────
 # 메인
 # ─────────────────────────────────────────────────
 
@@ -843,6 +878,9 @@ def main():
         # Step 5 — 저장ㄹ
         content_data["slug"] = slug  # ensure_unique_slug 결과 반영
         save_post(slug, content_data, image_url, category, date, related_posts)
+
+        # Step 6 — Google 색인 요청
+        request_google_indexing(slug)
 
         used_ids.append(topic_data["id"])
         save_used_topics(used_ids)
