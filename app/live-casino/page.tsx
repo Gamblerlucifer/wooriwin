@@ -2,84 +2,129 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// ─── 타입 정의 ───────────────────────────────────────────────
+type FAQItem = {
+  '@type': 'Question'
+  name: string
+  acceptedAnswer: { '@type': 'Answer'; text: string }
+}
+
+type Feature = {
+  icon: string
+  title: string
+  desc: string
+}
+
+
+// ─── 메타데이터 ──────────────────────────────────────────────
 export const metadata: Metadata = {
   title: '에볼루션 라이브카지노 완벽 가이드 2026 | WOORIWIN',
-  description: '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리. 바카라, 블랙잭, 룰렛, 게임쇼까지 모든 라이브 게임 총망라.',
+  description:
+    '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리. 바카라, 블랙잭, 룰렛, 게임쇼까지 모든 라이브 게임 총망라. 초보자도 쉽게 이해하는 가이드.',
   keywords: ['에볼루션 라이브카지노', '에볼루션카지노 라이브', '라이브카지노', '라이브 딜러 카지노'],
   alternates: { canonical: 'https://wooriwin.com/live-casino' },
   openGraph: {
     title: '에볼루션 라이브카지노 완벽 가이드 2026 | WOORIWIN',
-    description: '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리.',
+    description:
+      '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리. 바카라, 블랙잭, 룰렛, 게임쇼까지 모든 라이브 게임 총망라.',
     url: 'https://wooriwin.com/live-casino',
     images: [{ url: 'https://wooriwin.com/images/live-casino.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: '에볼루션 라이브카지노 완벽 가이드 2026 | WOORIWIN',
-    description: '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리.',
+    description:
+      '에볼루션 라이브카지노 게임 종류·규칙·전략 완벽 정리. 바카라, 블랙잭, 룰렛, 게임쇼까지 모든 라이브 게임 총망라.',
     images: ['https://wooriwin.com/images/live-casino.jpg'],
   },
 }
 
-const jsonLd = {
+// ─── JSON-LD ─────────────────────────────────────────────────
+const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Article',
-      headline: '에볼루션 라이브카지노 완벽 가이드 2026',
-      url: 'https://wooriwin.com/live-casino',
-      inLanguage: 'ko-KR',
-      publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
-    },
-    {
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: '에볼루션 라이브카지노란 무엇인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션 라이브카지노는 실제 딜러가 진행하는 카지노 게임을 HD 영상으로 실시간 스트리밍하는 서비스입니다. 라트비아·조지아·루마니아·캐나다 등의 전문 스튜디오에서 24시간 운영되며, 실제 카드·룰렛으로 진행해 조작 불가능한 공정한 게임을 제공합니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 라이브카지노 가입방법은?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션은 B2B 소프트웨어 제공사로 직접 가입이 불가합니다. 에볼루션 라이선스를 보유한 합법적인 온라인 카지노(WOORIWIN 추천 카지노)에 회원가입 후 입금하면 에볼루션 라이브 로비에 입장할 수 있습니다. 가입은 보통 5분 이내에 완료됩니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 라이브카지노는 공정한가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션카지노는 UKGC(영국 도박위원회)·MGA(몰타 도박청)·DGA(덴마크)·AGCO(캐나다 온타리오) 등 세계 최고 권위 규제 기관의 라이선스를 보유합니다. 모든 게임은 eCOGRA·GLI 등 독립 심사기관의 정기 감사를 받으며, 실물 카드와 룰렛을 사용하므로 조작이 물리적으로 불가능합니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 라이브카지노는 24시간 이용 가능한가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '네, 에볼루션 라이브카지노는 24시간 365일 운영됩니다. 전 세계 여러 스튜디오가 교대로 운영되며, 바카라·블랙잭·룰렛 등 주요 게임은 항상 라이브 테이블이 열려 있습니다. 새벽 시간대에도 딜러 부족 없이 이용 가능합니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 살롱 프리베(Salon Privé)란 무엇인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '살롱 프리베는 에볼루션의 VIP 전용 프라이빗 라이브 테이블입니다. 바카라·블랙잭·룰렛의 고액 한도 테이블로 구성되며, 일반 테이블에 노출되지 않는 프라이빗 환경을 제공합니다. 입장 기준은 카지노마다 다릅니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 라이브카지노 한국어 딜러가 있나요?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션 표준 테이블은 영어·다국어로 진행됩니다. 일부 카지노 파트너는 한국어 딜러 전용 테이블을 별도로 운영하기도 합니다. 한국어 서비스를 원한다면 WOORIWIN 추천 카지노 중 한국어 딜러 제공 카지노를 선택하세요.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 라이브카지노 모바일 품질은 어떤가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션 라이브카지노는 HTML5 기반으로 iOS·Android에서 앱 설치 없이 브라우저에서 이용 가능합니다. 모바일 전용 UI가 최적화되어 있으며, LTE·5G 환경에서 끊김 없는 HD 스트리밍을 지원합니다. WiFi 환경을 권장합니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 라이브카지노 입출금 방식은?',
-          acceptedAnswer: { '@type': 'Answer', text: '입출금 방식은 각 카지노마다 다릅니다. 주요 방식으로는 암호화폐(비트코인·USDT 등), 신용/직불카드, 전자지갑(스크릴·네텔러) 등이 있습니다. WOORIWIN에서는 빠른 입출금과 보안이 검증된 카지노를 추천합니다.' },
-        },
-      ],
-    },
-  ],
+  '@type': 'Article',
+  headline: '에볼루션 라이브카지노 완벽 가이드 2026',
+  url: 'https://wooriwin.com/live-casino',
+  inLanguage: 'ko-KR',
+  datePublished: '2026-01-01',
+  dateModified: '2026-05-10',
+  author: { '@type': 'Person', name: 'Gambler Lucifer', url: 'https://wooriwin.com/about' },
+  publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
 }
 
-const features = [
+const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '에볼루션 라이브카지노란 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션 라이브카지노는 실제 딜러가 진행하는 카지노 게임을 HD 영상으로 실시간 스트리밍하는 서비스입니다. 라트비아·조지아·루마니아·캐나다 등의 전문 스튜디오에서 24시간 운영되며, 실제 카드·룰렛으로 진행해 조작 불가능한 공정한 게임을 제공합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 라이브카지노 가입방법은?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션은 B2B 소프트웨어 제공사로 직접 가입이 불가합니다. 에볼루션 라이선스를 보유한 합법적인 온라인 카지노(WOORIWIN 추천 카지노)에 회원가입 후 입금하면 에볼루션 라이브 로비에 입장할 수 있습니다. 가입은 보통 5분 이내에 완료됩니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 라이브카지노는 공정한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션카지노는 UKGC(영국 도박위원회)·MGA(몰타 도박청)·DGA(덴마크)·AGCO(캐나다 온타리오) 등 세계 최고 권위 규제 기관의 라이선스를 보유합니다. 모든 게임은 eCOGRA·GLI 등 독립 심사기관의 정기 감사를 받으며, 실물 카드와 룰렛을 사용하므로 조작이 물리적으로 불가능합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 라이브카지노는 24시간 이용 가능한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '네, 에볼루션 라이브카지노는 24시간 365일 운영됩니다. 전 세계 여러 스튜디오가 교대로 운영되며, 바카라·블랙잭·룰렛 등 주요 게임은 항상 라이브 테이블이 열려 있습니다. 새벽 시간대에도 딜러 부족 없이 이용 가능합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 살롱 프리베(Salon Privé)란 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '살롱 프리베는 에볼루션의 VIP 전용 프라이빗 라이브 테이블입니다. 바카라·블랙잭·룰렛의 고액 한도 테이블로 구성되며, 일반 테이블에 노출되지 않는 프라이빗 환경을 제공합니다. 입장 기준은 카지노마다 다릅니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 라이브카지노 한국어 딜러가 있나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션 표준 테이블은 영어·다국어로 진행됩니다. 일부 카지노 파트너는 한국어 딜러 전용 테이블을 별도로 운영하기도 합니다. 한국어 서비스를 원한다면 WOORIWIN 추천 카지노 중 한국어 딜러 제공 카지노를 선택하세요.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 라이브카지노 모바일 품질은 어떤가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션 라이브카지노는 HTML5 기반으로 iOS·Android에서 앱 설치 없이 브라우저에서 이용 가능합니다. 모바일 전용 UI가 최적화되어 있으며, LTE·5G 환경에서 끊김 없는 HD 스트리밍을 지원합니다. WiFi 환경을 권장합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 라이브카지노 입출금 방식은?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '입출금 방식은 각 카지노마다 다릅니다. 주요 방식으로는 암호화폐(비트코인·USDT 등), 신용/직불카드, 전자지갑(스크릴·네텔러) 등이 있습니다. WOORIWIN에서는 빠른 입출금과 보안이 검증된 카지노를 추천합니다.',
+      },
+    },
+  ] satisfies FAQItem[],
+}
+
+// ─── 데이터 ──────────────────────────────────────────────────
+const features: Feature[] = [
   { icon: '🎬', title: 'HD 실시간 스트리밍', desc: '전문 스튜디오에서 실제 딜러가 24/7 HD 품질로 진행. 지연 없는 라이브 경험.' },
   { icon: '🔒', title: '세계 최고 수준 라이선스', desc: 'UKGC·MGA·DGA 등 최고 권위 규제 기관 라이선스 보유. 완벽한 공정성 보장.' },
   { icon: '📱', title: '완벽한 모바일 지원', desc: 'iOS·Android 브라우저에서 앱 없이 이용. 모바일 전용 UI 최적화.' },
@@ -88,21 +133,14 @@ const features = [
   { icon: '🌍', title: '100개국 서비스', desc: '전 세계 1,000개 이상 카지노에 소프트웨어 공급. 업계 절대 표준.' },
 ]
 
-const relatedLinks = [
-  { href: '/', label: '에볼루션카지노 메인' },
-  { href: '/baccarat', label: '에볼루션카지노 바카라' },
-  { href: '/blackjack', label: '에볼루션카지노 블랙잭' },
-  { href: '/roulette', label: '에볼루션카지노 룰렛' },
-  { href: '/slots', label: '에볼루션카지노 슬롯' },
-  { href: '/blog', label: '라이브카지노 전략 블로그' },
-]
-
+// ─── 페이지 컴포넌트 ─────────────────────────────────────────
 export default function LiveCasinoPage() {
-  const faqList = (jsonLd['@graph'][1] as any).mainEntity
+  const faqList: FAQItem[] = jsonLdFaq.mainEntity
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -111,8 +149,10 @@ export default function LiveCasinoPage() {
             <Image src="/images/live-casino.jpg" alt="에볼루션 라이브카지노 스튜디오 딜러" fill className="object-cover opacity-25" priority />
           </div>
           <div className="relative z-10 max-w-4xl mx-auto">
-            <nav className="text-sm text-gray-400 mb-6">
-              <Link href="/" className="hover:text-yellow-400">홈</Link> &rsaquo; <span className="text-white">라이브카지노</span>
+            <nav aria-label="breadcrumb" className="text-sm text-gray-400 mb-6">
+              <Link href="/" className="hover:text-yellow-400">홈</Link>
+              {' '}&rsaquo;{' '}
+              <span className="text-white" aria-current="page">라이브카지노</span>
             </nav>
             <p className="text-sm text-yellow-400 font-semibold tracking-widest uppercase mb-4">24/7 HD 스트리밍 · UKGC·MGA 라이선스</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
@@ -125,15 +165,27 @@ export default function LiveCasinoPage() {
           </div>
         </section>
 
+        {/* 본문 */}
         <section className="max-w-4xl mx-auto px-4 py-20 text-gray-300">
-          <header className="mb-16 border-b border-gray-800 pb-10">
+          {/* ① SEO: 정보 최신성 고지 */}
+          <p className="text-xs text-gray-500 mb-8 text-right">본 정보는 2026년 5월 기준이며, 실제 게임 수치는 운영사 정책에 따라 변동될 수 있습니다.</p>
+
+          {/* 메인 헤드라인 */}
+          <header className="mb-16 border-b border-gray-800 pb-8">
             <div className="flex items-center space-x-3 mb-4">
-              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Live Casino</span>
+              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Strategy Game</span>
+            </div>
+            {/* E-E-A-T: 저자 */}
+            <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
+              <span>작성자</span>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Gambler Lucifer</Link>
+              <span>·</span>
+              <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-extrabold mb-6 text-white border-b border-gray-800 pb-4">
               에볼루션 라이브카지노: <span className="text-yellow-400 text-xl md:text-2xl">20년 기술력이 만든 세계 표준</span>
             </h2>
-            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl">
+            <p className="text-xl text-gray-400 leading-relaxed mb-6">
               단순한 온라인 게임이 아닙니다. 실제 딜러, 실제 카드, 실제 룰렛 휠. 에볼루션이 만든 라이브카지노는 오프라인 카지노의 긴장감과 온라인의 편의성을 완벽하게 융합한 새로운 차원의 경험입니다.
             </p>
           </header>
@@ -149,7 +201,8 @@ export default function LiveCasinoPage() {
                 <strong>에볼루션카지노(Evolution Gaming)</strong>는 2006년 설립 이후 단 한 번도 업계 1위 자리를 내준 적이 없습니다. 그 비결은 단순합니다. 경쟁사가 흉내 낼 수 없는 <strong>하드웨어 기술력</strong>과 <strong>운영 노하우</strong>입니다. 라트비아 리가, 조지아 트빌리시, 캐나다 밴쿠버 등 전 세계 스튜디오에서 24시간 365일 HD 스트리밍이 끊김 없이 제공됩니다.
               </p>
               <p>
-                에볼루션의 모든 게임은 <strong>UKGC(영국 도박위원회)</strong>와 <strong>MGA(몰타 게임청)</strong> 라이선스를 보유하고 있으며, eCOGRA 등 국제 공인기관의 정기 감사를 통해 공정성이 검증됩니다. 실물 카드·룰렛 휠을 사용하기 때문에 RNG 게임과 달리 결과 조작이 물리적으로 불가능합니다.
+                에볼루션의 모든 게임은 <strong>UKGC(영국 도박위원회)</strong>와 <strong>MGA(몰타 게임청)</strong> 라이선스를 보유하고 있으며,{' '}
+                <a href="https://ecogra.org" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:underline">eCOGRA</a> 등 국제 공인기관의 정기 감사를 통해 공정성이 검증됩니다. 실물 카드·룰렛 휠을 사용하기 때문에 RNG 게임과 달리 결과 조작이 물리적으로 불가능합니다.
               </p>
             </article>
 
@@ -175,12 +228,24 @@ export default function LiveCasinoPage() {
                   <p className="text-xs mt-2 text-gray-500">최대 500x 멀티플라이어</p>
                 </div>
               </div>
-              <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400">
+              <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400 mb-4">
                 "게임 선택이 곧 전략입니다. 장기적인 수익을 추구한다면 RTP가 높은 바카라·블랙잭이 유리하고, 단기 고배당을 노린다면 라이트닝 룰렛·크레이지타임이 적합합니다."
               </blockquote>
+              {/* YMYL: RTP 출처 */}
+              <p className="text-xs text-gray-600 mb-4">
+                ※ RTP 수치 출처:{' '}
+                <a href="https://www.evolution.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-400">
+                  Evolution Gaming 공식 게임 수학 문서
+                </a>
+                . 수치는 이론적 기댓값이며 실제 결과와 다를 수 있습니다.
+              </p>
+              {/* YMYL: 손실 위험 경고 */}
+              <div className="bg-red-950/40 border border-red-800/50 rounded-lg px-5 py-3 text-xs text-red-300">
+                ⚠️ <strong>손실 위험 안내:</strong> 모든 카지노 게임은 장기적으로 하우스 엣지가 존재하며, 손실이 발생할 수 있습니다. RTP가 높은 게임도 단기 손실을 보장하지 않습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
+              </div>
             </article>
 
-            {/* 섹션 3 */}
+            {/* 섹션 3: 게임 라인업 */}
             <article className="bg-gray-800/20 p-8 rounded-3xl border border-gray-800 shadow-2xl">
               <h3 className="text-2xl font-bold text-white mb-8 italic">Evolution Innovation: 200종 게임 라인업</h3>
               <div className="space-y-10">
@@ -220,7 +285,7 @@ export default function LiveCasinoPage() {
               </div>
             </article>
 
-            {/* 섹션 4 */}
+            {/* 섹션 4: 모바일 */}
             <article>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
                 <span className="text-yellow-400 mr-3">#04</span> 모바일 최적화: 언제 어디서나 HD 품질
@@ -238,33 +303,6 @@ export default function LiveCasinoPage() {
                 </ul>
               </div>
             </article>
-
-            {/* 섹션 5: Responsible Gaming */}
-            <footer className="pt-12 border-t border-gray-800 text-left">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
-                <div className="max-w-2xl">
-                  <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tighter">
-                    Responsible Gaming & Strategy
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed mb-6">
-                    <span className="text-white font-semibold">WOORIWIN</span>은 단순한 정보 제공을 넘어, 건전하고 지속 가능한 게임 문화를 지향합니다.
-                    에볼루션 라이브카지노의 모든 게임 분석과 가이드는 오직 플레이어 여러분의 현명한 선택을 돕기 위해 존재합니다.
-                  </p>
-                  <p className="text-gray-400 leading-relaxed">
-                    에볼루션이 제공하는 기술의 정점을 만끽하시되, 항상 본인만의 자산 관리 원칙을 준수하시길 권장합니다.
-                  </p>
-                </div>
-                <div className="bg-yellow-400/5 p-6 rounded-2xl border border-yellow-400/20 md:min-w-[320px]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                    <p className="text-yellow-400 font-bold uppercase tracking-widest text-sm">WOORIWIN CHECK</p>
-                  </div>
-                  <p className="text-sm text-gray-300 leading-snug">
-                    "에볼루션 라이브카지노는 게임의 공정성을 보장하지만, 장기적 수익은 보장하지 않습니다. 게임은 엔터테인먼트입니다. 즐길 수 있는 범위 안에서 플레이하세요."
-                  </p>
-                </div>
-              </div>
-            </footer>
           </div>
         </section>
 
@@ -289,28 +327,17 @@ export default function LiveCasinoPage() {
         <section className="max-w-4xl mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-10 text-center">에볼루션 라이브카지노 FAQ</h2>
           <div className="space-y-4">
-            {faqList.map((faq: any, i: number) => (
-              <details key={i} className="bg-gray-800 rounded-xl p-5 group cursor-pointer">
+            {faqList.map((faq) => (
+              <details key={faq.name} className="bg-gray-800 rounded-xl p-5 group cursor-pointer">
                 <summary className="font-semibold text-base text-white flex justify-between items-center list-none">
                   {faq.name}
-                  <span className="text-yellow-400 text-xl transition-transform group-open:rotate-45">+</span>
+                  <span aria-hidden="true" className="text-yellow-400 text-xl transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-4 text-gray-400 text-sm leading-relaxed">{faq.acceptedAnswer.text}</p>
               </details>
             ))}
           </div>
         </section>
-
-        {/* 내부 링크 */}
-        <footer className="bg-gray-950 py-10 px-4 text-center">
-          <p className="text-gray-500 text-sm mb-4">관련 에볼루션카지노 가이드</p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            {relatedLinks.map((l) => (
-              <Link key={l.href} href={l.href} className="text-gray-400 hover:text-yellow-400 transition">{l.label}</Link>
-            ))}
-          </div>
-          <p className="text-gray-600 text-xs mt-8">© 2026 WOORIWIN. All rights reserved.</p>
-        </footer>
       </main>
     </>
   )

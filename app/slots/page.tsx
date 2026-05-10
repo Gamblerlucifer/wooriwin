@@ -2,82 +2,131 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// ─── 타입 정의 ───────────────────────────────────────────────
+type FAQItem = {
+  '@type': 'Question'
+  name: string
+  acceptedAnswer: { '@type': 'Answer'; text: string }
+}
+
+type GameShow = {
+  name: string
+  desc: string
+  rtp: string
+}
+
+// ─── 메타데이터 ──────────────────────────────────────────────
 export const metadata: Metadata = {
   title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
   description:
-    '에볼루션카지노 슬롯 게임 총정리. 크레이지타임, 모노폴리 라이브, 딜 오어 노딜 등 게임쇼 완벽 정리. NetEnt·Red Tiger 슬롯까지 에볼루션 슬롯 완전 공략.',
+    '에볼루션카지노 슬롯 게임 총정리. 크레이지타임, 모노폴리 라이브, 딜 오어 노딜 등 게임쇼 완벽 정리. NetEnt·Red Tiger 슬롯까지 에볼루션 슬롯 완전 공략. 초보자도 쉽게 이해하는 가이드.',
   keywords: ['에볼루션카지노 슬롯', '에볼루션 슬롯', '크레이지타임', '모노폴리 라이브', '에볼루션 게임쇼', '라이브 슬롯'],
   alternates: { canonical: 'https://wooriwin.com/slots' },
   openGraph: {
     title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
-    description: '크레이지타임·모노폴리 라이브 등 에볼루션 슬롯·게임쇼 완벽 정리.',
+    description:
+      '크레이지타임·모노폴리 라이브 등 에볼루션 슬롯·게임쇼 완벽 정리. NetEnt·Red Tiger 슬롯까지 총망라.',
     url: 'https://wooriwin.com/slots',
     siteName: 'WOORIWIN',
     locale: 'ko_KR',
     type: 'article',
     images: [{ url: 'https://wooriwin.com/images/slots.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: '에볼루션카지노 슬롯 완벽 가이드 2026 | WOORIWIN',
+    description:
+      '크레이지타임·모노폴리 라이브 등 에볼루션 슬롯·게임쇼 완벽 정리. NetEnt·Red Tiger 슬롯까지 총망라.',
+    images: ['https://wooriwin.com/images/slots.jpg'],
+  },
 }
 
-const jsonLd = {
+// ─── JSON-LD ─────────────────────────────────────────────────
+const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Article',
-      headline: '에볼루션카지노 슬롯 완벽 가이드 2026',
-      url: 'https://wooriwin.com/slots',
-      inLanguage: 'ko-KR',
-      publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
-    },
-    {
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: '에볼루션카지노 슬롯과 라이브 게임의 차이는?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션카지노의 슬롯은 RNG(난수생성기) 기반의 디지털 게임으로 NetEnt·Red Tiger·Nolimit City 등 계열사 브랜드가 제공합니다. 라이브 게임은 실제 딜러가 실시간 진행하는 게임입니다. 게임쇼(크레이지타임 등)는 라이브 게임이지만 슬롯 요소가 결합된 하이브리드 형식입니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '크레이지타임이란 무엇인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '크레이지타임(Crazy Time)은 에볼루션의 대표 라이브 게임쇼입니다. 거대한 머니 휠을 스핀하여 착지 칸에 따라 배당을 받거나 4가지 보너스 게임(캐시 헌트·코인 플립·퍼시피코·크레이지타임)에 진입합니다. 크레이지타임 보너스의 최대 당첨은 이론상 2만배 이상입니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 슬롯 RTP는 평균 얼마인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션 계열(NetEnt·Red Tiger) 슬롯의 평균 RTP는 96% 전후입니다. 인기 타이틀인 Starburst는 96.09%, Gonzo\'s Quest는 95.97%, Divine Fortune은 96.59%입니다. 일부 고변동성 슬롯은 RTP가 97~98%에 달하지만 잭팟에 집중된 구조입니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '모노폴리 라이브는 어떤 게임인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '모노폴리 라이브(Monopoly Live)는 에볼루션과 Hasbro가 협력하여 만든 라이브 게임쇼입니다. 머니 휠 스핀 후 보너스에 진입하면 3D 모노폴리 보드게임이 시뮬레이션되며 다수의 당첨 기회를 제공합니다. 보너스 최대 당첨은 수백 배에 달합니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 메가볼이란 무엇인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '메가볼(Mega Ball)은 에볼루션의 라이브 복권 스타일 게임입니다. 여러 장의 카드를 구입 후 번호가 추첨되며, 카드에 당첨 번호가 많을수록 더 높은 배당을 받습니다. 메가볼 번호가 추첨되면 최대 1,000,000배까지 멀티플라이어가 적용됩니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: 'NetEnt와 Red Tiger는 에볼루션과 어떤 관계인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: 'NetEnt는 2020년, Red Tiger는 2019년 에볼루션에 인수된 슬롯 제공업체입니다. NetEnt는 Starburst·Gonzo\'s Quest 등 클래식 슬롯으로 유명하고, Red Tiger는 고변동성 메가웨이즈 슬롯으로 유명합니다. 에볼루션 라이선스 카지노에서 이 브랜드 슬롯도 함께 이용 가능합니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 드림 캐처란 무엇인가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '드림 캐처(Dream Catcher)는 에볼루션 최초의 라이브 머니 휠 게임쇼입니다. 1·2·5·10·20·40 배당이 표시된 대형 수직 휠을 스핀하여 착지 칸의 배당을 받습니다. 2x·7x 멀티플라이어 칸이 있어 연속 적용 시 높은 배당을 기대할 수 있습니다.' },
-        },
-        {
-          '@type': 'Question',
-          name: '에볼루션 슬롯은 모바일에서 이용 가능한가요?',
-          acceptedAnswer: { '@type': 'Answer', text: '에볼루션 계열 슬롯은 HTML5 기반으로 iOS·Android 모바일 브라우저에서 별도 앱 설치 없이 이용 가능합니다. 라이브 게임쇼(크레이지타임·모노폴리 라이브 등)도 모바일에 완전 최적화되어 있습니다.' },
-        },
-      ],
-    },
-  ],
+  '@type': 'Article',
+  headline: '에볼루션카지노 슬롯 완벽 가이드 2026',
+  url: 'https://wooriwin.com/slots',
+  inLanguage: 'ko-KR',
+  datePublished: '2026-01-01',
+  dateModified: '2026-05-10',
+  author: { '@type': 'Person', name: 'Gambler Lucifer', url: 'https://wooriwin.com/about' },
+  publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
 }
 
-const gameShows = [
+const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '에볼루션카지노 슬롯과 라이브 게임의 차이는?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션카지노의 슬롯은 RNG(난수생성기) 기반의 디지털 게임으로 NetEnt·Red Tiger·Nolimit City 등 계열사 브랜드가 제공합니다. 라이브 게임은 실제 딜러가 실시간 진행하는 게임입니다. 게임쇼(크레이지타임 등)는 라이브 게임이지만 슬롯 요소가 결합된 하이브리드 형식입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '크레이지타임이란 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '크레이지타임(Crazy Time)은 에볼루션의 대표 라이브 게임쇼입니다. 거대한 머니 휠을 스핀하여 착지 칸에 따라 배당을 받거나 4가지 보너스 게임(캐시 헌트·코인 플립·퍼시피코·크레이지타임)에 진입합니다. 크레이지타임 보너스의 최대 당첨은 이론상 2만배 이상입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 슬롯 RTP는 평균 얼마인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "에볼루션 계열(NetEnt·Red Tiger) 슬롯의 평균 RTP는 96% 전후입니다. 인기 타이틀인 Starburst는 96.09%, Gonzo's Quest는 95.97%, Divine Fortune은 96.59%입니다. 일부 고변동성 슬롯은 RTP가 97~98%에 달하지만 잭팟에 집중된 구조입니다.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '모노폴리 라이브는 어떤 게임인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '모노폴리 라이브(Monopoly Live)는 에볼루션과 Hasbro가 협력하여 만든 라이브 게임쇼입니다. 머니 휠 스핀 후 보너스에 진입하면 3D 모노폴리 보드게임이 시뮬레이션되며 다수의 당첨 기회를 제공합니다. 보너스 최대 당첨은 수백 배에 달합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 메가볼이란 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '메가볼(Mega Ball)은 에볼루션의 라이브 복권 스타일 게임입니다. 여러 장의 카드를 구입 후 번호가 추첨되며, 카드에 당첨 번호가 많을수록 더 높은 배당을 받습니다. 메가볼 번호가 추첨되면 최대 1,000,000배까지 멀티플라이어가 적용됩니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'NetEnt와 Red Tiger는 에볼루션과 어떤 관계인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "NetEnt는 2020년, Red Tiger는 2019년 에볼루션에 인수된 슬롯 제공업체입니다. NetEnt는 Starburst·Gonzo's Quest 등 클래식 슬롯으로 유명하고, Red Tiger는 고변동성 메가웨이즈 슬롯으로 유명합니다. 에볼루션 라이선스 카지노에서 이 브랜드 슬롯도 함께 이용 가능합니다.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 드림 캐처란 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '드림 캐처(Dream Catcher)는 에볼루션 최초의 라이브 머니 휠 게임쇼입니다. 1·2·5·10·20·40 배당이 표시된 대형 수직 휠을 스핀하여 착지 칸의 배당을 받습니다. 2x·7x 멀티플라이어 칸이 있어 연속 적용 시 높은 배당을 기대할 수 있습니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '에볼루션 슬롯은 모바일에서 이용 가능한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '에볼루션 계열 슬롯은 HTML5 기반으로 iOS·Android 모바일 브라우저에서 별도 앱 설치 없이 이용 가능합니다. 라이브 게임쇼(크레이지타임·모노폴리 라이브 등)도 모바일에 완전 최적화되어 있습니다.',
+      },
+    },
+  ] satisfies FAQItem[],
+}
+
+// ─── 데이터 ──────────────────────────────────────────────────
+const gameShows: GameShow[] = [
   { name: '크레이지타임', desc: '에볼루션 최고 인기 게임쇼. 최대 2만배+ 보너스 당첨.', rtp: 'RTP 96.08%' },
   { name: '모노폴리 라이브', desc: 'Hasbro 협력 3D 보드게임 결합 라이브 쇼.', rtp: 'RTP 96.23%' },
   { name: '드림 캐처', desc: '에볼루션 최초 머니 휠. 최대 7x 멀티플라이어.', rtp: 'RTP 96.58%' },
@@ -86,20 +135,14 @@ const gameShows = [
   { name: '퍼시피코', desc: '크레이지타임 보너스 게임 독립 버전. 산 정상 등반 컨셉.', rtp: 'RTP 96.00%' },
 ]
 
-const relatedLinks = [
-  { href: '/', label: '에볼루션카지노 메인' },
-  { href: '/baccarat', label: '에볼루션카지노 바카라' },
-  { href: '/roulette', label: '에볼루션카지노 룰렛' },
-  { href: '/live-casino', label: '에볼루션 라이브카지노' },
-  { href: '/blog', label: '슬롯 전략 블로그' },
-]
-
+// ─── 페이지 컴포넌트 ─────────────────────────────────────────
 export default function SlotsPage() {
-  const faqList = (jsonLd['@graph'][1] as any).mainEntity
+  const faqList: FAQItem[] = jsonLdFaq.mainEntity
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -108,8 +151,10 @@ export default function SlotsPage() {
             <Image src="/images/slots.jpg" alt="에볼루션카지노 크레이지타임 게임쇼 휠" fill className="object-cover opacity-25" priority />
           </div>
           <div className="relative z-10 max-w-4xl mx-auto">
-            <nav className="text-sm text-gray-400 mb-6">
-              <Link href="/" className="hover:text-yellow-400">홈</Link> &rsaquo; <span className="text-white">슬롯</span>
+            <nav aria-label="breadcrumb" className="text-sm text-gray-400 mb-6">
+              <Link href="/" className="hover:text-yellow-400">홈</Link>
+              {' '}&rsaquo;{' '}
+              <span className="text-white" aria-current="page">슬롯</span>
             </nav>
             <p className="text-sm text-yellow-400 font-semibold tracking-widest uppercase mb-4">크레이지타임 최대 2만배 · NetEnt·Red Tiger 슬롯</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
@@ -122,15 +167,27 @@ export default function SlotsPage() {
           </div>
         </section>
 
+        {/* 본문 */}
         <section className="max-w-4xl mx-auto px-4 py-20 text-gray-300">
-          <header className="mb-16 border-b border-gray-800 pb-10">
+          {/* ① SEO: 정보 최신성 고지 */}
+          <p className="text-xs text-gray-500 mb-8 text-right">본 정보는 2026년 5월 기준이며, 실제 게임 수치는 운영사 정책에 따라 변동될 수 있습니다.</p>
+
+          {/* 메인 헤드라인 */}
+          <header className="mb-16 border-b border-gray-800 pb-8">
             <div className="flex items-center space-x-3 mb-4">
-              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Slots & Game Show</span>
+              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Strategy Game</span>
+            </div>
+            {/* E-E-A-T: 저자 */}
+            <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
+              <span>작성자</span>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Gambler Lucifer</Link>
+              <span>·</span>
+              <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-extrabold mb-6 text-white border-b border-gray-800 pb-4">
               에볼루션 슬롯: <span className="text-yellow-400 text-xl md:text-2xl">게임쇼와 슬롯의 경계를 허물다</span>
             </h2>
-            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl">
+            <p className="text-xl text-gray-400 leading-relaxed mb-6">
               단순히 릴을 돌리는 슬롯의 시대는 끝났습니다. 에볼루션은 라이브 딜러·대형 세트장·멀티플라이어를 결합한 완전히 새로운 카테고리를 창조했습니다. 크레이지타임 한 번의 보너스가 인생을 바꿀 수 있습니다.
             </p>
           </header>
@@ -146,7 +203,8 @@ export default function SlotsPage() {
                 에볼루션 슬롯을 처음 접하는 플레이어가 가장 많이 혼동하는 것은 <strong>라이브 게임쇼와 RNG 슬롯의 차이</strong>입니다. 라이브 게임쇼는 실제 딜러와 대형 세트장에서 실시간으로 진행되는 반면, RNG 슬롯은 난수생성기 기반의 전통적인 슬롯 머신입니다. 에볼루션은 NetEnt·Red Tiger·Nolimit City 인수로 두 세계를 모두 장악했습니다.
               </p>
               <p>
-                선택 기준은 명확합니다. <strong>엔터테인먼트와 대형 당첨</strong>을 원한다면 라이브 게임쇼, <strong>안정적인 RTP와 다양한 테마</strong>를 원한다면 NetEnt·Red Tiger 슬롯이 적합합니다.
+                선택 기준은 명확합니다. <strong>엔터테인먼트와 대형 당첨</strong>을 원한다면 라이브 게임쇼, <strong>안정적인 RTP와 다양한 테마</strong>를 원한다면 NetEnt·Red Tiger 슬롯이 적합합니다. 모든 게임의 공정성은{' '}
+                <a href="https://ecogra.org" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:underline">eCOGRA</a> 등 국제 공인기관의 정기 감사를 통해 검증됩니다.
               </p>
             </article>
 
@@ -172,12 +230,24 @@ export default function SlotsPage() {
                   <p className="text-xs mt-2 text-red-400">최대 1,000,000배 멀티플라이어</p>
                 </div>
               </div>
-              <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400">
+              <blockquote className="border-l-4 border-gray-500 pl-4 italic text-sm text-gray-400 mb-4">
                 "RTP만 보고 슬롯을 선택하는 것은 절반만 맞습니다. 변동성(Volatility)을 함께 확인하세요. 고변동성 슬롯은 당첨 빈도는 낮지만 대형 당첨이 가능합니다. 저변동성은 작은 당첨이 자주 발생해 뱅크롤을 오래 유지할 수 있습니다."
               </blockquote>
+              {/* YMYL: RTP 출처 */}
+              <p className="text-xs text-gray-600 mb-4">
+                ※ RTP 수치 출처:{' '}
+                <a href="https://www.evolution.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-400">
+                  Evolution Gaming 공식 게임 수학 문서
+                </a>
+                . 수치는 이론적 기댓값이며 실제 결과와 다를 수 있습니다.
+              </p>
+              {/* YMYL: 손실 위험 경고 */}
+              <div className="bg-red-950/40 border border-red-800/50 rounded-lg px-5 py-3 text-xs text-red-300">
+                ⚠️ <strong>손실 위험 안내:</strong> 모든 슬롯 및 게임쇼는 장기적으로 하우스 엣지가 존재하며 손실이 발생할 수 있습니다. 크레이지타임 등 고변동성 게임은 당첨 빈도가 낮고 단기 손실이 클 수 있습니다. 자신의 재정 범위 내에서만 게임을 즐기시기 바랍니다.
+              </div>
             </article>
 
-            {/* 섹션 3 */}
+            {/* 섹션 3: 게임쇼의 혁명 */}
             <article className="bg-gray-800/20 p-8 rounded-3xl border border-gray-800 shadow-2xl">
               <h3 className="text-2xl font-bold text-white mb-8 italic">Evolution Innovation: 게임쇼의 혁명</h3>
               <div className="space-y-10">
@@ -217,7 +287,7 @@ export default function SlotsPage() {
               </div>
             </article>
 
-            {/* 섹션 4 */}
+            {/* 섹션 4: RNG 슬롯 */}
             <article>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
                 <span className="text-yellow-400 mr-3">#04</span> RNG 슬롯: NetEnt·Red Tiger의 세계
@@ -235,33 +305,6 @@ export default function SlotsPage() {
                 </ul>
               </div>
             </article>
-
-            {/* 섹션 5: Responsible Gaming */}
-            <footer className="pt-12 border-t border-gray-800 text-left">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
-                <div className="max-w-2xl">
-                  <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tighter">
-                    Responsible Gaming & Strategy
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed mb-6">
-                    <span className="text-white font-semibold">WOORIWIN</span>은 단순한 정보 제공을 넘어, 건전하고 지속 가능한 게임 문화를 지향합니다.
-                    에볼루션 슬롯·게임쇼의 모든 분석 데이터는 오직 플레이어 여러분의 현명한 선택을 돕기 위해 존재합니다.
-                  </p>
-                  <p className="text-gray-400 leading-relaxed">
-                    에볼루션이 제공하는 기술의 정점을 만끽하시되, 항상 본인만의 자산 관리 원칙을 준수하시길 권장합니다.
-                  </p>
-                </div>
-                <div className="bg-yellow-400/5 p-6 rounded-2xl border border-yellow-400/20 md:min-w-[320px]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                    <p className="text-yellow-400 font-bold uppercase tracking-widest text-sm">WOORIWIN CHECK</p>
-                  </div>
-                  <p className="text-sm text-gray-300 leading-snug">
-                    "크레이지타임 2만배는 이론적 최대값입니다. 슬롯과 게임쇼는 엔터테인먼트입니다. 잃어도 괜찮은 금액만 베팅하고, 당첨은 보너스로 생각하세요."
-                  </p>
-                </div>
-              </div>
-            </footer>
           </div>
         </section>
 
@@ -286,11 +329,11 @@ export default function SlotsPage() {
         <section className="max-w-4xl mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-10 text-center">에볼루션카지노 슬롯 FAQ</h2>
           <div className="space-y-4">
-            {faqList.map((faq: any, i: number) => (
-              <details key={i} className="bg-gray-800 rounded-xl p-5 group cursor-pointer">
+            {faqList.map((faq) => (
+              <details key={faq.name} className="bg-gray-800 rounded-xl p-5 group cursor-pointer">
                 <summary className="font-semibold text-base text-white flex justify-between items-center list-none">
                   {faq.name}
-                  <span className="text-yellow-400 text-xl transition-transform group-open:rotate-45">+</span>
+                  <span aria-hidden="true" className="text-yellow-400 text-xl transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-4 text-gray-400 text-sm leading-relaxed">{faq.acceptedAnswer.text}</p>
               </details>
@@ -298,16 +341,6 @@ export default function SlotsPage() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="bg-gray-950 py-10 px-4 text-center">
-          <p className="text-gray-500 text-sm mb-4">관련 에볼루션카지노 가이드</p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            {relatedLinks.map((l) => (
-              <Link key={l.href} href={l.href} className="text-gray-400 hover:text-yellow-400 transition">{l.label}</Link>
-            ))}
-          </div>
-          <p className="text-gray-600 text-xs mt-8">© 2026 WOORIWIN. All rights reserved.</p>
-        </footer>
       </main>
     </>
   )

@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // [추가] WebP/AVIF 자동 변환 → slots.jpg 등 55KiB 절감
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
@@ -10,6 +12,37 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          // HSTS
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          // Clickjacking 방지
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          // COOP
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
+          // XSS 방지
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+        ],
+      },
+    ];
+  },
+
   async redirects() {
     return [
       // ── 에볼루션카지노.site → wooriwin.com 301 리다이렉트 ──

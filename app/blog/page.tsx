@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { readFileSync, readdirSync, existsSync } from 'fs'
 import { join } from 'path'
+import CategoryFilter from './CategoryFilter'
 
 const POSTS_DIR = join(process.cwd(), 'data', 'posts')
 
@@ -14,9 +15,7 @@ function getAllPosts() {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
-// ✅ title에서 | WOORIWIN 제거
-// ✅ OG에서 siteName, locale 제거 (layout 상속)
-// ✅ twitter 추가
+// ─── 메타데이터 ────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
   title: '에볼루션카지노 전략 블로그 | WOORIWIN',
   description:
@@ -38,6 +37,7 @@ export const metadata: Metadata = {
   },
 }
 
+// ─── JSON-LD (① SEO 개선: author/datePublished/dateModified 추가) ─────────
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
@@ -45,18 +45,19 @@ const jsonLd = {
   description: '에볼루션카지노 바카라·블랙잭·룰렛 전략, 규칙, 팁 전문 블로그',
   url: 'https://wooriwin.com/blog',
   inLanguage: 'ko-KR',
+  datePublished: '2026-05-01',
+  dateModified: '2026-05-10',
+  author: {
+    '@type': 'Organization',
+    name: 'Gambler Lucifer',
+    url: 'https://wooriwin.com/about',
+  },
   publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
 }
 
-const categories = ['전체', '바카라', '블랙잭', '룰렛', '슬롯/게임쇼', '가이드']
 
-const relatedLinks = [
-  { href: '/', label: '에볼루션카지노 메인' },
-  { href: '/baccarat', label: '에볼루션카지노 바카라' },
-  { href: '/blackjack', label: '에볼루션카지노 블랙잭' },
-  { href: '/roulette', label: '에볼루션카지노 룰렛' },
-  { href: '/live-casino', label: '에볼루션 라이브카지노' },
-]
+const categories = ['전체', '에볼루션 가이드', '바카라 가이드', '블랙잭 가이드', '게임쇼 분석', '룰렛 & 포커', '최신 트렌드', '자금 관리', '보안 및 라이선스', '모바일 최적화', '책임감 있는 게임']
+
 
 export default function BlogPage() {
   const posts = getAllPosts()
@@ -73,8 +74,8 @@ export default function BlogPage() {
             <Image src="/images/blog.jpg" alt="에볼루션카지노 전략 블로그" fill className="object-cover opacity-20" priority />
           </div>
           <div className="relative z-10 max-w-4xl mx-auto">
-            <nav className="text-sm text-gray-400 mb-6">
-              <Link href="/" className="hover:text-yellow-400">홈</Link> &rsaquo; <span className="text-white">블로그</span>
+            <nav aria-label="breadcrumb" className="text-sm text-gray-400 mb-6">
+              <Link href="/" className="hover:text-yellow-400">홈</Link> &rsaquo; <span className="text-white" aria-current="page">블로그</span>
             </nav>
             <p className="text-sm text-yellow-400 font-semibold tracking-widest uppercase mb-4">매일 업데이트 · 전문가 분석</p>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
@@ -87,62 +88,8 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* 카테고리 탭 */}
-        <section className="max-w-5xl mx-auto px-4 py-8">
-          <div className="flex flex-wrap gap-2 justify-center">
-            {categories.map((cat) => (
-              <span
-                key={cat}
-                className={`px-4 py-2 rounded-full text-sm font-semibold cursor-pointer transition ${
-                  cat === '전체'
-                    ? 'bg-yellow-400 text-gray-900'
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
-                }`}
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        {/* 블로그 포스트 그리드 */}
-        <section className="max-w-5xl mx-auto px-4 pb-16">
-          {posts.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-gray-400">포스트가 없습니다. 자동화 스크립트를 실행하세요.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {posts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all hover:shadow-xl hover:shadow-yellow-400/10"
-                >
-                  <div className="relative h-48 bg-gray-700">
-                    <Image src={post.image} alt={post.imageAlt || post.title} fill className="object-cover group-hover:opacity-90 transition" />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-semibold text-yellow-400 bg-yellow-400/10 px-2 py-1 rounded">
-                        {post.category}
-                      </span>
-                      <span className="text-xs text-gray-500">{post.readTime} 읽기</span>
-                    </div>
-                    <p className="text-base font-bold text-white mb-3 leading-snug group-hover:text-yellow-400 transition line-clamp-2">
-                      {post.title}
-                    </p>
-                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">{post.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">{post.date}</span>
-                      <span className="text-xs text-yellow-400 font-semibold group-hover:underline">자세히 보기 →</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </section>
+        {/* 카테고리 필터 + 포스트 그리드 */}
+        <CategoryFilter posts={posts} categories={categories} />
 
         {/* SEO 본문 */}
         <section className="bg-gray-800 py-16 px-4">
@@ -323,43 +270,8 @@ export default function BlogPage() {
                 </p>
               </div>
             </div>
-
-            {/* 10. 책임감 있는 게임 */}
-            <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">🛡️ 책임감 있는 게임</h3>
-              <div className="text-gray-300 space-y-4 leading-relaxed text-base">
-                <p>
-                  WOORIWIN은 <strong className="text-white">건전하고 즐거운 게임 문화</strong>를 지향합니다.
-                  에볼루션카지노 내 자기 제한(Self-Exclusion) 기능 설정법, 입금 한도 설정,
-                  쿨링오프(Cooling-Off) 기간 활용법 등 플레이어 보호 도구를 상세히 안내합니다.
-                </p>
-                <p>
-                  도박을 오락으로 즐기기 위한 심리적 경계선 설정법,
-                  문제성 도박 자가 진단 체크리스트, 라이브 딜러와의 건전한 에티켓까지
-                  <strong className="text-white">장기적으로 즐길 수 있는 게임 습관</strong>을 함께 만들어 갑니다.
-                </p>
-                <p className="border border-yellow-400/30 rounded-lg p-4 text-sm text-gray-400">
-                  ⚠️ <strong className="text-yellow-400">책임감 있는 게임 안내</strong><br />
-                  에볼루션카지노는 만 19세 이상 성인만 이용 가능합니다.
-                  도박 문제로 어려움을 겪고 계신다면{' '}
-                  <strong className="text-white">한국도박문제예방치유원 ☎ 1336</strong> (24시간 무료상담)에 연락하세요.
-                </p>
-              </div>
-            </div>
-
           </div>
         </section>
-
-
-        <footer className="bg-gray-950 py-10 px-4 text-center">
-          <p className="text-gray-500 text-sm mb-4">관련 에볼루션카지노 가이드</p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            {relatedLinks.map((l) => (
-              <Link key={l.href} href={l.href} className="text-gray-400 hover:text-yellow-400 transition">{l.label}</Link>
-            ))}
-          </div>
-          <p className="text-gray-600 text-xs mt-8">© 2026 WOORIWIN. All rights reserved.</p>
-        </footer>
       </main>
     </>
   )

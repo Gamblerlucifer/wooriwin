@@ -85,40 +85,44 @@ export default async function BlogPost({
 
   const finalImageUrl = getImageUrl(post.image)
 
-  const jsonLd = {
+  const jsonLdArticle = {
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Article',
-        headline: post.title,
-        description: post.description,
-        url: `https://wooriwin.com/blog/${slug}`,
-        inLanguage: 'ko-KR',
-        datePublished: `${post.date}T09:00:00+09:00`,
-        dateModified: `${post.date}T09:00:00+09:00`,
-        image: finalImageUrl,
-        author: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
-        publisher: {
-          '@type': 'Organization',
-          name: 'WOORIWIN',
-          url: 'https://wooriwin.com',
-          logo: { '@type': 'ImageObject', url: 'https://wooriwin.com/logo.png' },
-        },
-      },
-      {
-        '@type': 'FAQPage',
-        mainEntity: (post.faq || []).map((f: { q: string; a: string }) => ({
-          '@type': 'Question',
-          name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a },
-        })),
-      },
-    ],
+    '@type': 'Article',
+    headline: post.title,
+    description: post.description,
+    url: `https://wooriwin.com/blog/${slug}`,
+    inLanguage: 'ko-KR',
+    datePublished: `${post.date}T09:00:00+09:00`,
+    dateModified: `${post.date}T09:00:00+09:00`,
+    image: finalImageUrl,
+    author: {
+      '@type': 'Organization',
+      name: 'Gambler Lucifer',
+      url: 'https://wooriwin.com/about',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'WOORIWIN',
+      url: 'https://wooriwin.com',
+      logo: { '@type': 'ImageObject', url: 'https://wooriwin.com/images/logo.png' },
+    },
+  }
+
+  const jsonLdFaq = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: (post.faq || []).map((f: { q: string; a: string }) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   }
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {/* ① SEO: Article·FAQPage 스키마 분리 */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
       <main className="min-h-screen bg-gray-900 text-white">
 
         {/* Hero */}
@@ -126,10 +130,10 @@ export default async function BlogPost({
           <Image src={finalImageUrl} alt={post.imageAlt || post.title} fill className="object-cover opacity-40" priority />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 max-w-4xl mx-auto px-4 pb-8">
-            <nav className="text-sm text-gray-400 mb-3">
+            <nav aria-label="breadcrumb" className="text-sm text-gray-400 mb-3">
               <Link href="/" className="hover:text-yellow-400">홈</Link> &rsaquo;{' '}
               <Link href="/blog" className="hover:text-yellow-400">블로그</Link> &rsaquo;{' '}
-              <span className="text-white">{post.category}</span>
+              <span className="text-white" aria-current="page">{post.category}</span>
             </nav>
             <div className="flex items-center gap-3 mb-3">
               <span className="text-xs font-semibold text-yellow-400 bg-yellow-400/10 px-2 py-1 rounded">{post.category}</span>
@@ -148,6 +152,8 @@ export default async function BlogPost({
         {/* Content */}
         <div className="max-w-6xl mx-auto px-4 py-12 flex gap-10">
           <article className="flex-1 min-w-0">
+            {/* ① SEO: 정보 최신성 고지 */}
+            <p className="text-xs text-gray-500 mb-8 text-right">본 정보는 2026년 5월 기준이며, 실제 게임 수치는 운영사 정책에 따라 변동될 수 있습니다.</p>
             <div className="text-gray-300 space-y-5 leading-relaxed text-base md:text-lg">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -177,11 +183,11 @@ export default async function BlogPost({
               <section className="mt-16">
                 <h2 className="text-2xl font-bold mb-6 text-yellow-400">자주 묻는 질문</h2>
                 <div className="space-y-4">
-                  {post.faq.map((f: { q: string; a: string }, i: number) => (
-                    <details key={i} className="bg-gray-800 rounded-xl p-5 group cursor-pointer">
+                  {post.faq.map((f: { q: string; a: string }) => (
+                    <details key={f.q} className="bg-gray-800 rounded-xl p-5 group cursor-pointer">
                       <summary className="font-semibold text-white flex justify-between items-center list-none">
                         {f.q}
-                        <span className="text-yellow-400 text-xl transition-transform group-open:rotate-45">+</span>
+                        <span className="text-yellow-400 text-xl transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                       </summary>
                       <p className="mt-4 text-gray-400 text-sm leading-relaxed">{f.a}</p>
                     </details>
@@ -227,18 +233,6 @@ export default async function BlogPost({
             </div>
           </aside>
         </div>
-
-        {/* Footer */}
-        <footer className="bg-gray-950 py-10 px-4 text-center">
-          <div className="flex flex-wrap justify-center gap-4 text-sm mb-4">
-            <Link href="/" className="text-gray-400 hover:text-yellow-400 transition">에볼루션카지노 메인</Link>
-            <Link href="/blog" className="text-gray-400 hover:text-yellow-400 transition">블로그 전체보기</Link>
-            <Link href="/baccarat" className="text-gray-400 hover:text-yellow-400 transition">바카라 가이드</Link>
-            <Link href="/blackjack" className="text-gray-400 hover:text-yellow-400 transition">블랙잭 가이드</Link>
-            <Link href="/roulette" className="text-gray-400 hover:text-yellow-400 transition">룰렛 가이드</Link>
-          </div>
-          <p className="text-gray-600 text-xs">© 2026 WOORIWIN. All rights reserved.</p>
-        </footer>
       </main>
     </>
   )
