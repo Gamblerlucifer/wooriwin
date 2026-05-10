@@ -45,9 +45,10 @@ const jsonLdArticle = {
   '@type': 'Article',
   headline: '에볼루션 라이브카지노 완벽 가이드 2026',
   url: 'https://wooriwin.com/live-casino',
+  image: 'https://wooriwin.com/images/live-casino.jpg',
   inLanguage: 'ko-KR',
-  datePublished: '2026-01-01',
-  dateModified: '2026-05-10',
+  datePublished: '2026-05-01T09:00:00+09:00',
+  dateModified: '2026-05-10T09:00:00+09:00',
   author: { '@type': 'Person', name: 'Lucifer', url: 'https://wooriwin.com/about' },
   publisher: { '@type': 'Organization', name: 'WOORIWIN', url: 'https://wooriwin.com' },
 }

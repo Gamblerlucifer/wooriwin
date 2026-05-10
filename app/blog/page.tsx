@@ -44,9 +44,10 @@ const jsonLd = {
   name: 'WOORIWIN 에볼루션카지노 전략 블로그',
   description: '에볼루션카지노 바카라·블랙잭·룰렛 전략, 규칙, 팁 전문 블로그',
   url: 'https://wooriwin.com/blog',
+  image: 'https://wooriwin.com/images/blog.jpg',
   inLanguage: 'ko-KR',
-  datePublished: '2026-05-01',
-  dateModified: '2026-05-10',
+  datePublished: '2026-05-01T09:00:00+09:00',
+  dateModified: '2026-05-10T09:00:00+09:00',
   author: {
     '@type': 'Organization',
     name: 'Lucifer',
