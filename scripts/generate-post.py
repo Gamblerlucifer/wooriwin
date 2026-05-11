@@ -5,7 +5,7 @@ import time
 import requests
 from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env.local'))
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from google import genai
 from google.oauth2 import service_account
 import googleapiclient.discovery
@@ -499,8 +499,27 @@ def ensure_unique_slug(slug: str, existing_slugs: set) -> str:
     return unique
 
 
-def fetch_pexels_image(queries: list) -> str:
+def get_used_images() -> set:
+    """기존 포스트에서 사용된 이미지 URL 수집."""
+    used = set()
+    if not os.path.exists(POSTS_DIR):
+        return used
+    for f in os.listdir(POSTS_DIR):
+        if f.endswith('.json'):
+            try:
+                with open(os.path.join(POSTS_DIR, f), encoding='utf-8') as fp:
+                    data = json.load(fp)
+                    if data.get('image'):
+                        used.add(data['image'])
+            except Exception:
+                pass
+    return used
+
+
+def fetch_pexels_image(queries: list, used_images: set = None) -> str:
     fallback = "https://images.pexels.com/photos/1871508/pexels-photo-1871508.jpg"
+    if used_images is None:
+        used_images = set()
     for query in queries:
         if not query:
             continue
@@ -508,13 +527,18 @@ def fetch_pexels_image(queries: list) -> str:
             res = requests.get(
                 "https://api.pexels.com/v1/search",
                 headers={"Authorization": PEXELS_API_KEY},
-                params={"query": query, "per_page": 5, "orientation": "landscape"},
+                params={"query": query, "per_page": 15, "orientation": "landscape"},
                 timeout=10,
             )
             res.raise_for_status()
             photos = res.json().get("photos", [])
-            if photos:
+            available = [p for p in photos if p["src"]["large2x"] not in used_images]
+            if available:
+                chosen = random.choice(available[:10])["src"]["large2x"]
                 print(f"  ✅ 이미지 확보: '{query}'")
+                return chosen
+            elif photos:
+                print(f"  ⚠️ 중복 없는 이미지 없음 → 기존 중 랜덤 사용")
                 return random.choice(photos[:5])["src"]["large2x"]
         except Exception as e:
             print(f"  ⚠️ 이미지 오류 ({query}): {e}")
@@ -591,11 +615,14 @@ def main():
     
     print(f"📌 오늘 작성 카테고리: {selected_categories}\n")
 
-    today = datetime.now()
+    KST = timezone(timedelta(hours=9))
+    today = datetime.now(KST)
+    used_images = get_used_images()
+    print(f"🖼️  기존 사용 이미지: {len(used_images)}개 (중복 방지)")
     success = 0
 
     for i, category in enumerate(selected_categories):
-        date = (today - timedelta(days=i)).strftime("%Y-%m-%d")
+        date = today.strftime("%Y-%m-%d")
         cat_data = CATEGORIES[category]
         keyword = random.choice(cat_data["keywords"])
         pexels_queries = cat_data["pexels_queries"]
@@ -631,7 +658,8 @@ def main():
         gemini_query = content_data.get("pexels_query", "")
         image_queries = ([gemini_query] if gemini_query else []) + pexels_queries
         print("  📸 Pexels 이미지 검색 중...")
-        image_url = fetch_pexels_image(image_queries)
+        image_url = fetch_pexels_image(image_queries, used_images)
+        used_images.add(image_url)  # 이번 루프에서 사용한 이미지도 중복 방지
 
         # Step 5 — 저장
         content_data["slug"] = slug
