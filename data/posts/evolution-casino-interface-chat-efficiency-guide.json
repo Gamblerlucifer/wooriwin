@@ -38,16 +38,15 @@
     }
   ],
   "author": {
-    "name": "최민석",
-    "role": "에디터",
+    "name": "이수연",
+    "role": "콘텐츠 전문가",
     "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
-    "image": "/about/04.jpg",
+    "image": "/about/03.jpg",
     "url": "/about",
-    "experience": "12년+",
+    "experience": "8년+",
     "specialty": [
       "에볼루션 가이드",
-      "최신 트렌드",
-      "자금 관리"
+      "모바일 최적화"
     ]
   }
 }

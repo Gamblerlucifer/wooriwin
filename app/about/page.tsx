@@ -66,7 +66,7 @@ const teamMembers = [
   {
     id: '01',
     name: '박성준',
-    role: '창업자 · 대표',
+    role: 'WOORIWIN 대표',
     experience: '15년+',
     articles: null,
     image: '/about/01.jpg',
