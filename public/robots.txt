@@ -2,8 +2,5 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://wooriwin.com
-
 # Sitemaps
 Sitemap: https://wooriwin.com/sitemap.xml
