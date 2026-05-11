@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { readFileSync, readdirSync, existsSync } from 'fs'
 import { join } from 'path'
 import CategoryFilter from './CategoryFilter'
@@ -109,7 +110,9 @@ export default function BlogPage() {
         </section>
 
         {/* 카테고리 필터 + 포스트 그리드 */}
-        <CategoryFilter posts={posts} categories={categories} />
+        <Suspense fallback={<div className="text-center py-20 text-gray-400">로딩 중...</div>}>
+          <CategoryFilter posts={posts} categories={categories} />
+        </Suspense>
 
         {/* SEO 본문 */}
         <section className="bg-gray-800 py-16 px-4">
