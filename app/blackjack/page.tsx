@@ -202,10 +202,12 @@ export default function BlackjackPage() {
             </div>
             {/* E-E-A-T: 저자 */}
             <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
+            <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
               <span>작성자</span>
-              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">Lucifer</Link>
+              <Link href="/about" className="text-yellow-400 hover:underline font-semibold">WOORIWIN 팀</Link>
               <span>·</span>
-              <span>라이브카지노 전문 애널리스트 · 에볼루션 게임 10년 경력</span>
+              <span>라이브카지노 전문 애널리스트 · Evolution 공식 자료 기반 검수</span>
+            </div>
             </div>
             <h2 className="text-2xl md:text-3xl font-extrabold mb-6 text-white border-b border-gray-800 pb-4">
               에볼루션 블랙잭: <span className="text-yellow-400 text-xl md:text-2xl">0.5%의 하우스 엣지에 도전하는 기술</span>
