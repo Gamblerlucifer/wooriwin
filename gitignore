@@ -44,3 +44,7 @@ next-env.d.ts
 wooriwin-indexing.json
 *-indexing.json
 *.serviceaccount.json
+service_account.json
+
+# 블로그 포스트 (GitHub Actions만 관리)
+/data/posts/
