@@ -7,7 +7,40 @@ from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env.local'))
 from datetime import datetime, timedelta
 from google import genai
+from google.oauth2 import service_account
+import googleapiclient.discovery
 import random
+
+# ── Google Indexing API 설정 ──────────────────────
+INDEXING_KEY_FILE = os.path.join(os.path.dirname(__file__), '..', 'wooriwin-indexing.json')
+INDEXING_SCOPES   = ['https://www.googleapis.com/auth/indexing']
+SITE_BASE_URL     = 'https://wooriwin.com'
+
+def get_indexing_service():
+    """서비스 계정 JSON으로 Indexing API 클라이언트 생성."""
+    try:
+        credentials = service_account.Credentials.from_service_account_file(
+            INDEXING_KEY_FILE, scopes=INDEXING_SCOPES
+        )
+        return googleapiclient.discovery.build('indexing', 'v3', credentials=credentials)
+    except Exception as e:
+        print(f'  ⚠️ Indexing API 초기화 실패: {e}')
+        return None
+
+def submit_url_to_google(service, slug: str) -> bool:
+    """생성된 포스트 URL을 Google에 색인 요청."""
+    if not service:
+        return False
+    url = f'{SITE_BASE_URL}/blog/{slug}'
+    try:
+        service.urlNotifications().publish(
+            body={'url': url, 'type': 'URL_UPDATED'}
+        ).execute()
+        print(f'  ✅ Google 색인 요청 완료: {url}')
+        return True
+    except Exception as e:
+        print(f'  ⚠️ 색인 요청 실패 ({url}): {e}')
+        return False
 
 # ── API 키 ────────────────────────────────────────
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -783,6 +816,7 @@ def main():
 
     os.makedirs(POSTS_DIR, exist_ok=True)
     client = setup_gemini()
+    indexing_service = get_indexing_service()
 
     used_ids       = load_used_topics()
     existing_slugs = get_existing_slugs()
@@ -851,6 +885,9 @@ def main():
         # Step 4 — 저장
         content_data["slug"] = slug
         save_post(slug, content_data, image_url, category, date)
+
+        # ── Google 색인 요청 ──────────────────────
+        submit_url_to_google(indexing_service, slug)
 
         used_ids.append(topic_data["id"])
         save_used_topics(used_ids)
