@@ -18,7 +18,10 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install google-genai requests python-dotenv
+        run: pip install google-genai requests python-dotenv google-auth google-api-python-client
+
+      - name: Restore Google Service Account Key
+        run: echo '${{ secrets.GOOGLE_INDEXING_KEY }}' | base64 -d > wooriwin-indexing.json
 
       - name: Generate posts
         env:
@@ -30,6 +33,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
+          git add data/posts/
           git diff --staged --quiet || git commit -m "feat: auto generate posts $(date +%Y-%m-%d)"
           git push
