@@ -3,7 +3,9 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: '개인정보처리방침 | WOORIWIN',
-  robots: { index: false, follow: false },
+  description: 'WOORIWIN 개인정보처리방침입니다. 이용자의 개인정보 수집, 이용, 보호에 관한 정책을 안내합니다.',
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://wooriwin.com/privacy-policy' },
 }
 
 type Section = {

@@ -3,7 +3,9 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: '이용약관 | WOORIWIN',
-  robots: { index: false, follow: false },
+  description: 'WOORIWIN 이용약관입니다. 서비스 이용 전 반드시 확인하시기 바랍니다.',
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://wooriwin.com/terms' },
 }
 
 type Section = {

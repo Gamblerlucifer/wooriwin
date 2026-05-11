@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: '책임감 있는 게임 | WOORIWIN',
   description: '문제 도박 징후 체크리스트, 건전한 게임 팁, 한국도박문제관리센터 1336 상담 안내.',
   alternates: { canonical: 'https://wooriwin.com/responsible-gaming' },
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
 }
 
 const signs = [

@@ -3,7 +3,11 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: '면책조항 | WOORIWIN',
-  robots: { index: false, follow: false },
+  description: 'WOORIWIN 면책조항입니다. 본 사이트는 정보 제공 목적으로 운영되며 직접 게임 서비스를 제공하지 않습니다.',
+  robots: { index: true, follow: true },
+  alternates: {
+    canonical: 'https://wooriwin.com/disclaimer',
+  },
 }
 
 const sections = [
