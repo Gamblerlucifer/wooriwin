@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // ── 레거시 폴리필 제거 + 최신 브라우저 전용 번들 ──────────────────────────
+  experimental: {
+    browsersListForSwc: true,
+  },
+
   images: {
     // [추가] WebP/AVIF 자동 변환 → slots.jpg 등 55KiB 절감
     formats: ["image/avif", "image/webp"],

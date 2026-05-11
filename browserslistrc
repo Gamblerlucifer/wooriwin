@@ -1,0 +1,8 @@
+# 최신 브라우저만 지원 — 레거시 폴리필 제거
+# Array.at / flat / flatMap, Object.fromEntries/hasOwn, String.trimStart/trimEnd
+# 모두 아래 범위에서 네이티브 지원됨
+
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
