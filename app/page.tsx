@@ -82,6 +82,14 @@ const jsonLdArticle = {
   },
 }
 
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+  ],
+}
+
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -212,6 +220,9 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {/* LCP 이미지 preload — 크리티컬 요청 체인 단축 */}
+      <link rel="preload" as="image" href="/images/hero.jpg" />
 
       <main className="min-h-screen text-white" style={{ background: '#0A0A0F' }}>
 
@@ -344,7 +355,7 @@ export default function Home() {
               {[...games, featuredGame, blogCard].map((game) => (
                 <Link key={game.href} href={game.href} className="group block bg-[#111118] border border-gray-800 rounded-xl overflow-hidden hover:border-[#C9A84C] transition-all">
                   <div className="relative h-48 overflow-hidden">
-                    <Image src={game.img} alt={game.alt} fill className="object-cover opacity-70 group-hover:scale-105 transition-transform" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+                    <Image src={game.img} alt={game.alt} fill loading="lazy" className="object-cover opacity-70 group-hover:scale-105 transition-transform" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                   </div>
                   <div className="p-6">
                     <h3 className="font-bold mb-3" style={{ color: '#F5F0E8' }}>{game.keyword}</h3>
