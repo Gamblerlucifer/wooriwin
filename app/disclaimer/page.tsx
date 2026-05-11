@@ -2,12 +2,21 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '면책조항 | WOORIWIN',
+  title: '면책조항 - 에볼루션카지노 정보 제공 안내 | WOORIWIN',
   description: 'WOORIWIN 면책조항입니다. 본 사이트는 정보 제공 목적으로 운영되며 직접 게임 서비스를 제공하지 않습니다.',
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://wooriwin.com/disclaimer',
   },
+}
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '면책조항', item: 'https://wooriwin.com/disclaimer' },
+  ],
 }
 
 const sections = [
@@ -44,6 +53,8 @@ const sections = [
 export default function Disclaimer() {
   return (
     <main className="min-h-screen text-white" style={{ background: '#0A0A0F' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
+
       <section style={{ borderBottom: '1px solid rgba(201,168,76,0.15)', background: '#111118' }}>
         <div className="max-w-3xl mx-auto px-6 py-16">
           <nav aria-label="breadcrumb" className="text-sm text-gray-500 mb-6">
@@ -57,7 +68,6 @@ export default function Disclaimer() {
       </section>
 
       <div className="max-w-3xl mx-auto px-6 py-16 space-y-10">
-        {/* 강조 박스 */}
         <div className="rounded-xl p-5 text-sm" style={{ background: 'rgba(120,20,20,0.25)', border: '1px solid rgba(180,30,30,0.4)', color: '#fca5a5' }}>
           <span aria-hidden="true">⚠️</span> 본 사이트는 정보 제공만을 목적으로 하며, 도박 참여를 권유하지 않습니다. 모든 게임에는 손실 위험이 따릅니다.
         </div>
@@ -69,7 +79,6 @@ export default function Disclaimer() {
           </div>
         ))}
 
-        {/* 최종 수정일 */}
         <p className="text-xs" style={{ color: '#8A8A9A' }}>마지막 업데이트: 2026년 5월 1일</p>
       </div>
     </main>

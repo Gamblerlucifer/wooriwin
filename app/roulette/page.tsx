@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 // ─── JSON-LD ─────────────────────────────────────────────────
 const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'TechArticle',
   headline: '에볼루션카지노 룰렛 완벽 가이드 2026',
   description: '에볼루션카지노 룰렛 규칙·전략·변형 게임 완벽 정리. 라이트닝 룰렛, 이머시브 룰렛, 유럽식·미국식 룰렛 RTP 비교 분석.',
   url: 'https://wooriwin.com/roulette',

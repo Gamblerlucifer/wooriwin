@@ -2,10 +2,19 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '개인정보처리방침 | WOORIWIN',
+  title: '개인정보처리방침 - 쿠키 및 데이터 수집 안내 | WOORIWIN',
   description: 'WOORIWIN 개인정보처리방침입니다. 이용자의 개인정보 수집, 이용, 보호에 관한 정책을 안내합니다.',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://wooriwin.com/privacy-policy' },
+}
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '개인정보처리방침', item: 'https://wooriwin.com/privacy-policy' },
+  ],
 }
 
 type Section = {
@@ -64,10 +73,14 @@ const sections: Section[] = [
 ]
 
 export default function PrivacyPolicy() {
-  return <PolicyPage title="개인정보처리방침" subtitle="Privacy Policy" sections={sections} />
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
+      <PolicyPage title="개인정보처리방침" subtitle="Privacy Policy" sections={sections} />
+    </>
+  )
 }
 
-// ─── 공통 레이아웃 컴포넌트 ───────────────────────────────────────────────
 function PolicyPage({ title, subtitle, sections }: {
   title: string
   subtitle: string
@@ -75,7 +88,6 @@ function PolicyPage({ title, subtitle, sections }: {
 }) {
   return (
     <main className="min-h-screen text-white" style={{ background: '#0A0A0F' }}>
-      {/* Header */}
       <section style={{ borderBottom: '1px solid rgba(201,168,76,0.15)', background: '#111118' }}>
         <div className="max-w-3xl mx-auto px-6 py-16">
           <nav aria-label="breadcrumb" className="text-sm text-gray-500 mb-6">
@@ -88,7 +100,6 @@ function PolicyPage({ title, subtitle, sections }: {
         </div>
       </section>
 
-      {/* Content */}
       <div className="max-w-3xl mx-auto px-6 py-16 space-y-10">
         {sections.map((s) => (
           <div key={s.title} style={{ borderLeft: '2px solid rgba(201,168,76,0.3)', paddingLeft: 24 }}>
@@ -112,7 +123,6 @@ function PolicyPage({ title, subtitle, sections }: {
           </div>
         ))}
 
-        {/* 연락처 */}
         <div style={{ borderLeft: '2px solid rgba(201,168,76,0.3)', paddingLeft: 24 }}>
           <h2 className="font-bold text-white mb-3 text-base">문의처</h2>
           <p className="text-sm mb-2" style={{ color: '#8A8A9A' }}>

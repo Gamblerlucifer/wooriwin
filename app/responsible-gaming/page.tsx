@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '책임감 있는 게임 | WOORIWIN',
+  title: '책임감 있는 게임 - 도박 문제 예방 가이드 | WOORIWIN',
   description: '문제 도박 징후 체크리스트, 건전한 게임 팁, 한국도박문제관리센터 1336 상담 안내.',
   alternates: { canonical: 'https://wooriwin.com/responsible-gaming' },
   robots: { index: true, follow: true },
@@ -69,7 +69,7 @@ export default function ResponsibleGaming() {
           </ul>
         </div>
 
-        {/* 문제 도박 징후 */}
+        {/* 문제 도박 징후 — 시맨틱 체크박스로 변경 */}
         <div>
           <h2 className="font-bold text-white mb-6 text-base" style={{ borderLeft: '2px solid #C9A84C', paddingLeft: 16 }}>
             문제 도박 징후 체크리스트
@@ -78,11 +78,16 @@ export default function ResponsibleGaming() {
             다음 중 하나라도 해당된다면 전문 기관의 도움을 받으시기 바랍니다.
           </p>
           <ul className="space-y-3">
-            {signs.map((sign) => (
+            {signs.map((sign, i) => (
               <li key={sign} className="flex items-start gap-3 text-sm p-4 rounded-lg" style={{ background: '#111118', border: '1px solid rgba(201,168,76,0.1)', color: '#B0B0C0' }}>
-                {/* □ 기호 → aria-hidden 처리 */}
-                <span aria-hidden="true" style={{ color: '#C9A84C', marginTop: 1 }}>□</span>
-                {sign}
+                <input
+                  type="checkbox"
+                  id={`sign-${i}`}
+                  disabled
+                  className="mt-1 accent-yellow-500"
+                  aria-label={sign}
+                />
+                <label htmlFor={`sign-${i}`} className="cursor-default flex-1">{sign}</label>
               </li>
             ))}
           </ul>
@@ -110,7 +115,6 @@ export default function ResponsibleGaming() {
           </h2>
           <div className="space-y-4">
 
-            {/* kcgp 카드 — <a> 중첩 방지: 카드는 div, 전화번호만 <a> */}
             <div
               className="flex items-center justify-between p-5 rounded-xl"
               style={{ background: '#111118', border: '1px solid rgba(201,168,76,0.2)' }}

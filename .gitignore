@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Google Service Account Key (절대 커밋 금지)
+wooriwin-indexing.json
+service_account.json
+*-indexing.json
+*.serviceaccount.json
+
+# zip/tar (실수 방지)
+*.zip
+*.tar.gz
+
+# 주의: /data/posts/ 는 GitHub에 커밋되어야 빌드 시 사이트맵에 포함됨
+# 로컬 테스트 시 생성된 파일은 git status에서 확인 후 선별 커밋

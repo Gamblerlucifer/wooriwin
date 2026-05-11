@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 // ─── JSON-LD ─────────────────────────────────────────────────
 const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'TechArticle',
   headline: '에볼루션 라이브카지노 완벽 가이드 2026',
   description: '에볼루션카지노 라이브카지노 완벽 가이드. 바카라·블랙잭·룰렛·게임쇼 라인업, RTP, 모바일 호환성 분석.',
   url: 'https://wooriwin.com/live-casino',

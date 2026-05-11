@@ -2,10 +2,19 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '이용약관 | WOORIWIN',
+  title: '이용약관 - WOORIWIN 에볼루션카지노 서비스 이용 정책',
   description: 'WOORIWIN 이용약관입니다. 서비스 이용 전 반드시 확인하시기 바랍니다.',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://wooriwin.com/terms' },
+}
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: 'https://wooriwin.com' },
+    { '@type': 'ListItem', position: 2, name: '이용약관', item: 'https://wooriwin.com/terms' },
+  ],
 }
 
 type Section = {
@@ -54,6 +63,8 @@ const sections: Section[] = [
 export default function Terms() {
   return (
     <main className="min-h-screen text-white" style={{ background: '#0A0A0F' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
+
       <section style={{ borderBottom: '1px solid rgba(201,168,76,0.15)', background: '#111118' }}>
         <div className="max-w-3xl mx-auto px-6 py-16">
           <nav aria-label="breadcrumb" className="text-sm text-gray-500 mb-6">
@@ -89,7 +100,6 @@ export default function Terms() {
           </div>
         ))}
 
-        {/* 연락처 */}
         <div style={{ borderLeft: '2px solid rgba(201,168,76,0.3)', paddingLeft: 24 }}>
           <h2 className="font-bold text-white mb-3 text-base">문의처</h2>
           <p className="text-sm mb-2" style={{ color: '#8A8A9A' }}>

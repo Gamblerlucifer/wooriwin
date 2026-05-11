@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 // ─── JSON-LD ─────────────────────────────────────────────────
 const jsonLdArticle = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'TechArticle',
   headline: '에볼루션카지노 슬롯 완벽 가이드 2026',
   description: '에볼루션카지노 슬롯·게임쇼 완벽 가이드. NetEnt·Red Tiger 슬롯 RTP 비교, 크레이지타임·모노폴리 라이브 공략.',
   url: 'https://wooriwin.com/slots',
