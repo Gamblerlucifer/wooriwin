@@ -2,7 +2,7 @@ name: Auto Generate Posts
 
 on:
   schedule:
-    - cron: '0 22 * * *'  # 매일 새벽 1시 (KST = UTC+9)
+    - cron: '0 22 * * *'  # 매일 아침 7시 (KST = UTC+9)
   workflow_dispatch:  # 수동 실행 버튼
 
 jobs:
