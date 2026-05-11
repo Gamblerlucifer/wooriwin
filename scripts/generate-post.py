@@ -142,6 +142,68 @@ CATEGORY_TO_PAGE = {
     "책임감 있는 게임":  {"slug": "responsible-gaming",  "anchor": "책임감 있는 게임 가이드"},
 }
 
+# ── 작성자 데이터 ─────────────────────────────────
+AUTHORS = {
+    "박성준": {
+        "role": "창업자 · 대표",
+        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "image": "/about/01.jpg",
+        "url": "/about",
+    },
+    "김도현": {
+        "role": "라이브카지노 전문가",
+        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "image": "/about/02.jpg",
+        "url": "/about",
+    },
+    "이수연": {
+        "role": "콘텐츠 전문가",
+        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "image": "/about/03.jpg",
+        "url": "/about",
+    },
+    "최민석": {
+        "role": "에디터",
+        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "image": "/about/04.jpg",
+        "url": "/about",
+    },
+    "정혜진": {
+        "role": "책임도박 담당",
+        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "image": "/about/05.jpg",
+        "url": "/about",
+    },
+    "한재원": {
+        "role": "커뮤니티 매니저",
+        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "image": "/about/06.jpg",
+        "url": "/about",
+    },
+}
+
+# 카테고리별 담당 작성자 목록 (동일 카테고리는 랜덤 배정)
+CATEGORY_TO_AUTHORS = {
+    "에볼루션 가이드":   ["이수연", "최민석", "한재원"],
+    "바카라 가이드":     ["김도현"],
+    "블랙잭 가이드":     ["김도현"],
+    "게임쇼 분석":       ["김도현"],
+    "룰렛 & 포커":       ["김도현"],
+    "최신 트렌드":       ["박성준", "최민석"],
+    "자금 관리":         ["최민석", "정혜진"],
+    "보안 및 라이선스":  ["박성준"],
+    "모바일 최적화":     ["이수연", "한재원"],
+    "책임감 있는 게임":  ["정혜진"],
+}
+
+
+def get_author_for_category(category: str) -> dict:
+    """카테고리에 맞는 작성자를 랜덤 배정."""
+    candidates = CATEGORY_TO_AUTHORS.get(category, list(AUTHORS.keys()))
+    name = random.choice(candidates)
+    return {"name": name, **AUTHORS[name]}
+
+
 # ── 페르소나 시스템 지침 ──────────────────────────
 SYSTEM_INSTRUCTION = """
 당신은 라이브 카지노 UX 분석 및 플레이 환경 최적화 전문 콘텐츠 팀입니다.
@@ -426,7 +488,7 @@ def ensure_unique_slug(slug: str, existing_slugs: set) -> str:
 
 
 def fetch_pexels_image(queries: list) -> str:
-    fallback = "https://images.pexels.com/photos/1871508/pexels-photo-1871508.jpeg"
+    fallback = "https://images.pexels.com/photos/1871508/pexels-photo-1871508.jpg"
     for query in queries:
         if not query:
             continue
@@ -458,6 +520,11 @@ def save_post(slug, content_data, image_url, category, date):
         content = content + link_md
 
     content_with_eeat = content + RESPONSIBLE_GAMBLING_TEXT
+
+    # 카테고리별 작성자 랜덤 배정
+    author = get_author_for_category(category)
+    print(f"  ✍️  작성자 배정: {author['name']} ({author['role']})")
+
     post = {
         "slug": slug,
         "title": content_data["title"],
@@ -470,6 +537,7 @@ def save_post(slug, content_data, image_url, category, date):
         "imageAlt": content_data.get("imageAlt", content_data["title"]),
         "content": content_with_eeat,
         "faq": content_data.get("faq", []),
+        "author": author,
     }
     os.makedirs(POSTS_DIR, exist_ok=True)
     filepath = os.path.join(POSTS_DIR, f"{slug}.json")

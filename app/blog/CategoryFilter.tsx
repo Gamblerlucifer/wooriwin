@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -21,7 +22,26 @@ interface CategoryFilterProps {
 }
 
 export default function CategoryFilter({ posts, categories }: CategoryFilterProps) {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [active, setActive] = useState('전체')
+
+  // URL 쿼리 파라미터로 초기 카테고리 설정
+  useEffect(() => {
+    const cat = searchParams.get('category')
+    if (cat && categories.includes(cat)) {
+      setActive(cat)
+    }
+  }, [searchParams, categories])
+
+  const handleSelect = (cat: string) => {
+    setActive(cat)
+    if (cat === '전체') {
+      router.replace('/blog', { scroll: false })
+    } else {
+      router.replace(`/blog?category=${encodeURIComponent(cat)}`, { scroll: false })
+    }
+  }
 
   const filtered = active === '전체' ? posts : posts.filter((p) => p.category === active)
 
@@ -33,7 +53,7 @@ export default function CategoryFilter({ posts, categories }: CategoryFilterProp
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActive(cat)}
+              onClick={() => handleSelect(cat)}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
                 active === cat
                   ? 'bg-yellow-400 text-gray-900'

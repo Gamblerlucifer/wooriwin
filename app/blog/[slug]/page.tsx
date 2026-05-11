@@ -104,9 +104,9 @@ export default async function BlogPost({
     dateModified: `${post.updatedAt || post.date}T09:00:00+09:00`,
     image: finalImageUrl,
     author: {
-      '@type': post.author ? 'Person' : 'Organization',
-      name: post.author || 'WOORIWIN 편집팀',
-      url: 'https://wooriwin.com/about',
+      '@type': post.author?.name ? 'Person' : 'Organization',
+      name: post.author?.name || 'WOORIWIN 편집팀',
+      url: post.author?.url ? `https://wooriwin.com${post.author.url}` : 'https://wooriwin.com/about',
     },
     publisher: {
       '@type': 'Organization',
@@ -221,15 +221,39 @@ export default async function BlogPost({
             {/* ✅ 저자 프로필 (E-E-A-T: 작성 주체 신뢰 신호) */}
             <div className="mt-16 pt-8 border-t border-gray-700">
               <div className="flex items-center gap-4 bg-gray-800/50 rounded-xl p-5 border border-gray-700">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-xl font-bold"
-                  style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.3)', color: '#C9A84C' }}>
-                  {post.author ? post.author[0].toUpperCase() : 'W'}
+                <div className="w-12 h-12 rounded-full shrink-0 overflow-hidden"
+                  style={{ border: '1px solid rgba(201,168,76,0.3)' }}>
+                  {post.author?.image ? (
+                    <img
+                      src={post.author.image}
+                      alt={post.author.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-xl font-bold"
+                      style={{ background: 'rgba(201,168,76,0.15)', color: '#C9A84C' }}>
+                      {post.author?.name ? post.author.name[0].toUpperCase() : 'W'}
+                    </div>
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-bold text-white text-sm">{post.author || 'WOORIWIN 편집팀'}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">
-                    에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공
-                  </p>
+                  <p className="text-xs text-gray-500 mb-0.5">작성자</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="font-bold text-white text-sm">{post.author?.name}</p>
+                    {post.author?.role && <span className="text-xs text-gray-400">· {post.author.role}</span>}
+                    {post.author?.experience && <span className="text-xs text-gray-500">· 경력 {post.author.experience}</span>}
+                  </div>
+                  {post.author?.specialty?.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-1 mt-1.5">
+                      <span className="text-xs text-gray-500 shrink-0">전문분야 :</span>
+                      {post.author.specialty.map((s: string) => (
+                        <span key={s} className="text-xs px-2 py-0.5 rounded-full"
+                          style={{ background: 'rgba(201,168,76,0.1)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.2)' }}>
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <Link
                   href="/about"
