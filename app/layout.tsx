@@ -80,7 +80,7 @@ const jsonLd = {
 
     "logo": {
       "@type": "ImageObject",
-      "url": "https://wooriwin.com/favicon.png"
+      "url": "https://wooriwin.com/logo.png"
     }
   }
 };
