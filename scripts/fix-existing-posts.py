@@ -52,6 +52,20 @@ SLUG_SUFFIXES = ["guide", "tips", "review", "strategy", "explained", "overview",
 
 BAD_SLUG_PATTERNS = ["evolution-casino", "interface", "-ux-", "-4-", "-2-", "-5-"]
 
+# ── 카테고리별 제목 키워드 풀 ────────────────────
+CATEGORY_TITLE_KEYWORDS = {
+    "에볼루션 가이드":   ["에볼루션게이밍", "에볼루션 게이밍", "Evolution Gaming", "에볼루션카지노", "라이브카지노"],
+    "바카라 가이드":     ["에볼루션바카라", "에볼루션 바카라", "바카라", "라이브바카라", "라이브 바카라"],
+    "블랙잭 가이드":     ["에볼루션블랙잭", "에볼루션 블랙잭", "블랙잭", "라이브블랙잭", "라이브 블랙잭"],
+    "게임쇼 분석":       ["크레이지타임", "모노폴리라이브", "라이브게임쇼", "에볼루션게임쇼", "드림캐처"],
+    "룰렛 & 포커":       ["라이트닝룰렛", "라이트닝 룰렛", "룰렛", "라이브룰렛", "카지노홀덤"],
+    "최신 트렌드":       ["에볼루션게이밍", "에볼루션 게이밍", "라이브카지노", "온라인카지노", "카지노 트렌드"],
+    "자금 관리":         ["카지노 자금관리", "뱅크롤", "베팅 전략", "카지노 예산", "손실 관리"],
+    "보안 및 라이선스":  ["카지노 보안", "라이선스 카지노", "안전한 카지노", "MGA 라이선스", "카지노 인증"],
+    "모바일 최적화":     ["모바일카지노", "모바일 카지노", "스마트폰 카지노", "모바일 바카라", "앱 카지노"],
+    "책임감 있는 게임":  ["책임감있는 게임", "도박 중독 예방", "안전한 게임", "카지노 자기제한", "건전한 게임문화"],
+}
+
 STOP_WORDS = {
     "에볼루션카지노", "에볼루션", "카지노", "위한", "가이드", "이해", "활용",
     "방법", "설정", "분석", "관리", "최적화", "환경", "플레이", "라이브",
@@ -114,18 +128,28 @@ def generate_new_slug(category: str, title: str, existing_slugs: set) -> str:
 def generate_new_title(client, category, existing_titles):
     """기존 제목과 중복 안 되는 새 제목 생성."""
     existing_list = "\n".join(f"- {t}" for t in existing_titles[-20:])
-    
+    title_kw_pool = CATEGORY_TITLE_KEYWORDS.get(category, ["에볼루션카지노"])
+    title_kw = random.choice(title_kw_pool)
+
     for attempt in range(3):
         prompt = f"""
 다음 조건으로 한국인 독자에게 매력적인 블로그 제목 3개를 생성하세요.
 
 카테고리: {category}
+제목에 반드시 포함할 키워드: {title_kw}
 
 조건:
-- "에볼루션카지노" 키워드 반드시 포함
+- 위 키워드를 제목 어디에나 자연스럽게 포함 (맨 앞에 올 필요 없음)
+- "에볼루션카지노"를 항상 제목 맨 앞에 쓰는 패턴 금지
 - 정보형·가이드형 톤 유지
+- 과장형·선정적 표현 금지
 - 25~45자 사이
 - 제목에 콜론(:) 사용 금지
+
+제목 패턴 예시:
+- "바카라 로드맵 시스템의 허와 실 | 라이브바카라 분석"
+- "라이트닝 룰렛 배당률과 RTP 완벽 해설"
+- "뱅크롤 관리 황금법칙 카지노 자금관리 가이드"
 
 ⚠️ 아래 기존 제목들과 핵심 단어 3개 이상 겹치는 제목 금지:
 {existing_list}
@@ -192,41 +216,28 @@ def main():
 
     print(f"\n슬러그 교체: {len(slug_map)}개\n")
 
-    # 1단계 — 중복 title 검사
-    print("=== 1단계: 중복 title 검사 ===")
-    duplicates = []
-    titles_seen = []
+    # 1단계 — 전체 title 새 패턴으로 교체
+    print("=== 1단계: 전체 title 새 패턴으로 교체 ===")
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    new_titles = []
+
     for p in posts:
-        if has_duplicate(p["title"], titles_seen):
-            duplicates.append(p)
-            print(f"  ⚠️ 중복: {p['_file']}")
-            print(f"     '{p['title']}'")
-        titles_seen.append(p["title"])
-    
-    print(f"\n중복 발견: {len(duplicates)}개\n")
-    
-    # 2단계 — 중복 title 수정
-    if duplicates:
-        print("=== 2단계: 중복 title 새로 생성 ===")
-        client = genai.Client(api_key=GEMINI_API_KEY)
-        
-        # 중복 제외한 깨끗한 title 목록
-        clean_titles = [p["title"] for p in posts if p not in duplicates]
-        
-        for p in duplicates:
-            print(f"\n📝 수정 중: {p['_file']}")
-            print(f"   기존: '{p['title']}'")
-            new_title = generate_new_title(client, p["category"], clean_titles)
-            if new_title:
-                print(f"   신규: '{new_title}'")
-                p["title"] = new_title
-                clean_titles.append(new_title)
-            else:
-                # Fallback — 카테고리 + 타임스탬프
-                from datetime import datetime
-                p["title"] = f"에볼루션카지노 {p['category']} 심층 가이드 ({datetime.now().strftime('%m월')})"
-                print(f"   Fallback: '{p['title']}'")
-            time.sleep(1)
+        print(f"\n📝 제목 교체 중: {p['_file']}")
+        print(f"   기존: '{p['title']}'")
+        new_title = generate_new_title(client, p["category"], new_titles)
+        if new_title:
+            print(f"   신규: '{new_title}'")
+            p["title"] = new_title
+            new_titles.append(new_title)
+        else:
+            from datetime import datetime
+            fallback = f"{p['category']} 완벽 분석 가이드 {datetime.now().strftime('%m월')}"
+            print(f"   Fallback: '{fallback}'")
+            p["title"] = fallback
+            new_titles.append(fallback)
+        time.sleep(1)
+
+    print(f"\n제목 교체 완료: {len(posts)}개\n")
     
     # 3단계 — 내부 링크 추가 + relatedPosts 제거
     print("\n=== 3단계: 내부 링크 추가 + relatedPosts 제거 ===")
