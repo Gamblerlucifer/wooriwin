@@ -1,6 +1,19 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { readFileSync, readdirSync, existsSync } from 'fs'
+import { join } from 'path'
+
+const POSTS_DIR = join(process.cwd(), 'data', 'posts')
+
+function getRecentPosts(count = 6) {
+  if (!existsSync(POSTS_DIR)) return []
+  return readdirSync(POSTS_DIR)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(readFileSync(join(POSTS_DIR, f), 'utf-8')))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, count)
+}
 
 // ─── 타입 정의 ──────────────────────────────────────────────────────────────
 interface FAQItem {
@@ -215,6 +228,7 @@ const seoBlocks: SeoBlock[] = [
 // ─── 메인 컴포넌트 ──────────────────────────────────────────────────────────
 export default function Home() {
   const faqList: FAQItem[] = faqJsonLd.mainEntity
+  const recentPosts = getRecentPosts(6)
 
   return (
     <>
@@ -405,7 +419,58 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. FAQ 섹션 */}
+        {/* 5. 최신 블로그 섹션 */}
+        {recentPosts.length > 0 && (
+          <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)' }}>
+            <div className="max-w-6xl mx-auto px-6 py-28">
+              <div className="flex items-center justify-between mb-16">
+                <h2 className="font-bold" style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontFamily: 'Georgia, serif' }}>
+                  최신 <span style={{ color: '#C9A84C' }}>블로그</span>
+                </h2>
+                <Link href="/blog" className="text-sm font-medium hover:text-yellow-400 transition" style={{ color: '#C9A84C' }}>
+                  전체 글 보기 →
+                </Link>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {recentPosts.map((post) => (
+                  <Link
+                    key={post.slug}
+                    href={`/blog/${post.slug}`}
+                    className="group block bg-[#111118] border border-gray-800 rounded-xl overflow-hidden hover:border-[#C9A84C] transition-all"
+                  >
+                    <div className="relative h-44 overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={post.imageAlt || post.title}
+                        fill
+                        loading="lazy"
+                        className="object-cover opacity-70 group-hover:scale-105 transition-transform"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-xs font-semibold px-2 py-1 rounded" style={{ color: '#C9A84C', background: 'rgba(201,168,76,0.1)' }}>
+                          {post.category}
+                        </span>
+                        <span className="text-xs" style={{ color: '#666' }}>{post.readTime} 읽기</span>
+                      </div>
+                      <p className="text-sm font-bold mb-2 leading-snug line-clamp-2 group-hover:text-yellow-400 transition" style={{ color: '#F5F0E8' }}>
+                        {post.title}
+                      </p>
+                      <p className="text-xs leading-relaxed line-clamp-2" style={{ color: '#AAAABC' }}>
+                        {post.description}
+                      </p>
+                      <p className="text-xs mt-3" style={{ color: '#555' }}>{post.date}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* 6. FAQ 섹션 */}
         <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)' }}>
           <div className="max-w-3xl mx-auto px-6 py-28">
             <h2 className="font-bold mb-16 text-center" style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontFamily: 'Georgia, serif' }}>

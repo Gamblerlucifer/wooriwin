@@ -34,6 +34,24 @@ CATEGORY_TO_PAGE = {
     "책임감 있는 게임":  {"slug": "responsible-gaming",  "anchor": "책임감 있는 게임 가이드"},
 }
 
+# ── 카테고리별 슬러그 prefix 매핑 ────────────────
+CATEGORY_SLUG_PREFIX = {
+    "에볼루션 가이드":  "live-casino",
+    "바카라 가이드":    "baccarat",
+    "블랙잭 가이드":    "blackjack",
+    "게임쇼 분석":      "game-show",
+    "룰렛 & 포커":      "roulette",
+    "최신 트렌드":      "casino-trends",
+    "자금 관리":        "bankroll",
+    "보안 및 라이선스": "casino-safety",
+    "모바일 최적화":    "mobile-casino",
+    "책임감 있는 게임": "responsible-gambling",
+}
+
+SLUG_SUFFIXES = ["guide", "tips", "review", "strategy", "explained", "overview", "how-to", "complete"]
+
+BAD_SLUG_PATTERNS = ["evolution-casino", "interface", "-ux-", "-4-", "-2-", "-5-"]
+
 STOP_WORDS = {
     "에볼루션카지노", "에볼루션", "카지노", "위한", "가이드", "이해", "활용",
     "방법", "설정", "분석", "관리", "최적화", "환경", "플레이", "라이브",
@@ -59,6 +77,39 @@ def clean_json_response(text):
     elif "```" in text:
         text = text.split("```")[1].split("```")[0]
     return text.strip()
+
+def needs_slug_fix(slug: str) -> bool:
+    """기존 패턴 슬러그인지 검사."""
+    return any(pat in slug for pat in BAD_SLUG_PATTERNS)
+
+def generate_new_slug(category: str, title: str, existing_slugs: set) -> str:
+    """카테고리 prefix + 제목 키워드 기반 새 슬러그 생성."""
+    prefix = CATEGORY_SLUG_PREFIX.get(category, "casino")
+    suffix = random.choice(SLUG_SUFFIXES)
+    # 제목에서 핵심 단어 추출 (영문 변환은 간단히 처리)
+    keywords = extract_keywords(title)
+    # 불용어 제거 후 2~3개 단어 선택
+    kw_list = list(keywords)[:2]
+    # 한글 → 간단 영문 매핑
+    KO_EN = {
+        "바카라": "baccarat", "블랙잭": "blackjack", "룰렛": "roulette",
+        "슬롯": "slots", "포커": "poker", "게임쇼": "gameshow",
+        "스피드": "speed", "라이트닝": "lightning", "인피니트": "infinite",
+        "모바일": "mobile", "보안": "security", "자금": "bankroll",
+        "전략": "strategy", "규칙": "rules", "가입": "signup",
+        "인터페이스": "interface", "스트리밍": "streaming",
+        "크레이지타임": "crazytime", "모노폴리": "monopoly",
+    }
+    en_parts = [KO_EN.get(k, "") for k in kw_list if KO_EN.get(k)]
+    if en_parts:
+        candidate = f"{prefix}-{'-'.join(en_parts)}-{suffix}"
+    else:
+        candidate = f"{prefix}-{suffix}-{random.randint(100, 999)}"
+    # 중복 방지
+    if candidate in existing_slugs:
+        candidate = f"{candidate}-{random.randint(10, 99)}"
+    return candidate
+
 
 def generate_new_title(client, category, existing_titles):
     """기존 제목과 중복 안 되는 새 제목 생성."""
@@ -121,6 +172,26 @@ def main():
             p["_file"] = f
             posts.append(p)
     
+    # 0단계 — 슬러그 패턴 교체
+    print("=== 0단계: 슬러그 패턴 교체 ===")
+    existing_slugs = {p["slug"] for p in posts}
+    slug_map = {}  # 구 슬러그 → 새 슬러그 매핑
+
+    for p in posts:
+        old_slug = p["slug"]
+        if needs_slug_fix(old_slug):
+            new_slug = generate_new_slug(p["category"], p["title"], existing_slugs)
+            slug_map[old_slug] = new_slug
+            existing_slugs.discard(old_slug)
+            existing_slugs.add(new_slug)
+            p["slug"] = new_slug
+            print(f"  🔄 {old_slug}")
+            print(f"     → {new_slug}")
+        else:
+            print(f"  ✅ 유지: {old_slug}")
+
+    print(f"\n슬러그 교체: {len(slug_map)}개\n")
+
     # 1단계 — 중복 title 검사
     print("=== 1단계: 중복 title 검사 ===")
     duplicates = []
@@ -187,13 +258,20 @@ def main():
                 modified = True
                 print(f"  🔗 내부 링크 추가 ({cat} → /{link_info['slug']}): {p['_file']}")
     
-    # 4단계 — 저장
+    # 4단계 — 저장 (파일명도 새 슬러그로 변경)
     print("\n=== 4단계: 파일 저장 ===")
     for p in posts:
-        file = p.pop("_file")
-        with open(os.path.join(POSTS_DIR, file), "w", encoding="utf-8") as fp:
+        old_file = p.pop("_file")
+        new_file = f"{p['slug']}.json"
+        # 구 파일 삭제
+        old_path = os.path.join(POSTS_DIR, old_file)
+        new_path = os.path.join(POSTS_DIR, new_file)
+        if old_file != new_file and os.path.exists(old_path):
+            os.remove(old_path)
+            print(f"  🗑️  삭제: {old_file}")
+        with open(new_path, "w", encoding="utf-8") as fp:
             json.dump(p, fp, ensure_ascii=False, indent=2)
-        print(f"  ✅ 저장: {file}")
+        print(f"  ✅ 저장: {new_file}")
     
     print("\n" + "=" * 60)
     print(f"  완료! 총 {len(posts)}개 포스트 처리")

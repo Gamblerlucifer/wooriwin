@@ -80,42 +80,62 @@ CATEGORIES = {
     "에볼루션 가이드": {
         "keywords": ["가입 방법", "인터페이스", "독점 기술", "역사와 성장", "플랫폼 구조"],
         "pexels_queries": ["live casino studio", "casino platform interface", "online casino environment"],
+        "slug_prefix": "live-casino",
+        "slug_suffixes": ["guide", "tips", "review", "explained", "overview", "complete", "beginners", "advanced"],
     },
     "바카라 가이드": {
         "keywords": ["기본 규칙", "라이트닝 바카라", "스피드 바카라", "스퀴즈 바카라", "로드맵 시스템"],
         "pexels_queries": ["baccarat casino table", "baccarat cards dealer", "live baccarat"],
+        "slug_prefix": "baccarat",
+        "slug_suffixes": ["strategy", "rules", "tips", "guide", "winning", "odds", "how-to", "explained"],
     },
     "블랙잭 가이드": {
         "keywords": ["기본 전략", "인피니트 블랙잭", "라이트닝 블랙잭", "사이드 베팅", "파워 블랙잭"],
         "pexels_queries": ["blackjack casino table", "blackjack dealer", "live blackjack"],
+        "slug_prefix": "blackjack",
+        "slug_suffixes": ["strategy", "rules", "tips", "guide", "basic-strategy", "odds", "how-to", "variants"],
     },
     "게임쇼 분석": {
         "keywords": ["크레이지타임", "모노폴리 라이브", "드림캐처", "메가볼", "게임쇼 비교"],
         "pexels_queries": ["casino game show wheel", "live game show casino", "casino entertainment"],
+        "slug_prefix": "game-show",
+        "slug_suffixes": ["review", "guide", "analysis", "tips", "explained", "how-to-play", "odds", "strategy"],
     },
     "룰렛 & 포커": {
         "keywords": ["유럽식 룰렛", "라이트닝 룰렛", "임머시브 룰렛", "카지노 홀덤", "3 카드 포커"],
         "pexels_queries": ["roulette wheel casino", "live roulette dealer", "casino poker table"],
+        "slug_prefix": "roulette",
+        "slug_suffixes": ["strategy", "guide", "tips", "odds", "how-to", "variants", "explained", "winning"],
     },
     "최신 트렌드": {
         "keywords": ["2026 신규 게임", "암호화폐 결제", "AI 기술", "글로벌 스튜디오", "VR 카지노"],
         "pexels_queries": ["casino innovation 2026", "casino technology", "live casino studio"],
+        "slug_prefix": "casino-trends",
+        "slug_suffixes": ["2026", "update", "new", "latest", "future", "review", "guide", "overview"],
     },
     "자금 관리": {
         "keywords": ["세션 예산", "입출금 시스템", "손실 한도", "베팅 단위", "세션 관리"],
         "pexels_queries": ["casino budget management", "money management casino", "casino bankroll"],
+        "slug_prefix": "bankroll",
+        "slug_suffixes": ["management", "strategy", "guide", "tips", "budgeting", "limits", "control", "plan"],
     },
     "보안 및 라이선스": {
         "keywords": ["MGA UKGC 라이선스", "암호화 보안", "RNG 검증", "플랫폼 선택", "고객센터 활용"],
         "pexels_queries": ["casino license security", "online security casino", "casino safety"],
+        "slug_prefix": "casino-safety",
+        "slug_suffixes": ["license", "security", "guide", "tips", "verified", "trusted", "how-to", "checklist"],
     },
     "모바일 최적화": {
         "keywords": ["앱 vs 브라우저", "스트리밍 최적화", "iOS vs 안드로이드", "네트워크 설정", "태블릿 활용"],
         "pexels_queries": ["mobile casino smartphone", "smartphone gaming casino", "tablet casino"],
+        "slug_prefix": "mobile-casino",
+        "slug_suffixes": ["guide", "tips", "setup", "optimization", "ios", "android", "streaming", "settings"],
     },
     "책임감 있는 게임": {
         "keywords": ["기본 원칙", "자기 제한", "도박 문제 예방", "딜러 에티켓", "초보자 FAQ"],
         "pexels_queries": ["responsible gambling", "casino healthy gaming", "gambling prevention"],
+        "slug_prefix": "responsible-gambling",
+        "slug_suffixes": ["guide", "tips", "limits", "prevention", "self-control", "faq", "principles", "rules"],
     },
 }
 
@@ -429,9 +449,14 @@ def generate_post_content(
     fixed_queries: list,
     existing_slugs: set,
     intro_type: str,
+    slug_prefix: str = "",
+    slug_suffixes: list = None,
 ):
     slugs_sample = list(existing_slugs)[-50:]
     slugs_list = "\n".join(f"- {s}" for s in slugs_sample) if slugs_sample else "없음"
+    if not slug_suffixes:
+        slug_suffixes = ["guide", "tips", "review", "strategy"]
+    random_suffix = random.choice(slug_suffixes)
 
     prompt = f"""
 글 제목: {title}
@@ -464,7 +489,10 @@ def generate_post_content(
 ⚠️ 슬러그 생성 규칙:
 - 아래 기존 슬러그 목록과 절대 겹치지 않게 생성
 - 영문 소문자 + 숫자 + 하이픈만 사용, 50자 이내
-- 제목 핵심 키워드를 영문으로 번역
+- 반드시 슬러그 prefix로 시작: {slug_prefix}
+- prefix 다음에 핵심 키워드 영문 번역 + suffix 중 하나 조합
+- 예시: {slug_prefix}-keyword-{random_suffix}
+- "evolution-casino", "interface", "ux" 단어 슬러그에 사용 금지
 
 기존 슬러그 목록:
 {slugs_list}
@@ -626,6 +654,8 @@ def main():
         cat_data = CATEGORIES[category]
         keyword = random.choice(cat_data["keywords"])
         pexels_queries = cat_data["pexels_queries"]
+        slug_prefix = cat_data.get("slug_prefix", "casino")
+        slug_suffixes = cat_data.get("slug_suffixes", ["guide", "tips"])
 
         print(f"\n📌 [{i+1}/{POSTS_PER_RUN}] 카테고리: {category}")
         print(f"   핵심 키워드: {keyword}")
@@ -643,7 +673,8 @@ def main():
         print("  🤖 Gemini 본문 생성 중...")
         content_data = generate_post_content(
             client, title, category, keyword,
-            pexels_queries, existing_slugs, intro_type
+            pexels_queries, existing_slugs, intro_type,
+            slug_prefix, slug_suffixes
         )
         if not content_data:
             continue
