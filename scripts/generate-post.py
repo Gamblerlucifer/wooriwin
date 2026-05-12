@@ -236,6 +236,21 @@ def get_author_for_category(category: str) -> dict:
     return {"name": name, **AUTHORS[name]}
 
 
+# ── 카테고리별 제목 키워드 풀 ────────────────────
+CATEGORY_TITLE_KEYWORDS = {
+    "에볼루션 가이드":   ["에볼루션게이밍", "에볼루션 게이밍", "Evolution Gaming", "에볼루션카지노", "라이브카지노"],
+    "바카라 가이드":     ["에볼루션바카라", "에볼루션 바카라", "바카라", "라이브바카라", "라이브 바카라"],
+    "블랙잭 가이드":     ["에볼루션블랙잭", "에볼루션 블랙잭", "블랙잭", "라이브블랙잭", "라이브 블랙잭"],
+    "게임쇼 분석":       ["크레이지타임", "모노폴리라이브", "라이브게임쇼", "에볼루션게임쇼", "드림캐처"],
+    "룰렛 & 포커":       ["라이트닝룰렛", "라이트닝 룰렛", "룰렛", "라이브룰렛", "카지노홀덤"],
+    "최신 트렌드":       ["에볼루션게이밍", "에볼루션 게이밍", "라이브카지노", "온라인카지노", "카지노 트렌드"],
+    "자금 관리":         ["카지노 자금관리", "뱅크롤", "베팅 전략", "카지노 예산", "손실 관리"],
+    "보안 및 라이선스":  ["카지노 보안", "라이선스 카지노", "안전한 카지노", "MGA 라이선스", "카지노 인증"],
+    "모바일 최적화":     ["모바일카지노", "모바일 카지노", "스마트폰 카지노", "모바일 바카라", "앱 카지노"],
+    "책임감 있는 게임":  ["책임감있는 게임", "도박 중독 예방", "안전한 게임", "카지노 자기제한", "건전한 게임문화"],
+}
+
+
 # ── 페르소나 시스템 지침 ──────────────────────────
 SYSTEM_INSTRUCTION = """
 당신은 라이브 카지노 UX 분석 및 플레이 환경 최적화 전문 콘텐츠 팀입니다.
@@ -391,6 +406,10 @@ def generate_unique_title(client: genai.Client, category: str, keyword: str, exi
     existing_sample = existing_titles[-20:] if existing_titles else []
     existing_list = "\n".join(f"- {t}" for t in existing_sample) if existing_sample else "없음"
     
+    # 카테고리별 키워드 풀에서 랜덤 선택
+    title_kw_pool = CATEGORY_TITLE_KEYWORDS.get(category, ["에볼루션카지노"])
+    title_kw = random.choice(title_kw_pool)
+    
     for attempt in range(max_attempts):
         prompt = f"""
 오늘 날짜: {datetime.now().strftime("%Y년 %m월 %d일")}
@@ -399,15 +418,23 @@ def generate_unique_title(client: genai.Client, category: str, keyword: str, exi
 
 카테고리: {category}
 핵심 키워드: {keyword}
+제목에 반드시 포함할 브랜드/게임 키워드: {title_kw}
 
 조건:
-- "에볼루션카지노" 키워드 반드시 포함
+- 위 브랜드/게임 키워드를 제목 어디에나 자연스럽게 포함 (반드시 앞에 올 필요 없음)
+- "에볼루션카지노"를 항상 제목 맨 앞에 쓰는 패턴 금지
 - 정보형·가이드형 톤 유지
 - 과장형·선정적 표현 금지
 - 수치 보장·승률 예측·결과 보장 표현 절대 금지
 - 각 제목은 서로 다른 앵글로 작성
 - 제목에 콜론(:) 사용 금지
 - 25~45자 사이
+
+제목 패턴 예시 (다양하게):
+- "바카라 로드맵 시스템의 허와 실 | 라이브바카라 분석"
+- "라이트닝 룰렛 배당률과 RTP 완벽 해설"
+- "뱅크롤 관리 황금법칙 카지노 자금관리 가이드"
+- "모바일카지노 스트리밍 최적화 완벽 설정법"
 
 ⚠️ 절대 금지 — 아래 기존 제목들과 핵심 단어 3개 이상 겹치는 제목 금지:
 {existing_list}
