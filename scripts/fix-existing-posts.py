@@ -52,20 +52,6 @@ SLUG_SUFFIXES = ["guide", "tips", "review", "strategy", "explained", "overview",
 
 BAD_SLUG_PATTERNS = ["evolution-casino", "interface", "-ux-", "-4-", "-2-", "-5-"]
 
-# ── 카테고리별 제목 키워드 풀 ────────────────────
-CATEGORY_TITLE_KEYWORDS = {
-    "에볼루션 가이드":   ["에볼루션게이밍", "에볼루션 게이밍", "Evolution Gaming", "에볼루션카지노", "라이브카지노"],
-    "바카라 가이드":     ["에볼루션바카라", "에볼루션 바카라", "바카라", "라이브바카라", "라이브 바카라"],
-    "블랙잭 가이드":     ["에볼루션블랙잭", "에볼루션 블랙잭", "블랙잭", "라이브블랙잭", "라이브 블랙잭"],
-    "게임쇼 분석":       ["크레이지타임", "모노폴리라이브", "라이브게임쇼", "에볼루션게임쇼", "드림캐처"],
-    "룰렛 & 포커":       ["라이트닝룰렛", "라이트닝 룰렛", "룰렛", "라이브룰렛", "카지노홀덤"],
-    "최신 트렌드":       ["에볼루션게이밍", "에볼루션 게이밍", "라이브카지노", "온라인카지노", "카지노 트렌드"],
-    "자금 관리":         ["카지노 자금관리", "뱅크롤", "베팅 전략", "카지노 예산", "손실 관리"],
-    "보안 및 라이선스":  ["카지노 보안", "라이선스 카지노", "안전한 카지노", "MGA 라이선스", "카지노 인증"],
-    "모바일 최적화":     ["모바일카지노", "모바일 카지노", "스마트폰 카지노", "모바일 바카라", "앱 카지노"],
-    "책임감 있는 게임":  ["책임감있는 게임", "도박 중독 예방", "안전한 게임", "카지노 자기제한", "건전한 게임문화"],
-}
-
 STOP_WORDS = {
     "에볼루션카지노", "에볼루션", "카지노", "위한", "가이드", "이해", "활용",
     "방법", "설정", "분석", "관리", "최적화", "환경", "플레이", "라이브",
@@ -126,51 +112,54 @@ def generate_new_slug(category: str, title: str, existing_slugs: set) -> str:
 
 
 def generate_new_title(client, category, existing_titles):
-    """기존 제목과 중복 안 되는 새 제목 생성."""
+    """기존 제목과 중복 안 되는 새 제목 + 슬러그 동시 생성."""
     existing_list = "\n".join(f"- {t}" for t in existing_titles[-20:])
     title_kw_pool = CATEGORY_TITLE_KEYWORDS.get(category, ["에볼루션카지노"])
     title_kw = random.choice(title_kw_pool)
+    slug_prefix = CATEGORY_SLUG_PREFIX.get(category, "casino")
 
     for attempt in range(3):
         prompt = f"""
-다음 조건으로 한국인 독자에게 매력적인 블로그 제목 3개를 생성하세요.
-
 카테고리: {category}
 제목에 반드시 포함할 키워드: {title_kw}
+슬러그 prefix: {slug_prefix}
 
 조건:
 - 위 키워드를 제목 어디에나 자연스럽게 포함 (맨 앞에 올 필요 없음)
 - "에볼루션카지노"를 항상 제목 맨 앞에 쓰는 패턴 금지
-- 정보형·가이드형 톤 유지
-- 과장형·선정적 표현 금지
-- 25~45자 사이
+- 정보형·가이드형 톤 유지, 25~45자 사이
 - 제목에 콜론(:) 사용 금지
-
-제목 패턴 예시:
-- "바카라 로드맵 시스템의 허와 실 | 라이브바카라 분석"
-- "라이트닝 룰렛 배당률과 RTP 완벽 해설"
-- "뱅크롤 관리 황금법칙 카지노 자금관리 가이드"
+- 슬러그는 반드시 {slug_prefix}로 시작
+- 슬러그는 제목 핵심 키워드 영문 번역으로 구성
+- 슬러그에 랜덤 숫자 금지 (숫자는 제목에 "3가지" 같은 경우만)
+- 슬러그 50자 이내, 영문 소문자 + 하이픈만
 
 ⚠️ 아래 기존 제목들과 핵심 단어 3개 이상 겹치는 제목 금지:
 {existing_list}
 
 JSON 배열만 출력 (마크다운 없이):
-["제목1", "제목2", "제목3"]
+[
+  {{"title": "제목1", "slug": "{slug_prefix}-keyword-suffix"}},
+  {{"title": "제목2", "slug": "{slug_prefix}-keyword-suffix"}},
+  {{"title": "제목3", "slug": "{slug_prefix}-keyword-suffix"}}
+]
 """
         try:
             response = client.models.generate_content(
                 model="gemini-3.1-flash-lite",
                 contents=prompt,
             )
-            titles = json.loads(clean_json_response(response.text))
-            if isinstance(titles, list):
-                for t in titles:
-                    if not has_duplicate(t, existing_titles):
-                        return t
+            results = json.loads(clean_json_response(response.text))
+            if isinstance(results, list):
+                for item in results:
+                    t = item.get("title", "")
+                    s = item.get("slug", "")
+                    if t and s and not has_duplicate(t, existing_titles):
+                        return t, s
         except Exception as e:
             print(f"  ⚠️ 시도 {attempt+1} 실패: {e}")
             time.sleep(2)
-    return None
+    return None, None
 
 def already_has_internal_link(content):
     """내부 링크가 이미 있는지 검사."""
@@ -196,38 +185,27 @@ def main():
             p["_file"] = f
             posts.append(p)
     
-    # 0단계 — 슬러그 패턴 교체
-    print("=== 0단계: 슬러그 패턴 교체 ===")
-    existing_slugs = {p["slug"] for p in posts}
-    slug_map = {}  # 구 슬러그 → 새 슬러그 매핑
-
-    for p in posts:
-        old_slug = p["slug"]
-        if needs_slug_fix(old_slug):
-            new_slug = generate_new_slug(p["category"], p["title"], existing_slugs)
-            slug_map[old_slug] = new_slug
-            existing_slugs.discard(old_slug)
-            existing_slugs.add(new_slug)
-            p["slug"] = new_slug
-            print(f"  🔄 {old_slug}")
-            print(f"     → {new_slug}")
-        else:
-            print(f"  ✅ 유지: {old_slug}")
-
-    print(f"\n슬러그 교체: {len(slug_map)}개\n")
-
-    # 1단계 — 전체 title 새 패턴으로 교체
-    print("=== 1단계: 전체 title 새 패턴으로 교체 ===")
     client = genai.Client(api_key=GEMINI_API_KEY)
+
+    # 1단계 — 전체 title + slug 새 패턴으로 교체
+    print("=== 1단계: 전체 title + slug 새 패턴으로 교체 ===")
+    existing_slugs = {p["slug"] for p in posts}
     new_titles = []
 
     for p in posts:
-        print(f"\n📝 제목 교체 중: {p['_file']}")
-        print(f"   기존: '{p['title']}'")
-        new_title = generate_new_title(client, p["category"], new_titles)
-        if new_title:
-            print(f"   신규: '{new_title}'")
+        print(f"\n📝 교체 중: {p['_file']}")
+        print(f"   기존 제목: '{p['title']}'")
+        print(f"   기존 슬러그: '{p['slug']}'")
+        new_title, new_slug = generate_new_title(client, p["category"], new_titles)
+        if new_title and new_slug:
+            if new_slug in existing_slugs:
+                new_slug = f"{new_slug}-v2"
+            print(f"   신규 제목: '{new_title}'")
+            print(f"   신규 슬러그: '{new_slug}'")
+            existing_slugs.discard(p["slug"])
+            existing_slugs.add(new_slug)
             p["title"] = new_title
+            p["slug"] = new_slug
             new_titles.append(new_title)
         else:
             from datetime import datetime
@@ -237,7 +215,7 @@ def main():
             new_titles.append(fallback)
         time.sleep(1)
 
-    print(f"\n제목 교체 완료: {len(posts)}개\n")
+    print(f"\n교체 완료: {len(posts)}개\n")
     
     # 3단계 — 내부 링크 추가 + relatedPosts 제거
     print("\n=== 3단계: 내부 링크 추가 + relatedPosts 제거 ===")
