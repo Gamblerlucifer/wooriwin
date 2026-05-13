@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -180,7 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 ].map((logo) => (
                   <a key={logo.alt} href={logo.href} target="_blank" rel="noopener noreferrer"
                     className="opacity-40 hover:opacity-70 transition-opacity">
-                    <img src={logo.src} alt={logo.alt} className="h-8 md:h-10 w-auto object-contain" />
+                    <Image src={logo.src} alt={logo.alt} width={120} height={40} className="h-8 md:h-10 w-auto object-contain" />
                   </a>
                 ))}
               </div>
