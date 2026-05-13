@@ -266,7 +266,7 @@ export default function Home() {
 
             <div className="flex flex-col gap-4 items-center">
               {/* ✅ YMYL: 제휴 광고 투명성 명시 (이미지에 있던 부분 복구) */}
-              <p className="text-xs" style={{ color: 'rgba(201,168,76,0.6)', letterSpacing: '0.05em' }}>
+              <p className="text-xs" style={{ color: 'rgba(201,168,76,0.9)', letterSpacing: '0.05em' }}>
                 ※ 아래 버튼은 광고제휴 파트너 링크입니다
               </p>
               
@@ -400,7 +400,7 @@ export default function Home() {
                     ))}
                   </div>
                   {block.title.includes('바카라') && (
-                    <p className="text-xs mt-4" style={{ color: 'rgba(201,168,76,0.6)' }}>
+                    <p className="text-xs mt-4" style={{ color: 'rgba(201,168,76,0.9)' }}>
                       출처:{' '}
                       <a href="https://www.evolutiongaming.com" target="_blank" rel="noopener noreferrer"
                         className="underline hover:text-yellow-400 transition">
@@ -466,7 +466,7 @@ export default function Home() {
 
         {/* 6. 파트너사 로고 마키 */}
         <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)', background: '#0D0D13', overflow: 'hidden', padding: '32px 0' }}>
-          <p className="text-xs font-bold uppercase tracking-widest text-center mb-6" style={{ color: 'rgba(201,168,76,0.5)' }}>Global Partners</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-center mb-6" style={{ color: 'rgba(201,168,76,0.85)' }}>Global Partners</p>
           <style>{`
             @keyframes marquee {
               0% { transform: translateX(0); }
@@ -561,7 +561,7 @@ export default function Home() {
                         <span className="text-xs font-semibold px-2 py-1 rounded" style={{ color: '#C9A84C', background: 'rgba(201,168,76,0.1)' }}>
                           {post.category}
                         </span>
-                        <span className="text-xs" style={{ color: '#666' }}>{post.readTime} 읽기</span>
+                        <span className="text-xs" style={{ color: '#999' }}>{post.readTime} 읽기</span>
                       </div>
                       <p className="text-sm font-bold mb-2 leading-snug line-clamp-2 group-hover:text-yellow-400 transition" style={{ color: '#F5F0E8' }}>
                         {post.title}
@@ -569,7 +569,7 @@ export default function Home() {
                       <p className="text-xs leading-relaxed line-clamp-2" style={{ color: '#AAAABC' }}>
                         {post.description}
                       </p>
-                      <p className="text-xs mt-3" style={{ color: '#555' }}>{post.date}</p>
+                      <p className="text-xs mt-3" style={{ color: '#888' }}>{post.date}</p>
                     </div>
                   </Link>
                 ))}

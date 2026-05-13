@@ -230,20 +230,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link key={l.href} href={l.href} className="text-gray-400 hover:text-yellow-400 transition">{l.label}</Link>
               ))}
             </div>
-            <p className="text-[10px] md:text-[11px] text-gray-600 max-w-3xl mx-auto leading-relaxed mb-1">
+            <p className="text-[10px] md:text-[11px] text-gray-400 max-w-3xl mx-auto leading-relaxed mb-1">
               WOORIWIN은 정보 제공 가이드 사이트이며, 직접 게임 서비스를 제공하지 않습니다.
             </p>
-            <p className="text-[10px] md:text-[11px] text-gray-600 max-w-3xl mx-auto leading-relaxed mb-4">
+            <p className="text-[10px] md:text-[11px] text-gray-400 max-w-3xl mx-auto leading-relaxed mb-4">
               모든 배팅의 책임은 이용자 본인에게 있으며, 당사는 이용 결과에 대한 법적 책임을 지지 않습니다.
             </p>
-            <div className="flex justify-center flex-wrap gap-x-6 gap-y-3 text-[10px] md:text-[11px] text-gray-500 mb-8">
+            <div className="flex justify-center flex-wrap gap-x-6 gap-y-3 text-[10px] md:text-[11px] text-gray-400 mb-8">
               {policyLinks.map(({ href, label }) => (
                 <Link key={href} href={`/${href}`} className="hover:text-yellow-500 transition-colors">
                   {label}
                 </Link>
               ))}
             </div>
-            <p className="text-[9px] text-gray-800 uppercase tracking-[0.3em]">© 2026 WOORIWIN. ALL RIGHTS RESERVED.</p>
+            <p className="text-[9px] text-gray-500 uppercase tracking-[0.3em]">© 2026 WOORIWIN. ALL RIGHTS RESERVED.</p>
           </div>
         </footer>
       </body>
