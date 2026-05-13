@@ -169,15 +169,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             {/* 신뢰 기관 로고 */}
             <div className="mb-10">
-              <p className="text-xs text-gray-600 uppercase tracking-widest mb-6">Trusted & Certified By</p>
+              <p className="text-xs text-gray-400 uppercase tracking-widest mb-6">Trusted & Certified By</p>
               <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
                 {[
-                  { src: '/images/begambleaware.png', alt: 'BeGambleAware', href: 'https://www.begambleaware.org/' },
-                  { src: '/images/ecogra.png', alt: 'eCOGRA', href: 'https://ecogra.org/' },
-                  { src: '/images/gambling-commission.png', alt: 'Gambling Commission', href: 'https://www.gamblingcommission.gov.uk/' },
-                  { src: '/images/gamecheck.png', alt: 'GameCheck', href: 'https://gamecheck.com/ko' },
-                  { src: '/images/gamstop.png', alt: 'GamStop', href: 'https://www.gamstop.co.uk/' },
-                  { src: '/images/mga.png', alt: 'MGA', href: 'https://www.mga.org.mt/' },
+                  { src: '/images/begambleaware.png', alt: 'BeGambleAware 공식 사이트', href: 'https://www.begambleaware.org/' },
+                  { src: '/images/ecogra.png', alt: 'eCOGRA 인증 기관', href: 'https://ecogra.org/' },
+                  { src: '/images/gambling-commission.png', alt: 'UK Gambling Commission', href: 'https://www.gamblingcommission.gov.uk/' },
+                  { src: '/images/gamecheck.png', alt: 'GameCheck 인증', href: 'https://gamecheck.com/ko' },
+                  { src: '/images/gamstop.png', alt: 'GamStop 자가 제외 서비스', href: 'https://www.gamstop.co.uk/' },
+                  { src: '/images/mga.png', alt: 'Malta Gaming Authority', href: 'https://www.mga.org.mt/' },
                 ].map((logo) => (
                   <a key={logo.alt} href={logo.href} target="_blank" rel="noopener noreferrer"
                     className="opacity-70 hover:opacity-100 transition-opacity bg-white rounded-lg px-3 py-2 flex items-center justify-center">
@@ -189,20 +189,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             {/* Evolution Gaming 공식 SNS */}
             <div className="mb-10">
-              <p className="text-xs text-gray-600 uppercase tracking-widest mb-4">Evolution Gaming Official</p>
+              <p className="text-xs text-gray-400 uppercase tracking-widest mb-4">Evolution Gaming Official</p>
               <div className="flex justify-center items-center gap-5">
                 {[
-                  { href: 'https://www.facebook.com/EvolutionGlobal', label: 'Facebook', icon: 'f' },
-                  { href: 'https://www.instagram.com/evolution_global_/', label: 'Instagram', icon: '📷' },
-                  { href: 'https://www.linkedin.com/company/evolution-global/', label: 'LinkedIn', icon: 'in' },
-                  { href: 'https://twitter.com/Evo_global', label: 'Twitter', icon: '𝕏' },
-                  { href: 'https://www.youtube.com/channel/UChpq8ocCD-OW8XXrya28TmQ', label: 'YouTube', icon: '▶' },
+                  {
+                    href: 'https://www.facebook.com/EvolutionGlobal', label: 'Evolution Gaming Facebook',
+                    svg: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                  },
+                  {
+                    href: 'https://www.instagram.com/evolution_global_/', label: 'Evolution Gaming Instagram',
+                    svg: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="#0D0D13"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="#0D0D13" strokeWidth="2"/></svg>
+                  },
+                  {
+                    href: 'https://www.linkedin.com/company/evolution-global/', label: 'Evolution Gaming LinkedIn',
+                    svg: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                  },
+                  {
+                    href: 'https://twitter.com/Evo_global', label: 'Evolution Gaming Twitter',
+                    svg: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  },
+                  {
+                    href: 'https://www.youtube.com/channel/UChpq8ocCD-OW8XXrya28TmQ', label: 'Evolution Gaming YouTube',
+                    svg: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0D0D13"/></svg>
+                  },
                 ].map((sns) => (
                   <a key={sns.label} href={sns.href} target="_blank" rel="nofollow noopener noreferrer"
                     aria-label={sns.label}
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition opacity-40 hover:opacity-80"
-                    style={{ border: '1px solid rgba(201,168,76,0.2)', color: '#C9A84C' }}>
-                    {sns.icon}
+                    className="w-9 h-9 rounded-full flex items-center justify-center transition opacity-50 hover:opacity-90"
+                    style={{ border: '1px solid rgba(201,168,76,0.3)', color: '#C9A84C' }}>
+                    {sns.svg}
                   </a>
                 ))}
               </div>
