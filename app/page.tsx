@@ -419,7 +419,52 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. 최신 블로그 섹션 */}
+        {/* 5. Evolution Gaming 본사 위치 */}
+        <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)' }}>
+          <div className="max-w-6xl mx-auto px-6 py-20">
+            <div className="flex flex-col lg:flex-row gap-10 items-center">
+              <div className="lg:w-1/2">
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#C9A84C' }}>Location</p>
+                <h2 className="font-bold mb-6" style={{ fontSize: 'clamp(22px, 3vw, 36px)', fontFamily: 'Georgia, serif' }}>
+                  글로벌 카지노의 중심,<br />
+                  <span style={{ color: '#C9A84C' }}>에볼루션 게이밍</span> 본사
+                </h2>
+                <ul className="space-y-3 text-sm text-gray-400">
+                  <li className="flex items-start gap-3">
+                    <span style={{ color: '#C9A84C' }}>🕐</span>
+                    <span>9:00 AM ~ 17:00 PM (Mon–Fri)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span style={{ color: '#C9A84C' }}>📍</span>
+                    <span>Vasagatan 16, 111 20 Stockholm, Sweden</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span style={{ color: '#C9A84C' }}>📞</span>
+                    <span>+46 (0)8-440 46 60</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span style={{ color: '#C9A84C' }}>✉️</span>
+                    <span>asrealasitgets@evolution.com</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="lg:w-1/2 w-full rounded-xl overflow-hidden" style={{ border: '1px solid rgba(201,168,76,0.2)' }}>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2034.1!2d18.059152!3d59.3303192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d5fd29e8851%3A0x62452186a465e968!2sEsselte%20building%2C%20Vasagatan%2016%2C%20111%2020%20Stockholm!5e0!3m2!1sko!2sse!4v1"
+                  width="100%"
+                  height="320"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Evolution Gaming 본사 위치"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. 최신 블로그 섹션 */}
         {recentPosts.length > 0 && (
           <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)' }}>
             <div className="max-w-6xl mx-auto px-6 py-28">

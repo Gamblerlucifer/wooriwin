@@ -165,6 +165,48 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* 3. 공통 정책 푸터 */}
         <footer className="bg-[#050507] py-12 border-t border-gray-900 mt-auto">
           <div className="max-w-6xl mx-auto px-6 text-center">
+
+            {/* 신뢰 기관 로고 */}
+            <div className="mb-10">
+              <p className="text-xs text-gray-600 uppercase tracking-widest mb-6">Trusted & Certified By</p>
+              <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
+                {[
+                  { src: '/images/begambleaware.png', alt: 'BeGambleAware', href: 'https://www.begambleaware.org/' },
+                  { src: '/images/ecogra.png', alt: 'eCOGRA', href: 'https://ecogra.org/' },
+                  { src: '/images/gambling-commission.png', alt: 'Gambling Commission', href: 'https://www.gamblingcommission.gov.uk/' },
+                  { src: '/images/gamecheck.png', alt: 'GameCheck', href: 'https://gamecheck.com/ko' },
+                  { src: '/images/gamstop.png', alt: 'GamStop', href: 'https://www.gamstop.co.uk/' },
+                  { src: '/images/mga.png', alt: 'MGA', href: 'https://www.mga.org.mt/' },
+                ].map((logo) => (
+                  <a key={logo.alt} href={logo.href} target="_blank" rel="noopener noreferrer"
+                    className="opacity-40 hover:opacity-70 transition-opacity">
+                    <img src={logo.src} alt={logo.alt} className="h-8 md:h-10 w-auto object-contain" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Evolution Gaming 공식 SNS */}
+            <div className="mb-10">
+              <p className="text-xs text-gray-600 uppercase tracking-widest mb-4">Evolution Gaming Official</p>
+              <div className="flex justify-center items-center gap-5">
+                {[
+                  { href: 'https://www.facebook.com/EvolutionGlobal', label: 'Facebook', icon: 'f' },
+                  { href: 'https://www.instagram.com/evolution_global_/', label: 'Instagram', icon: '📷' },
+                  { href: 'https://www.linkedin.com/company/evolution-global/', label: 'LinkedIn', icon: 'in' },
+                  { href: 'https://twitter.com/Evo_global', label: 'Twitter', icon: '𝕏' },
+                  { href: 'https://www.youtube.com/channel/UChpq8ocCD-OW8XXrya28TmQ', label: 'YouTube', icon: '▶' },
+                ].map((sns) => (
+                  <a key={sns.label} href={sns.href} target="_blank" rel="nofollow noopener noreferrer"
+                    aria-label={sns.label}
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition opacity-40 hover:opacity-80"
+                    style={{ border: '1px solid rgba(201,168,76,0.2)', color: '#C9A84C' }}>
+                    {sns.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <p className="text-[#C9A84C] font-bold text-2xl mb-4 font-serif tracking-widest">WOORIWIN</p>
             <p className="text-[#C9A84C] font-bold text-sm mb-4">관련 에볼루션카지노 가이드</p>
             <div className="flex flex-wrap justify-center gap-4 mb-4 text-sm">
