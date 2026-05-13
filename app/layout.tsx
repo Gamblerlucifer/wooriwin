@@ -95,13 +95,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col bg-[#0A0A0F]">
         
         {/* 1. 최상단 정책 배너: 구글 정책 준수 (고정형) */}
-        <div className="bg-black/95 text-[10px] md:text-xs text-gray-500 py-2 border-b border-gray-800 text-center sticky top-0 z-[100] backdrop-blur-md">
+        <div className="bg-black/95 text-[10px] md:text-xs text-gray-400 py-2 border-b border-gray-800 text-center sticky top-0 z-[100] backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-x-4 gap-y-1">
-            <span className="text-red-500 font-bold"><span aria-hidden="true">🔞</span> 만 18세 미만 이용 불가</span>
-            <span className="hidden md:inline text-gray-800">|</span>
-            <span>본 사이트는 제휴 마케팅 링크를 포함하며 정보 제공만을 목적으로 합니다.</span>
-            <span className="hidden md:inline text-gray-800">|</span>
-            <span className="font-semibold text-gray-400 font-mono text-[9px] md:text-xs">도박중독 상담: 1336</span>
+            <span className="text-red-400 font-bold"><span aria-hidden="true">🔞</span> 만 18세 미만 이용 불가</span>
+            <span className="hidden md:inline text-gray-600" aria-hidden="true">|</span>
+            <span className="text-gray-400">본 사이트는 제휴 마케팅 링크를 포함하며 정보 제공만을 목적으로 합니다.</span>
+            <span className="hidden md:inline text-gray-600" aria-hidden="true">|</span>
+            <span className="font-semibold text-gray-300 font-mono text-[9px] md:text-xs">도박중독 상담: <a href="tel:1336" className="underline hover:text-white transition">1336</a></span>
           </div>
         </div>
 
