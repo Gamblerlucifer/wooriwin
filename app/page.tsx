@@ -482,43 +482,47 @@ export default function Home() {
           <div style={{ overflow: 'hidden' }}>
             <div className="marquee-track">
               {[
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/888.png', alt: '888 Casino' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/betwaybig.jpg', alt: 'Betway' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/draftkings-1.png', alt: 'DraftKings' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/hardrock-hotel-and-casino-big.jpg', alt: 'Hard Rock' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/leovegas.png', alt: 'LeoVegas' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/mrgreen.png', alt: 'Mr Green' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/pokerstars-big.jpg', alt: 'PokerStars' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/unibet.png', alt: 'Unibet' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/williamhill.png', alt: 'William Hill' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/paddpower.png', alt: 'Paddy Power' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/sisal-1.png', alt: 'Sisal' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/svenskaspel-1.png', alt: 'Svenska Spel' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/888.png', alt: '888 Casino', href: 'https://www.888casino.com/live-casino/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair', href: 'https://casino.betfair.com/p/live-casino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson', href: 'https://livecasino.betsson.com/en/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/betwaybig.jpg', alt: 'Betway', href: 'https://livecasino.betway.com/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/draftkings-1.png', alt: 'DraftKings', href: 'https://www.draftkings.co.uk/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/hardrock-hotel-and-casino-big.jpg', alt: 'Hard Rock', href: 'https://www.hardrockhotels.com/casinos' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/leovegas.png', alt: 'LeoVegas', href: 'https://www.leovegas.com/en-gb/livecasino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/mrgreen.png', alt: 'Mr Green', href: 'https://www.mrgreen.com/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/pokerstars-big.jpg', alt: 'PokerStars', href: 'https://www.pokerstars.uk/casino/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/unibet.png', alt: 'Unibet', href: 'https://www.unibet.co.uk/livecasino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/williamhill.png', alt: 'William Hill', href: 'http://vegas.williamhill.com/live-casino/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/paddpower.png', alt: 'Paddy Power', href: 'https://casino.paddypower.com/p/live-casino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/sisal-1.png', alt: 'Sisal', href: 'https://www.sisal.com/eng/offering/games/online/italy' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/svenskaspel-1.png', alt: 'Svenska Spel', href: 'https://www.svenskaspel.se/' },
                 // 무한 루프용 복사본
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/888.png', alt: '888 Casino' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/betwaybig.jpg', alt: 'Betway' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/draftkings-1.png', alt: 'DraftKings' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/hardrock-hotel-and-casino-big.jpg', alt: 'Hard Rock' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/leovegas.png', alt: 'LeoVegas' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/mrgreen.png', alt: 'Mr Green' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/pokerstars-big.jpg', alt: 'PokerStars' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/unibet.png', alt: 'Unibet' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/williamhill.png', alt: 'William Hill' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/paddpower.png', alt: 'Paddy Power' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/sisal-1.png', alt: 'Sisal' },
-                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/svenskaspel-1.png', alt: 'Svenska Spel' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/888.png', alt: '888 Casino', href: 'https://www.888casino.com/live-casino/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair', href: 'https://casino.betfair.com/p/live-casino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson', href: 'https://livecasino.betsson.com/en/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson', href: 'https://livecasino.betsson.com/en/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair', href: 'https://casino.betfair.com/p/live-casino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/betwaybig.jpg', alt: 'Betway', href: 'https://livecasino.betway.com/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/draftkings-1.png', alt: 'DraftKings', href: 'https://www.draftkings.co.uk/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/hardrock-hotel-and-casino-big.jpg', alt: 'Hard Rock', href: 'https://www.hardrockhotels.com/casinos' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/leovegas.png', alt: 'LeoVegas', href: 'https://www.leovegas.com/en-gb/livecasino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/mrgreen.png', alt: 'Mr Green', href: 'https://www.mrgreen.com/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/pokerstars-big.jpg', alt: 'PokerStars', href: 'https://www.pokerstars.uk/casino/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/unibet.png', alt: 'Unibet', href: 'https://www.unibet.co.uk/livecasino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/williamhill.png', alt: 'William Hill', href: 'http://vegas.williamhill.com/live-casino/' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/paddpower.png', alt: 'Paddy Power', href: 'https://casino.paddypower.com/p/live-casino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/sisal-1.png', alt: 'Sisal', href: 'https://www.sisal.com/eng/offering/games/online/italy' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/svenskaspel-1.png', alt: 'Svenska Spel', href: 'https://www.svenskaspel.se/' },
               ].map((logo, i) => (
-                <div key={i} className="flex items-center justify-center mx-8" style={{ minWidth: '120px' }}>
+                <a key={i} href={logo.href} target="_blank" rel="nofollow noopener noreferrer"
+                  className="flex items-center justify-center mx-8" style={{ minWidth: '120px' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={logo.src} alt={logo.alt} loading="lazy"
-                    style={{ height: '36px', width: 'auto', objectFit: 'contain', opacity: 0.5, filter: 'grayscale(100%)' }} />
-                </div>
+                    style={{ height: '36px', width: 'auto', objectFit: 'contain', opacity: 0.5, filter: 'grayscale(100%)', transition: 'opacity 0.2s' }}
+                    onMouseOver={e => (e.currentTarget.style.opacity = '0.9')}
+                    onMouseOut={e => (e.currentTarget.style.opacity = '0.5')}
+                  />
+                </a>
               ))}
             </div>
           </div>
