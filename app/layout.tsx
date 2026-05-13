@@ -180,8 +180,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   { src: '/images/mga.png', alt: 'MGA', href: 'https://www.mga.org.mt/' },
                 ].map((logo) => (
                   <a key={logo.alt} href={logo.href} target="_blank" rel="noopener noreferrer"
-                    className="opacity-40 hover:opacity-70 transition-opacity">
-                    <Image src={logo.src} alt={logo.alt} width={120} height={40} className="h-8 md:h-10 w-auto object-contain" />
+                    className="opacity-70 hover:opacity-100 transition-opacity bg-white rounded-lg px-3 py-2 flex items-center justify-center">
+                    <Image src={logo.src} alt={logo.alt} width={120} height={40} className="h-7 md:h-9 w-auto object-contain" />
                   </a>
                 ))}
               </div>
