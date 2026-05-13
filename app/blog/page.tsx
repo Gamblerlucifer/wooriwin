@@ -78,6 +78,24 @@ const jsonLdBreadcrumb = {
 
 const categories = ['전체', '에볼루션 가이드', '바카라 가이드', '블랙잭 가이드', '게임쇼 분석', '룰렛 & 포커', '최신 트렌드', '자금 관리', '보안 및 라이선스', '모바일 최적화', '책임감 있는 게임']
 
+export const CATEGORY_SLUG_MAP: Record<string, string> = {
+  '전체': '',
+  '에볼루션 가이드': 'evolution-guide',
+  '바카라 가이드': 'baccarat-guide',
+  '블랙잭 가이드': 'blackjack-guide',
+  '게임쇼 분석': 'game-show',
+  '룰렛 & 포커': 'roulette-poker',
+  '최신 트렌드': 'latest-trends',
+  '자금 관리': 'bankroll',
+  '보안 및 라이선스': 'safety-license',
+  '모바일 최적화': 'mobile',
+  '책임감 있는 게임': 'responsible-gaming',
+}
+
+export const SLUG_CATEGORY_MAP: Record<string, string> = Object.fromEntries(
+  Object.entries(CATEGORY_SLUG_MAP).map(([k, v]) => [v, k])
+)
+
 
 export default function BlogPage() {
   const posts = getAllPosts()
@@ -111,7 +129,7 @@ export default function BlogPage() {
 
         {/* 카테고리 필터 + 포스트 그리드 */}
         <Suspense fallback={<div className="text-center py-20 text-gray-400">로딩 중...</div>}>
-          <CategoryFilter posts={posts} categories={categories} />
+          <CategoryFilter posts={posts} categories={categories} categorySlugMap={CATEGORY_SLUG_MAP} slugCategoryMap={SLUG_CATEGORY_MAP} />
         </Suspense>
 
         {/* SEO 본문 */}

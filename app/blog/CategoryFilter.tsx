@@ -19,23 +19,30 @@ interface Post {
 interface CategoryFilterProps {
   posts: Post[]
   categories: string[]
+  categorySlugMap: Record<string, string>
+  slugCategoryMap: Record<string, string>
 }
 
 const POSTS_PER_PAGE = 21
 
-export default function CategoryFilter({ posts, categories }: CategoryFilterProps) {
+export default function CategoryFilter({ posts, categories, categorySlugMap, slugCategoryMap }: CategoryFilterProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [active, setActive] = useState('전체')
   const [page, setPage] = useState(1)
 
   useEffect(() => {
-    const cat = searchParams.get('category')
-    if (cat && categories.includes(cat)) {
-      setActive(cat)
+    const slug = searchParams.get('category')
+    if (slug) {
+      const cat = slugCategoryMap[slug]
+      if (cat && categories.includes(cat)) {
+        setActive(cat)
+      }
+    } else {
+      setActive('전체')
     }
     setPage(1)
-  }, [searchParams, categories])
+  }, [searchParams, categories, slugCategoryMap])
 
   const handleSelect = (cat: string) => {
     setActive(cat)
@@ -43,7 +50,8 @@ export default function CategoryFilter({ posts, categories }: CategoryFilterProp
     if (cat === '전체') {
       router.replace('/blog', { scroll: false })
     } else {
-      router.replace(`/blog?category=${encodeURIComponent(cat)}`, { scroll: false })
+      const slug = categorySlugMap[cat] || encodeURIComponent(cat)
+      router.replace(`/blog?category=${slug}`, { scroll: false })
     }
   }
 
