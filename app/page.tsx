@@ -478,6 +478,8 @@ export default function Home() {
               animation: marquee 30s linear infinite;
             }
             .marquee-track:hover { animation-play-state: paused; }
+            .marquee-item img { opacity: 0.5; filter: grayscale(100%); transition: opacity 0.2s; }
+            .marquee-item:hover img { opacity: 0.9; filter: grayscale(0%); }
           `}</style>
           <div style={{ overflow: 'hidden' }}>
             <div className="marquee-track">
@@ -515,13 +517,10 @@ export default function Home() {
                 { src: 'https://www.evolution.com/wp-content/uploads/2021/07/svenskaspel-1.png', alt: 'Svenska Spel', href: 'https://www.svenskaspel.se/' },
               ].map((logo, i) => (
                 <a key={i} href={logo.href} target="_blank" rel="nofollow noopener noreferrer"
-                  className="flex items-center justify-center mx-8" style={{ minWidth: '120px' }}>
+                  className="marquee-item flex items-center justify-center mx-8" style={{ minWidth: '120px' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={logo.src} alt={logo.alt} loading="lazy"
-                    style={{ height: '36px', width: 'auto', objectFit: 'contain', opacity: 0.5, filter: 'grayscale(100%)', transition: 'opacity 0.2s' }}
-                    onMouseOver={e => (e.currentTarget.style.opacity = '0.9')}
-                    onMouseOut={e => (e.currentTarget.style.opacity = '0.5')}
-                  />
+                    style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
                 </a>
               ))}
             </div>
