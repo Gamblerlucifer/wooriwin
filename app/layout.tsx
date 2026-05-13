@@ -243,7 +243,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </Link>
               ))}
             </div>
-            <p className="text-[9px] text-gray-500 uppercase tracking-[0.3em]">© 2026 WOORIWIN. ALL RIGHTS RESERVED.</p>
+            <p className="text-[9px] text-gray-400 uppercase tracking-[0.3em]">© 2026 WOORIWIN. ALL RIGHTS RESERVED.</p>
           </div>
         </footer>
       </body>
