@@ -464,7 +464,67 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. 최신 블로그 섹션 */}
+        {/* 6. 파트너사 로고 마키 */}
+        <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)', background: '#0D0D13', overflow: 'hidden', padding: '32px 0' }}>
+          <p className="text-xs font-bold uppercase tracking-widest text-center mb-6" style={{ color: 'rgba(201,168,76,0.5)' }}>Global Partners</p>
+          <style>{`
+            @keyframes marquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .marquee-track {
+              display: flex;
+              width: max-content;
+              animation: marquee 30s linear infinite;
+            }
+            .marquee-track:hover { animation-play-state: paused; }
+          `}</style>
+          <div style={{ overflow: 'hidden' }}>
+            <div className="marquee-track">
+              {[
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/888.png', alt: '888 Casino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/betwaybig.jpg', alt: 'Betway' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/draftkings-1.png', alt: 'DraftKings' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/hardrock-hotel-and-casino-big.jpg', alt: 'Hard Rock' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/leovegas.png', alt: 'LeoVegas' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/mrgreen.png', alt: 'Mr Green' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/pokerstars-big.jpg', alt: 'PokerStars' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/unibet.png', alt: 'Unibet' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/williamhill.png', alt: 'William Hill' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/paddpower.png', alt: 'Paddy Power' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/sisal-1.png', alt: 'Sisal' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/svenskaspel-1.png', alt: 'Svenska Spel' },
+                // 무한 루프용 복사본
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/888.png', alt: '888 Casino' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betsson-1.png', alt: 'Betsson' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/betfair-1.png', alt: 'Betfair' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/betwaybig.jpg', alt: 'Betway' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/draftkings-1.png', alt: 'DraftKings' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/hardrock-hotel-and-casino-big.jpg', alt: 'Hard Rock' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/leovegas.png', alt: 'LeoVegas' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/mrgreen.png', alt: 'Mr Green' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2022/02/pokerstars-big.jpg', alt: 'PokerStars' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/unibet.png', alt: 'Unibet' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/williamhill.png', alt: 'William Hill' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/paddpower.png', alt: 'Paddy Power' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/sisal-1.png', alt: 'Sisal' },
+                { src: 'https://www.evolution.com/wp-content/uploads/2021/07/svenskaspel-1.png', alt: 'Svenska Spel' },
+              ].map((logo, i) => (
+                <div key={i} className="flex items-center justify-center mx-8" style={{ minWidth: '120px' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={logo.src} alt={logo.alt} loading="lazy"
+                    style={{ height: '36px', width: 'auto', objectFit: 'contain', opacity: 0.5, filter: 'grayscale(100%)' }} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 7. 최신 블로그 섹션 */}
         {recentPosts.length > 0 && (
           <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)' }}>
             <div className="max-w-6xl mx-auto px-6 py-28">
