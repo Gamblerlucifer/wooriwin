@@ -520,7 +520,7 @@ export default function Home() {
                   className="marquee-item flex items-center justify-center mx-8" style={{ minWidth: '120px' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={logo.src} alt={logo.alt} loading="lazy"
-                    style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
+                    style={{ height: '45px', width: 'auto', objectFit: 'contain' }} />
                 </a>
               ))}
             </div>
