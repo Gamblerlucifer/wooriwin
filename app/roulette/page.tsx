@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { readFileSync, readdirSync, existsSync } from 'fs'
+import { join } from 'path'
 
 // ─── 타입 정의 ───────────────────────────────────────────────
 type FAQItem = {
@@ -148,9 +150,22 @@ const variants: Variant[] = [
   { name: '더블볼 룰렛', desc: '두 볼 동시 사용. 더블 스트레이트업 1,300:1 배당.', rtp: '최대 1,300:1' },
 ]
 
+const POSTS_DIR = join(process.cwd(), 'data', 'posts')
+
+function getRelatedBlogPosts(categories: string[], count = 3) {
+  if (!existsSync(POSTS_DIR)) return []
+  return readdirSync(POSTS_DIR)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(readFileSync(join(POSTS_DIR, f), 'utf-8')))
+    .filter((p) => categories.includes(p.category))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, count)
+}
+
 // ─── 페이지 컴포넌트 ─────────────────────────────────────────
 export default function RoulettePage() {
   const faqList: FAQItem[] = jsonLdFaq.mainEntity
+  const relatedPosts = getRelatedBlogPosts(['룰렛 & 포커'], 3)
 
   return (
     <>
@@ -338,6 +353,46 @@ export default function RoulettePage() {
             </div>
           </div>
         </section>
+
+        {/* 관련 블로그 글 */}
+        {relatedPosts.length > 0 && (
+          <section className="bg-gray-800 py-16 px-4">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-3">에볼루션카지노 룰렛 관련 글</h2>
+              <p className="text-gray-400 text-center mb-10">더 깊이 있는 정보를 블로그에서 확인하세요</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {relatedPosts.map((post) => (
+                  <Link
+                    key={post.slug}
+                    href={`/blog/${post.slug}`}
+                    className="group block bg-gray-900 rounded-xl overflow-hidden border border-gray-700 hover:border-yellow-400 transition"
+                  >
+                    <div className="relative h-40 overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={post.imageAlt || post.title}
+                        fill
+                        loading="lazy"
+                        className="object-cover opacity-70 group-hover:scale-105 transition-transform"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                    <div className="p-5">
+                      <p className="text-sm font-bold mb-2 leading-snug line-clamp-2 text-white group-hover:text-yellow-400 transition">
+                        {post.title}
+                      </p>
+                      <p className="text-xs text-gray-400 line-clamp-2 mb-2">{post.description}</p>
+                      <p className="text-xs text-gray-500">{post.date}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <div className="text-center mt-10">
+                <Link href="/blog" className="text-yellow-400 hover:underline text-sm font-medium">전체 블로그 글 보기 →</Link>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* FAQ */}
         <section className="max-w-4xl mx-auto px-4 py-16">
