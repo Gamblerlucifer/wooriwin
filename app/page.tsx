@@ -385,14 +385,16 @@ export default function Home() {
         {/* 4. SEO 상세 내용 섹션 */}
         <section style={{ borderTop: '1px solid rgba(201,168,76,0.12)' }}>
           <div className="max-w-5xl mx-auto px-6 py-28">
-            <h2 className="font-bold mb-16 text-center" style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontFamily: 'Georgia, serif' }}>
+            <h2 className="font-bold mb-16 text-center whitespace-nowrap text-[17px] sm:text-3xl md:text-5xl" style={{ fontFamily: 'Georgia, serif' }}>
               에볼루션카지노 <span style={{ color: '#C9A84C' }}>게임별 심층 분석</span>
             </h2>
             <div className="flex flex-col gap-px bg-gray-800">
               {seoBlocks.map((block) => (
-                <div key={block.title} className="bg-[#111118] p-10">
-                  <h3 className="font-bold text-lg mb-6 flex items-center gap-3" style={{ color: '#F5F0E8' }}>
-                    <span aria-hidden="true">{block.icon}</span> {block.title}
+                <div key={block.title} className="bg-[#111118] p-5 sm:p-10">
+                  <h3 className="font-bold text-sm sm:text-lg mb-6 flex items-center gap-2 sm:gap-3 whitespace-nowrap" style={{ color: '#F5F0E8' }}>
+                    <span aria-hidden="true">{block.icon}</span>{' '}
+                    <span className="sm:hidden">{block.title.split('—')[0].trim()}</span>
+                    <span className="hidden sm:inline">{block.title}</span>
                   </h3>
                   <div className="space-y-4">
                     {block.paras.map((para, i) => (
