@@ -18,7 +18,7 @@ PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
 # ── 경로 ──────────────────────────────────────────
 BASE_DIR      = os.path.join(os.path.dirname(__file__), "..")
 POSTS_DIR     = os.path.join(BASE_DIR, "data", "posts")
-POSTS_PER_RUN = 3
+POSTS_PER_RUN = random.randint(1, 3)  # 하루 1~3개 랜덤 (과도한 발행으로 인한 색인 적체 방지)
 
 # ── E-E-A-T 고정 문구 (모든 글 하단 hard-code) ────
 RESPONSIBLE_GAMBLING_TEXT = """
@@ -222,7 +222,11 @@ CATEGORY_TITLE_KEYWORDS = {
 
 # ── 페르소나 시스템 지침 ──────────────────────────
 SYSTEM_INSTRUCTION = """
-당신은 라이브 카지노 UX 분석 및 플레이 환경 최적화 전문 콘텐츠 팀입니다.
+당신은 에볼루션카지노 라이브 게임을 깊이 이해하는 전문 콘텐츠 팀입니다.
+글의 '제목'이 독자에게 한 약속(전략 분석, 규칙 설명, 트렌드 비교, 환경 가이드 등)을
+본문이 정확히 충족시키는 것을 최우선 원칙으로 삼습니다.
+제목과 실제 본문의 주제가 어긋나면(예: 제목은 '전략'인데 본문은 '화면 설정'만 다룸)
+독자 신뢰와 검색 품질 평가에 직접적인 악영향을 준다는 점을 항상 인지하십시오.
 
 Google E-E-A-T, Helpful Content, YMYL 기준을 엄격히 준수합니다.
 
@@ -249,8 +253,8 @@ Google E-E-A-T, Helpful Content, YMYL 기준을 엄격히 준수합니다.
 - 본문 최소 1600자 이상
 
 ━━━ 콘텐츠 관점 ━━━
-UX 분석 / 플레이 환경 / 인터페이스 활용 / 환경 설정 / 리스크 관리
-사실 기반 정보와 사용자 편의 중심으로 중립적·설명형 문체 유지
+제목이 암시하는 주제(아래 '본문 핵심 관점' 지시를 따름)를 본문이 실제로 다루도록 작성하고,
+그 안에서 사실 기반 정보와 사용자 편의 중심의 중립적·설명형 문체를 유지합니다.
 """
 
 # ─────────────────────────────────────────────────
@@ -434,6 +438,47 @@ def generate_unique_title(client: genai.Client, category: str, keyword: str, exi
 
 
 # ─────────────────────────────────────────────────
+# 제목 유형별 본문 핵심 관점 결정 (제목-본문 불일치 방지)
+# ─────────────────────────────────────────────────
+
+def get_content_angle(title: str) -> str:
+    """제목에 포함된 단어를 보고, 그 제목이 독자에게 약속한 내용을
+    본문이 실제로 담도록 핵심 작성 관점을 동적으로 지정한다.
+    (예: 제목이 '전략'인데 본문이 '화면 설정' 얘기만 하는 괴리 방지)"""
+    if any(k in title for k in ["전략", "공략법", "필승", "노하우", "팁"]):
+        return (
+            "제목이 '전략/공략/팁'을 약속했으므로, 베팅 라운드를 진행하며 고려할 수 있는 "
+            "판단 기준·체크포인트·흐름 읽는 법 등 '의사결정에 실질적으로 도움이 되는 내용'을 "
+            "중심으로 작성 (수익·승률을 보장하는 표현은 절대 금지하되, '전략'이라는 제목에 걸맞은 "
+            "구체적 사고 과정과 고려 요소를 다룰 것 — 단순 화면·환경 설정 안내로 대체하지 말 것)"
+        )
+    if any(k in title for k in ["가이드", "방법", "안내", "이용", "설치"]):
+        return (
+            "제목이 '가이드/방법/안내'를 약속했으므로, 절차를 단계별로 안내하고 "
+            "처음 접하는 사람이 바로 따라할 수 있는 실용적인 정보 전달을 중심으로 작성"
+        )
+    if any(k in title for k in ["분석", "비교", "특징", "구성", "탐색"]):
+        return (
+            "제목이 '분석/비교'를 약속했으므로, 인터페이스·UX·게임 구조 등을 "
+            "구체적인 기준으로 비교하고 차이점을 짚어주는 내용을 중심으로 작성"
+        )
+    if any(k in title for k in ["트렌드", "인사이트", "소식", "이슈", "전망"]):
+        return (
+            "제목이 '트렌드/인사이트'를 약속했으므로, 최근 변화나 흐름과 그것이 "
+            "플레이어에게 갖는 의미를 중심으로 작성"
+        )
+    if any(k in title for k in ["규칙", "룰", "방식", "메커니즘"]):
+        return (
+            "제목이 '규칙/방식'을 약속했으므로, 게임 진행 방식과 핵심 규칙을 "
+            "정확하고 이해하기 쉽게 설명하는 내용을 중심으로 작성"
+        )
+    return (
+        "제목이 독자에게 암시하는 핵심 주제를 정확히 파악하여, "
+        "그 주제에서 벗어나지 않는 내용을 중심으로 작성"
+    )
+
+
+# ─────────────────────────────────────────────────
 # 본문 생성
 # ─────────────────────────────────────────────────
 
@@ -464,7 +509,9 @@ def generate_post_content(
 1. 본문은 최소 1600자 이상 작성
 2. H2 헤더(##)를 4~6개 포함
 3. 사용자 경험 중심의 설명형 콘텐츠로 작성
-4. UX 분석·플레이 환경·인터페이스 활용 관점 유지
+4. [본문 핵심 관점 — 반드시 준수] {get_content_angle(title)}
+   ⚠️ 위 관점이 제목과 어긋나 보이더라도, 제목이 약속한 주제를 본문이 충족하는 것이
+   화면 설정/인터페이스 안내보다 항상 우선합니다. (제목="전략" → 본문도 전략 이야기를 해야 함)
 5. 첫 문단 도입부 스타일: {intro_type}
 6. 본문 중간에 마크다운 표(|컬럼|컬럼|) 최소 1개 포함
 7. FAQ 5개 포함 (초보자 관점 질문 포함)
@@ -571,9 +618,26 @@ def fetch_pexels_image(queries: list, used_images: set = None) -> str:
     return fallback
 
 
-def save_post(slug, content_data, image_url, category, date):
-    # 내부 링크 자동 삽입 (Topic Cluster 강화)
+def insert_inline_image(content: str, image_url: str, alt_text: str) -> str:
+    """본문 중간(세 번째 H2 섹션 시작 직전)에 이미지 1장을 삽입해
+    글이 텍스트로만 빽빽하지 않도록 시각적 호흡을 추가한다."""
+    if not image_url:
+        return content
+    headers = [m.start() for m in re.finditer(r"^## ", content, re.MULTILINE)]
+    if len(headers) >= 3:
+        pos = headers[2]
+        img_md = f"![{alt_text}]({image_url})\n\n"
+        return content[:pos] + img_md + content[pos:]
+    return content
+
+
+def save_post(slug, content_data, image_url, category, date, inline_image_url=None, inline_image_alt=None):
+    # 본문 중간 이미지 삽입 (있는 경우)
     content = content_data["content"]
+    if inline_image_url:
+        content = insert_inline_image(content, inline_image_url, inline_image_alt or content_data["title"])
+
+    # 내부 링크 자동 삽입 (Topic Cluster 강화)
     internal_link = CATEGORY_TO_PAGE.get(category)
     if internal_link:
         link_md = f"\n\n## 함께 보면 좋은 글\n\n해당 주제에 대한 더 자세한 정보는 **[{internal_link['anchor']}](https://wooriwin.com/{internal_link['slug']})** 페이지에서 확인하실 수 있습니다.\n"
@@ -680,16 +744,26 @@ def main():
             continue
         slug = ensure_unique_slug(raw_slug, existing_slugs)
 
-        # Step 4 — 이미지 검색
+        # Step 4 — 이미지 검색 (대표 이미지 + 본문 삽입용 이미지)
         gemini_query = content_data.get("pexels_query", "")
         image_queries = ([gemini_query] if gemini_query else []) + pexels_queries
-        print("  📸 Pexels 이미지 검색 중...")
+        print("  📸 Pexels 대표 이미지 검색 중...")
         image_url = fetch_pexels_image(image_queries, used_images)
         used_images.add(image_url)  # 이번 루프에서 사용한 이미지도 중복 방지
 
+        print("  📸 Pexels 본문 삽입 이미지 검색 중...")
+        # 대표 이미지와 다른 분위기를 위해 검색어 순서를 섞어서 재검색
+        inline_queries = pexels_queries[::-1] + ([gemini_query] if gemini_query else [])
+        inline_image_url = fetch_pexels_image(inline_queries, used_images)
+        used_images.add(inline_image_url)
+        inline_image_alt = f"{content_data.get('imageAlt', title)} - 본문 참고 이미지"
+
         # Step 5 — 저장
         content_data["slug"] = slug
-        save_post(slug, content_data, image_url, category, date)
+        save_post(
+            slug, content_data, image_url, category, date,
+            inline_image_url=inline_image_url, inline_image_alt=inline_image_alt,
+        )
 
         # 다음 루프를 위해 즉시 업데이트
         existing_titles.append(title)

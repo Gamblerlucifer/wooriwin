@@ -194,6 +194,15 @@ export default async function BlogPost({
                     <td className="border border-gray-600 px-4 py-2 text-gray-300" {...props} />
                   ),
                   tr: ({ node, ...props }) => <tr className="even:bg-gray-800" {...props} />,
+                  img: ({ node, alt, ...props }) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      alt={alt || ''}
+                      loading="lazy"
+                      className="w-full h-auto rounded-2xl my-8 border border-gray-800"
+                      {...props}
+                    />
+                  ),
                 }}
               >
                 {post.content}
