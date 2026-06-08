@@ -271,7 +271,7 @@ export default function Home() {
               </p>
               
               <Link
-                href="https://ac24mj.com/"
+                href="https://acmj246.com/"
                 target="_blank"
                 rel="noopener noreferrer nofollow sponsored"
                 className="cta-glow inline-flex flex-col items-center justify-center gap-1 font-bold transition-all hover:-translate-y-1 w-80"
