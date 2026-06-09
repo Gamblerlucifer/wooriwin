@@ -115,9 +115,9 @@ ENDING_TYPES = [
 
 # ── 글 길이 옵션 ──────────────────────────────────
 LENGTH_OPTIONS = [
-    {"label": "단문",  "min": 1200, "max": 1600},
-    {"label": "중문",  "min": 1700, "max": 2300},
-    {"label": "장문",  "min": 2500, "max": 3500},
+    {"label": "단문",  "min": 1500},
+    {"label": "중문",  "min": 2000},
+    {"label": "장문",  "min": 2500},
 ]
 
 # ─────────────────────────────────────────────────
@@ -604,7 +604,7 @@ def generate_unique_title(
 출력 형식: JSON 배열만 출력 (마크다운 코드블록 없이)
 예시: ["제목1", "제목2", "제목3"]
 """
-        result = safe_generate_content(client, prompt, use_search=True, retries=1)
+        result = safe_generate_content(client, prompt, use_search=False, retries=1)
         if not isinstance(result, list) or not result:
             print(f"  ⚠️ 제목 생성 실패 ({attempt + 1}/{max_attempts})")
             continue
@@ -615,7 +615,7 @@ def generate_unique_title(
         print(f"  🔄 모든 제목이 중복 — 재시도 ({attempt + 1}/{max_attempts})")
         time.sleep(1)
 
-    fallback = f"에볼루션카지노 {keyword} {content_model} 완벽 가이드"
+    fallback = f"에볼루션카지노 {keyword} 완벽 가이드"
     print(f"  ⚠️ Fallback 제목 사용: '{fallback}'")
     return fallback
 
@@ -648,7 +648,6 @@ def generate_post_content(
 
     model_info    = CONTENT_MODELS[content_model]
     length_min    = length_option["min"]
-    length_max    = length_option["max"]
     length_label  = length_option["label"]
 
     prompt = f"""
@@ -663,7 +662,7 @@ def generate_post_content(
 문체       : {tone}
 도입부     : {intro_type}
 마무리     : {ending_type}
-글 길이    : {length_label} ({length_min}~{length_max}자)
+글 길이    : {length_label} ({length_min}자 이상)
 
 ━━━ 작성 지침 ━━━
 
@@ -671,7 +670,7 @@ def generate_post_content(
 - 위 콘텐츠 모델의 전개 구조를 충실히 따를 것
 - H2 헤더(##) 3~7개 (콘텐츠 모델에 맞게 자유롭게)
 - H3 소제목(###)은 필요 시 사용 (필수 아님)
-- 글 길이는 반드시 {length_min}~{length_max}자 사이로 작성
+- 글 길이는 반드시 {length_min}자 이상으로 작성
 
 [다양성 — 아래 요소는 콘텐츠 모델에 따라 유동적으로 결정]
 - 표(|컬럼|컬럼|): 분석형·비교형은 2개 이상, 나머지는 필요 시만 포함
@@ -880,7 +879,7 @@ def main():
 
         print(f"\n📌 [{i+1}/{POSTS_PER_RUN}] 카테고리: {category}")
         print(f"   키워드: {keyword} | 앵글: {angle} | 모델: {content_model}")
-        print(f"   문체: {tone[:10]}... | 길이: {length_option['label']} ({length_option['min']}~{length_option['max']}자)")
+        print(f"   문체: {tone[:10]}... | 길이: {length_option['label']} ({length_option['min']}자 이상)")
 
         # Step 1 — 중복 회피 제목 생성
         print("  🔍 제목 생성 중...")
