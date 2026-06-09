@@ -33,14 +33,91 @@ RESPONSIBLE_GAMBLING_TEXT = """
 > 온라인 상담: [kcgp.or.kr](https://kcgp.or.kr)
 """
 
-# ── 도입부 유형 랜덤화 ────────────────────────────
+# ── 앵글 — 독자 관점 / 수준 (5개 고정) ─────────
+ANGLES = {
+    "입문":   "처음 접하는 독자가 핵심 개념을 이해하고 시작할 수 있도록 안내하는 관점",
+    "실전":   "기본을 아는 독자가 실제 플레이에 바로 적용할 수 있는 실용적 관점",
+    "분석":   "확률·RTP·통계 데이터를 중심으로 논리적으로 접근하는 관점",
+    "비교":   "다른 게임·변형·옵션과 비교하여 선택 기준을 제시하는 관점",
+    "심화":   "경험 있는 플레이어를 위한 고급 전략과 심층 분석 관점",
+}
+
+# ── 콘텐츠 모델 — 문서 목적 / 전개 방식 (10개) ──
+CONTENT_MODELS = {
+    "교육형":     {
+        "desc": "개념과 용어를 단계별로 설명하고 마지막에 정리",
+        "structure": "용어 정의 → 핵심 개념 설명 → 작동 방식 → 정리 요약",
+    },
+    "분석형":     {
+        "desc": "수치·통계·데이터를 중심으로 제시하고 결론 도출",
+        "structure": "데이터 제시 → 수치 비교 → 패턴 분석 → 시사점",
+    },
+    "비교형":     {
+        "desc": "두 가지 이상을 비교하여 장단점과 추천 상황 제시",
+        "structure": "비교 대상 소개 → 기준별 비교표 → 장단점 → 상황별 추천",
+    },
+    "실수방지형": {
+        "desc": "흔히 저지르는 실수 목록과 그 이유, 예방법 중심",
+        "structure": "흔한 실수 나열 → 각 실수의 원인 → 예방·대처법 → 요약",
+    },
+    "체크리스트형": {
+        "desc": "독자가 직접 확인할 수 있는 단계별 항목 중심",
+        "structure": "목적 설명 → 단계별 체크 항목 → 각 항목 해설 → 완료 기준",
+    },
+    "사례연구형": {
+        "desc": "구체적인 시나리오 2~3개를 제시하고 공통점·교훈 도출",
+        "structure": "사례 1 → 사례 2 → (사례 3) → 공통점 분석 → 교훈",
+    },
+    "가이드형":   {
+        "desc": "처음부터 끝까지 순서대로 따라할 수 있는 절차 안내",
+        "structure": "준비 사항 → 1단계 → 2단계 → 3단계 → 마무리 팁",
+    },
+    "트렌드형":   {
+        "desc": "최근 변화와 흐름을 짚고 플레이어에게 갖는 의미 분석",
+        "structure": "현재 상황 → 변화 요인 → 주요 트렌드 → 플레이어 영향",
+    },
+    "Q&A형":     {
+        "desc": "독자가 자주 묻는 질문과 답변 형식으로 전개",
+        "structure": "배경 설명 → Q1+A1 → Q2+A2 → Q3+A3 → Q4+A4 → 총정리",
+    },
+    "의사결정형": {
+        "desc": "상황별 추천·비추천 판단 기준을 제시하여 선택을 돕는 구조",
+        "structure": "판단 기준 제시 → 상황 A (추천) → 상황 B (비추천) → 결론",
+    },
+}
+
+# ── 문체 ──────────────────────────────────────────
+TONES = [
+    "분석적 — 데이터와 수치 중심, 건조하고 객관적인 서술체",
+    "친근한 — 쉬운 언어, 독자를 '~하세요'로 직접 호칭, 공감형 표현 활용",
+    "저널리즘형 — 사실 중심, 중립적, 출처 명시를 자연스럽게 본문에 녹임",
+    "교과서형 — 체계적 설명, 소제목 명확, 정의 먼저 제시 후 예시 보강",
+]
+
+# ── 도입부 패턴 ───────────────────────────────────
 INTRO_TYPES = [
-    "사용자들이 자주 혼동하는 인터페이스 설정 문제로 시작",
-    "플레이 환경 최적화 관점의 설명으로 시작",
-    "UX 분석 기반의 기능 설명으로 시작",
-    "초보자들이 놓치기 쉬운 설정 요소 소개로 시작",
-    "리스크 관리 관점의 플레이 환경 설명으로 시작",
-    "실제 사용자 FAQ 기반 설명으로 시작",
+    "독자가 공감할 만한 상황이나 질문으로 시작",
+    "핵심 통계나 수치 데이터를 제시하며 시작",
+    "구체적인 시나리오나 사례로 시작",
+    "결론을 먼저 제시하고 이유를 풀어가는 방식으로 시작",
+    "흔한 오해나 잘못된 통념을 짚으며 시작",
+    "이 글이 독자에게 어떤 도움이 되는지 직접 밝히며 시작",
+]
+
+# ── 마무리 패턴 ───────────────────────────────────
+ENDING_TYPES = [
+    "핵심 내용 3줄 요약으로 마무리",
+    "독자가 다음에 취할 수 있는 행동을 자연스럽게 안내하며 마무리",
+    "글에서 다룬 내용의 미래 전망이나 변화 가능성으로 마무리",
+    "독자 스스로 판단할 수 있도록 열린 질문을 던지며 마무리",
+    "핵심 체크포인트 목록으로 마무리",
+]
+
+# ── 글 길이 옵션 ──────────────────────────────────
+LENGTH_OPTIONS = [
+    {"label": "단문",  "min": 1200, "max": 1600},
+    {"label": "중문",  "min": 1700, "max": 2300},
+    {"label": "장문",  "min": 2500, "max": 3500},
 ]
 
 # ─────────────────────────────────────────────────
@@ -356,11 +433,27 @@ def get_existing_slugs() -> set:
 # ─────────────────────────────────────────────────
 
 def load_used_topics() -> dict:
-    """data/used-topics.json에서 이미 사용한 (카테고리, 키워드) 기록 로드."""
+    """data/used-topics.json에서 이미 사용한 (keyword|angle|content_model) 기록 로드.
+    구조: {"카테고리": ["keyword|angle|content_model", ...]}
+    """
     if os.path.exists(USED_TOPICS_FILE):
         try:
             with open(USED_TOPICS_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+                # 구 형식 자동 마이그레이션
+                for cat in list(data.keys()):
+                    entries = data[cat]
+                    if not entries:
+                        continue
+                    # {"keyword":..., "angle":...} 형식이면 파이프 문자열로 변환
+                    if isinstance(entries[0], dict):
+                        data[cat] = [
+                            f"{e.get('keyword','')}"
+                            f"|{e.get('angle','입문')}"
+                            f"|{e.get('content_model','교육형')}"
+                            for e in entries
+                        ]
+                return data
         except Exception:
             pass
     return {cat: [] for cat in CATEGORIES}
@@ -373,20 +466,28 @@ def save_used_topics(used: dict) -> None:
         json.dump(used, f, ensure_ascii=False, indent=2)
 
 
-def get_next_keyword(category: str, used_topics: dict) -> str:
-    """카테고리에서 아직 사용하지 않은 키워드를 반환.
-    모두 소진되면 기록을 초기화하고 다시 순환."""
-    all_kws = CATEGORIES[category]["keywords"]
-    used_kws = used_topics.get(category, [])
-    available = [k for k in all_kws if k not in used_kws]
+def get_next_topic(category: str, used_topics: dict) -> tuple:
+    """카테고리에서 아직 사용하지 않은 (keyword, angle, content_model) 트리플 반환.
+    15 keywords × 5 angles × 10 content_models = 750 combinations/category (총 7,500).
+    모두 소진되면 초기화 후 재순환."""
+    all_kws     = CATEGORIES[category]["keywords"]
+    all_angles  = list(ANGLES.keys())
+    all_models  = list(CONTENT_MODELS.keys())
+    used_set    = set(used_topics.get(category, []))
+    available   = [
+        (kw, angle, model)
+        for kw    in all_kws
+        for angle in all_angles
+        for model in all_models
+        if f"{kw}|{angle}|{model}" not in used_set
+    ]
     if not available:
-        # 모두 소진 → 초기화 후 전체 풀에서 다시 선택
-        print(f"  ♻️  [{category}] 키워드 풀 소진 → 초기화하여 재순환")
+        print(f"  ♻️  [{category}] 모든 조합 소진 → 초기화하여 재순환")
         used_topics[category] = []
-        available = all_kws[:]
-    kw = random.choice(available)
-    used_topics[category].append(kw)
-    return kw
+        available = [(kw, a, m) for kw in all_kws for a in all_angles for m in all_models]
+    kw, angle, model = random.choice(available)
+    used_topics.setdefault(category, []).append(f"{kw}|{angle}|{model}")
+    return kw, angle, model
 
 
 # ─────────────────────────────────────────────────
@@ -460,46 +561,45 @@ def safe_generate_content(client: genai.Client, prompt: str, use_search: bool = 
 # 제목 생성 — 중복 회피 로직 포함
 # ─────────────────────────────────────────────────
 
-def generate_unique_title(client: genai.Client, category: str, keyword: str, existing_titles: list, max_attempts: int = 3) -> str:
+def generate_unique_title(
+    client: genai.Client,
+    category: str,
+    keyword: str,
+    angle: str,
+    content_model: str,
+    existing_titles: list,
+    max_attempts: int = 3,
+) -> str:
     """기존 제목과 중복되지 않는 새 제목 생성."""
-    
-    # 전체 제목 목록 사용 (기존 [-20:] 슬라이싱 제거 — 오래된 주제 재탕 방지)
-    # Gemini 프롬프트 길이 제한을 위해 최대 60개까지만 전달
     existing_sample = existing_titles[-60:] if existing_titles else []
-    existing_list = "\n".join(f"- {t}" for t in existing_sample) if existing_sample else "없음"
-    
-    # 카테고리별 키워드 풀에서 랜덤 선택
-    title_kw_pool = CATEGORY_TITLE_KEYWORDS.get(category, ["에볼루션카지노"])
-    title_kw = random.choice(title_kw_pool)
-    
+    existing_list   = "\n".join(f"- {t}" for t in existing_sample) if existing_sample else "없음"
+    title_kw_pool   = CATEGORY_TITLE_KEYWORDS.get(category, ["에볼루션카지노"])
+    title_kw        = random.choice(title_kw_pool)
+
+    angle_desc = ANGLES[angle]
+    model_desc = CONTENT_MODELS[content_model]["desc"]
+
     for attempt in range(max_attempts):
         prompt = f"""
 다음 조건으로 한국인 독자에게 매력적인 블로그 제목 3개를 생성하세요.
 
 카테고리: {category}
 핵심 키워드: {keyword}
+독자 관점(앵글): {angle} — {angle_desc}
+문서 목적(콘텐츠 모델): {content_model} — {model_desc}
 제목에 반드시 포함할 브랜드/게임 키워드: {title_kw}
 
 조건:
-- 위 브랜드/게임 키워드를 제목 어디에나 자연스럽게 포함 (반드시 앞에 올 필요 없음)
+- 위 브랜드/게임 키워드를 제목 어디에나 자연스럽게 포함
 - "에볼루션카지노"를 항상 제목 맨 앞에 쓰는 패턴 금지
-- 정보형·가이드형 톤 유지
-- 과장형·선정적 표현 금지
-- 수치 보장·승률 예측·결과 보장 표현 절대 금지
-- 각 제목은 서로 다른 앵글로 작성
+- 앵글({angle})과 콘텐츠 모델({content_model})이 암시하는 내용을 제목이 반영할 것
+- 과장형·선정적 표현 금지, 수익·승률 보장 표현 절대 금지
+- 각 제목은 서로 다른 각도로 작성
 - 제목에 콜론(:) 사용 금지
 - 25~45자 사이
 
-제목 패턴 예시 (다양하게):
-- "바카라 로드맵 시스템의 허와 실 | 라이브바카라 분석"
-- "라이트닝 룰렛 배당률과 RTP 완벽 해설"
-- "뱅크롤 관리 황금법칙 카지노 자금관리 가이드"
-- "모바일카지노 스트리밍 최적화 완벽 설정법"
-
 ⚠️ 절대 금지 — 아래 기존 제목들과 핵심 단어 3개 이상 겹치는 제목 금지:
 {existing_list}
-
-기존 제목들과 완전히 다른 각도의 새로운 제목을 만드세요.
 
 출력 형식: JSON 배열만 출력 (마크다운 코드블록 없이)
 예시: ["제목1", "제목2", "제목3"]
@@ -508,61 +608,16 @@ def generate_unique_title(client: genai.Client, category: str, keyword: str, exi
         if not isinstance(result, list) or not result:
             print(f"  ⚠️ 제목 생성 실패 ({attempt + 1}/{max_attempts})")
             continue
-        
-        # 중복 체크 통과한 제목 찾기
         for title in result:
             if not is_duplicate_title(title, existing_titles):
                 print(f"  🏆 선택된 제목: '{title}'")
                 return title
-        
         print(f"  🔄 모든 제목이 중복 — 재시도 ({attempt + 1}/{max_attempts})")
         time.sleep(1)
-    
-    # 최후 fallback — 카테고리+키워드+상시 에버그린 패턴 (날짜 배제)
-    fallback = f"에볼루션카지노 {keyword} 완벽 가이드"
+
+    fallback = f"에볼루션카지노 {keyword} {content_model} 완벽 가이드"
     print(f"  ⚠️ Fallback 제목 사용: '{fallback}'")
     return fallback
-
-
-# ─────────────────────────────────────────────────
-# 제목 유형별 본문 핵심 관점 결정 (제목-본문 불일치 방지)
-# ─────────────────────────────────────────────────
-
-def get_content_angle(title: str) -> str:
-    """제목에 포함된 단어를 보고, 그 제목이 독자에게 약속한 내용을
-    본문이 실제로 담도록 핵심 작성 관점을 동적으로 지정한다.
-    (예: 제목이 '전략'인데 본문이 '화면 설정' 얘기만 하는 괴리 방지)"""
-    if any(k in title for k in ["전략", "공략법", "필승", "노하우", "팁"]):
-        return (
-            "제목이 '전략/공략/팁'을 약속했으므로, 베팅 라운드를 진행하며 고려할 수 있는 "
-            "판단 기준·체크포인트·흐름 읽는 법 등 '의사결정에 실질적으로 도움이 되는 내용'을 "
-            "중심으로 작성 (수익·승률을 보장하는 표현은 절대 금지하되, '전략'이라는 제목에 걸맞은 "
-            "구체적 사고 과정과 고려 요소를 다룰 것 — 단순 화면·환경 설정 안내로 대체하지 말 것)"
-        )
-    if any(k in title for k in ["가이드", "방법", "안내", "이용", "설치"]):
-        return (
-            "제목이 '가이드/방법/안내'를 약속했으므로, 절차를 단계별로 안내하고 "
-            "처음 접하는 사람이 바로 따라할 수 있는 실용적인 정보 전달을 중심으로 작성"
-        )
-    if any(k in title for k in ["분석", "비교", "특징", "구성", "탐색"]):
-        return (
-            "제목이 '분석/비교'를 약속했으므로, 인터페이스·UX·게임 구조 등을 "
-            "구체적인 기준으로 비교하고 차이점을 짚어주는 내용을 중심으로 작성"
-        )
-    if any(k in title for k in ["트렌드", "인사이트", "소식", "이슈", "전망"]):
-        return (
-            "제목이 '트렌드/인사이트'를 약속했으므로, 최근 변화나 흐름과 그것이 "
-            "플레이어에게 갖는 의미를 중심으로 작성"
-        )
-    if any(k in title for k in ["규칙", "룰", "방식", "메커니즘"]):
-        return (
-            "제목이 '규칙/방식'을 약속했으므로, 게임 진행 방식과 핵심 규칙을 "
-            "정확하고 이해하기 쉽게 설명하는 내용을 중심으로 작성"
-        )
-    return (
-        "제목이 독자에게 암시하는 핵심 주제를 정확히 파악하여, "
-        "그 주제에서 벗어나지 않는 내용을 중심으로 작성"
-    )
 
 
 # ─────────────────────────────────────────────────
@@ -574,74 +629,86 @@ def generate_post_content(
     title: str,
     category: str,
     keyword: str,
+    angle: str,
+    content_model: str,
+    tone: str,
+    intro_type: str,
+    ending_type: str,
+    length_option: dict,
     fixed_queries: list,
     existing_slugs: set,
-    intro_type: str,
     slug_prefix: str = "",
     slug_suffixes: list = None,
 ):
-    slugs_sample = list(existing_slugs)[-50:]
-    slugs_list = "\n".join(f"- {s}" for s in slugs_sample) if slugs_sample else "없음"
+    slugs_sample  = list(existing_slugs)[-50:]
+    slugs_list    = "\n".join(f"- {s}" for s in slugs_sample) if slugs_sample else "없음"
     if not slug_suffixes:
         slug_suffixes = ["guide", "tips", "review", "strategy"]
     random_suffix = random.choice(slug_suffixes)
 
+    model_info    = CONTENT_MODELS[content_model]
+    length_min    = length_option["min"]
+    length_max    = length_option["max"]
+    length_label  = length_option["label"]
+
     prompt = f"""
-글 제목: {title}
-카테고리: {category}
+━━━ 콘텐츠 생성 명세 ━━━
+
+글 제목    : {title}
+카테고리   : {category}
 핵심 키워드: {keyword}
-참고 이미지 키워드(영문): {", ".join(fixed_queries)}
+독자 앵글  : {angle} — {ANGLES[angle]}
+콘텐츠 모델: {content_model} — {model_info['desc']}
+  └ 권장 전개 구조: {model_info['structure']}
+문체       : {tone}
+도입부     : {intro_type}
+마무리     : {ending_type}
+글 길이    : {length_label} ({length_min}~{length_max}자)
 
-작성 규칙:
-1. 본문은 최소 1600자 이상 작성
-2. H2 헤더(##)를 4~6개 포함
-3. 사용자 경험 중심의 설명형 콘텐츠로 작성
-4. [본문 핵심 관점 — 반드시 준수] {get_content_angle(title)}
-   ⚠️ 위 관점이 제목과 어긋나 보이더라도, 제목이 약속한 주제를 본문이 충족하는 것이
-   화면 설정/인터페이스 안내보다 항상 우선합니다. (제목="전략" → 본문도 전략 이야기를 해야 함)
-5. 첫 문단 도입부 스타일: {intro_type}
-6. 본문 중간에 마크다운 표(|컬럼|컬럼|) 최소 1개 포함
-7. FAQ 5개 포함 (초보자 관점 질문 포함)
-8. SEO 키워드는 자연스럽게 배치
-9. pexels_query 필드에 본문 주제와 어울리는 구체적인 영문 이미지 검색어 1개 생성
+━━━ 작성 지침 ━━━
 
-[YMYL 필수 준수 사항]
-10. [절대 금지] 특정 베팅을 권장·유도하는 표현 금지
-11. [절대 금지] '무조건', '절대', '반드시' 등 단정적 행동 지시 금지
-12. [절대 금지] 손익 보장 표현 금지
-13. [절대 금지] 과장된 당첨 기대 표현 금지
-14. [절대 금지] 본문에 'YMYL', 'E-E-A-T', 'EEAT', 'SEO' 같은 용어 직접 노출 금지
-15. [필수] RTP 수치 언급 시 반드시 '이론적 기댓값이며 실제 결과와 다를 수 있습니다' 병기
-16. [필수] 출처 명시: 'Evolution Gaming 공식 게임 수학 문서 기준' 본문 내 1회 이상 포함
-17. [필수] 손실 위험 안내 문구 본문 내 1회 이상 포함
-18. [필수] eCOGRA 등 공인 감사기관 언급으로 신뢰도 강화
+[구조]
+- 위 콘텐츠 모델의 전개 구조를 충실히 따를 것
+- H2 헤더(##) 3~7개 (콘텐츠 모델에 맞게 자유롭게)
+- H3 소제목(###)은 필요 시 사용 (필수 아님)
+- 글 길이는 반드시 {length_min}~{length_max}자 사이로 작성
 
-⚠️ 슬러그 생성 규칙:
-- 아래 기존 슬러그 목록과 절대 겹치지 않게 생성
-- 영문 소문자 + 숫자 + 하이픈만 사용, 50자 이내
-- 반드시 슬러그 prefix로 시작: {slug_prefix}
-- prefix 다음에 핵심 키워드 영문 번역 + suffix 중 하나 조합
+[다양성 — 아래 요소는 콘텐츠 모델에 따라 유동적으로 결정]
+- 표(|컬럼|컬럼|): 분석형·비교형은 2개 이상, 나머지는 필요 시만 포함
+- FAQ: Q&A형은 6~8개, 나머지는 0~4개 자유 배치 또는 생략
+- 체크리스트, 인용 박스, 번호 목록 등은 모델 구조에 어울릴 때만 사용
+
+[YMYL 필수]
+- 특정 베팅 권장·유도 표현 금지
+- '무조건', '절대', '반드시' 등 단정적 행동 지시 금지
+- 손익 보장·당첨 기대 표현 금지
+- 본문에 'YMYL', 'E-E-A-T', 'EEAT', 'SEO' 노출 금지
+- RTP 수치 언급 시 '이론적 기댓값이며 실제 결과와 다를 수 있습니다' 병기
+- 'Evolution Gaming 공식 게임 수학 문서 기준' 출처 1회 이상 포함
+- 손실 위험 안내 문구 1회 이상 포함
+- eCOGRA 등 공인 감사기관 언급
+
+[슬러그]
+- 기존 슬러그 목록과 겹치지 않게 생성
+- 영문 소문자 + 숫자 + 하이픈, 50자 이내
+- prefix로 시작: {slug_prefix}
 - 예시: {slug_prefix}-keyword-{random_suffix}
-- "evolution-casino", "interface", "ux" 단어 슬러그에 사용 금지
+- "evolution-casino", "interface", "ux" 사용 금지
 
-기존 슬러그 목록:
+기존 슬러그:
 {slugs_list}
 
-다음 JSON 형식으로만 응답 (마크다운 코드블록 없이 순수 JSON만):
+━━━ 출력 형식 (순수 JSON만, 코드블록 없이) ━━━
 {{
-  "slug": "unique-english-url-friendly-slug",
+  "slug": "unique-slug",
   "title": "{title}",
-  "description": "포스트 설명 (150자 이내, 키워드 자연스럽게 포함)",
+  "description": "150자 이내 포스트 설명",
   "keywords": ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"],
-  "imageAlt": "에볼루션카지노 관련 구체적 이미지 설명 (50자 이내)",
-  "pexels_query": "suggested-english-image-search-query",
-  "content": "본문 내용 (마크다운 형식, 1600자 이상, 표 포함)",
+  "imageAlt": "이미지 설명 50자 이내",
+  "pexels_query": "english-image-search-query",
+  "content": "본문 마크다운 ({length_min}자 이상)",
   "faq": [
-    {{"q": "질문1", "a": "답변1"}},
-    {{"q": "질문2", "a": "답변2"}},
-    {{"q": "질문3", "a": "답변3"}},
-    {{"q": "질문4", "a": "답변4"}},
-    {{"q": "질문5", "a": "답변5"}}
+    {{"q": "질문", "a": "답변"}}
   ]
 }}
 """
@@ -799,30 +866,38 @@ def main():
 
     for i, category in enumerate(selected_categories):
         date = today.strftime("%Y-%m-%d")
-        cat_data = CATEGORIES[category]
-        keyword = get_next_keyword(category, used_topics)  # 이미 쓴 키워드 제외
+        cat_data      = CATEGORIES[category]
         pexels_queries = cat_data["pexels_queries"]
-        slug_prefix = cat_data.get("slug_prefix", "casino")
+        slug_prefix   = cat_data.get("slug_prefix", "casino")
         slug_suffixes = cat_data.get("slug_suffixes", ["guide", "tips"])
 
+        # ── 파이프라인 변수 결정 ──────────────────────
+        keyword, angle, content_model = get_next_topic(category, used_topics)
+        tone         = random.choice(TONES)
+        intro_type   = random.choice(INTRO_TYPES)
+        ending_type  = random.choice(ENDING_TYPES)
+        length_option = random.choice(LENGTH_OPTIONS)
+
         print(f"\n📌 [{i+1}/{POSTS_PER_RUN}] 카테고리: {category}")
-        print(f"   핵심 키워드: {keyword}")
+        print(f"   키워드: {keyword} | 앵글: {angle} | 모델: {content_model}")
+        print(f"   문체: {tone[:10]}... | 길이: {length_option['label']} ({length_option['min']}~{length_option['max']}자)")
 
         # Step 1 — 중복 회피 제목 생성
-        print("  🔍 제목 생성 중 (중복 단어 3개 검사 포함)...")
-        title = generate_unique_title(client, category, keyword, existing_titles)
+        print("  🔍 제목 생성 중...")
+        title = generate_unique_title(
+            client, category, keyword, angle, content_model, existing_titles
+        )
         time.sleep(1)
 
-        # Step 2 — 도입부 유형
-        intro_type = random.choice(INTRO_TYPES)
-        print(f"  📖 도입부 유형: {intro_type}")
+        # Step 2 — 도입부·마무리 확정 로그
+        print(f"  📖 도입부: {intro_type[:20]}... | 마무리: {ending_type[:20]}...")
 
         # Step 3 — 본문 생성
         print("  🤖 Gemini 본문 생성 중...")
         content_data = generate_post_content(
             client, title, category, keyword,
-            pexels_queries, existing_slugs, intro_type,
-            slug_prefix, slug_suffixes
+            angle, content_model, tone, intro_type, ending_type, length_option,
+            pexels_queries, existing_slugs, slug_prefix, slug_suffixes,
         )
         if not content_data:
             continue
@@ -861,7 +936,7 @@ def main():
 
         # 사용된 주제 기록 즉시 저장 (다음 실행 시 재탕 방지)
         save_used_topics(used_topics)
-        print(f"  💾 used-topics.json 업데이트: [{category}] {keyword}")
+        print(f"  💾 used-topics.json 업데이트: [{category}] {keyword}|{angle}|{content_model}")
 
         time.sleep(2)
 
