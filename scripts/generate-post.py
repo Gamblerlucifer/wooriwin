@@ -17,7 +17,8 @@ PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
 
 # ── 경로 ──────────────────────────────────────────
 BASE_DIR      = os.path.join(os.path.dirname(__file__), "..")
-POSTS_DIR     = os.path.join(BASE_DIR, "data", "posts")
+POSTS_DIR        = os.path.join(BASE_DIR, "data", "posts")
+USED_TOPICS_FILE = os.path.join(BASE_DIR, "data", "used-topics.json")
 POSTS_PER_RUN = random.randint(1, 3)  # 하루 1~3개 랜덤 (과도한 발행으로 인한 색인 적체 방지)
 
 # ── E-E-A-T 고정 문구 (모든 글 하단 hard-code) ────
@@ -47,61 +48,103 @@ INTRO_TYPES = [
 # ─────────────────────────────────────────────────
 CATEGORIES = {
     "에볼루션 가이드": {
-        "keywords": ["가입 방법", "인터페이스", "독점 기술", "역사와 성장", "플랫폼 구조"],
+        "keywords": [
+            "가입 방법", "인터페이스", "독점 기술", "역사와 성장", "플랫폼 구조",
+            "게임 종류 총정리", "라이브 딜러 시스템", "스튜디오 위치", "스트리밍 기술",
+            "베팅 인터페이스", "멀티 게임 기능", "VIP 서비스", "모바일 지원",
+            "신규 유저 가이드", "에볼루션 경쟁사 비교",
+        ],
         "pexels_queries": ["live casino studio", "casino platform interface", "online casino environment"],
         "slug_prefix": "live-casino",
         "slug_suffixes": ["guide", "tips", "review", "explained", "overview", "complete", "beginners", "advanced"],
     },
     "바카라 가이드": {
-        "keywords": ["기본 규칙", "라이트닝 바카라", "스피드 바카라", "스퀴즈 바카라", "로드맵 시스템"],
+        "keywords": [
+            "기본 규칙", "라이트닝 바카라", "스피드 바카라", "스퀴즈 바카라", "로드맵 시스템",
+            "플레이어 뱅커 차이", "커미션 구조", "페어 베팅", "사이드 베팅 종류",
+            "바카라 통계", "연승 패턴", "테이블 선택법", "고액 베팅 전략",
+            "초보자 실수", "실전 플레이 가이드",
+        ],
         "pexels_queries": ["baccarat casino table", "baccarat cards dealer", "live baccarat"],
         "slug_prefix": "baccarat",
         "slug_suffixes": ["strategy", "rules", "tips", "guide", "winning", "odds", "how-to", "explained"],
     },
     "블랙잭 가이드": {
-        "keywords": ["기본 전략", "인피니트 블랙잭", "라이트닝 블랙잭", "사이드 베팅", "파워 블랙잭"],
+        "keywords": [
+            "기본 전략", "인피니트 블랙잭", "라이트닝 블랙잭", "사이드 베팅", "파워 블랙잭",
+            "히트와 스탠드", "더블다운", "스플릿 전략", "보험 베팅", "카드 카운팅 개념",
+            "블랙잭 확률", "딜러 규칙", "게임 변형 비교", "초보자 공략", "실전 예시",
+        ],
         "pexels_queries": ["blackjack casino table", "blackjack dealer", "live blackjack"],
         "slug_prefix": "blackjack",
         "slug_suffixes": ["strategy", "rules", "tips", "guide", "basic-strategy", "odds", "how-to", "variants"],
     },
     "게임쇼 분석": {
-        "keywords": ["크레이지타임", "모노폴리 라이브", "드림캐처", "메가볼", "게임쇼 비교"],
+        "keywords": [
+            "크레이지타임", "모노폴리 라이브", "드림캐처", "메가볼", "게임쇼 비교",
+            "보너스 라운드", "배당 구조", "RTP 비교", "인기 게임 순위", "신규 게임쇼",
+            "확률 분석", "진행 방식", "베팅 옵션", "초보자 추천", "실시간 인기 트렌드",
+        ],
         "pexels_queries": ["casino game show wheel", "live game show casino", "casino entertainment"],
         "slug_prefix": "game-show",
         "slug_suffixes": ["review", "guide", "analysis", "tips", "explained", "how-to-play", "odds", "strategy"],
     },
     "룰렛 & 포커": {
-        "keywords": ["유럽식 룰렛", "라이트닝 룰렛", "임머시브 룰렛", "카지노 홀덤", "3 카드 포커"],
+        "keywords": [
+            "유럽식 룰렛", "라이트닝 룰렛", "임머시브 룰렛", "카지노 홀덤", "3 카드 포커",
+            "아메리칸 룰렛", "프렌치 룰렛", "룰렛 베팅 종류", "포커 족보",
+            "텍사스 홀덤", "캐리비안 스터드", "사이드 베팅", "확률 계산", "실전 전략", "게임 비교",
+        ],
         "pexels_queries": ["roulette wheel casino", "live roulette dealer", "casino poker table"],
         "slug_prefix": "roulette",
         "slug_suffixes": ["strategy", "guide", "tips", "odds", "how-to", "variants", "explained", "winning"],
     },
     "최신 트렌드": {
-        "keywords": ["2026 신규 게임", "암호화폐 결제", "AI 기술", "글로벌 스튜디오", "VR 카지노"],
+        "keywords": [
+            "2026 신규 게임", "암호화폐 결제", "AI 기술", "글로벌 스튜디오", "VR 카지노",
+            "AR 기술", "실시간 스트리밍", "신규 공급업체", "멀티플레이 기능", "메타버스 카지노",
+            "모바일 우선 전략", "AI 딜러", "차세대 인터페이스", "블록체인 보안", "시장 전망",
+        ],
         "pexels_queries": ["casino innovation 2026", "casino technology", "live casino studio"],
         "slug_prefix": "casino-trends",
         "slug_suffixes": ["2026", "update", "new", "latest", "future", "review", "guide", "overview"],
     },
     "자금 관리": {
-        "keywords": ["세션 예산", "입출금 시스템", "손실 한도", "베팅 단위", "세션 관리"],
+        "keywords": [
+            "세션 예산", "입출금 시스템", "손실 한도", "베팅 단위", "세션 관리",
+            "자금 분배", "리스크 관리", "승리 목표 설정", "손절 전략", "장기 운영",
+            "예산 계획", "베팅 기록", "수익 관리", "감정 통제", "실전 사례",
+        ],
         "pexels_queries": ["casino budget management", "money management casino", "casino bankroll"],
         "slug_prefix": "bankroll",
         "slug_suffixes": ["management", "strategy", "guide", "tips", "budgeting", "limits", "control", "plan"],
     },
     "보안 및 라이선스": {
-        "keywords": ["MGA UKGC 라이선스", "암호화 보안", "RNG 검증", "플랫폼 선택", "고객센터 활용"],
+        "keywords": [
+            "MGA UKGC 라이선스", "암호화 보안", "RNG 검증", "플랫폼 선택", "고객센터 활용",
+            "SSL 인증", "개인정보 보호", "공정성 검증", "규제 기관", "사기 사이트 구별",
+            "보안 체크리스트", "KYC 인증", "출금 안전성", "플랫폼 신뢰도", "라이선스 확인법",
+        ],
         "pexels_queries": ["casino license security", "online security casino", "casino safety"],
         "slug_prefix": "casino-safety",
         "slug_suffixes": ["license", "security", "guide", "tips", "verified", "trusted", "how-to", "checklist"],
     },
     "모바일 최적화": {
-        "keywords": ["앱 vs 브라우저", "스트리밍 최적화", "iOS vs 안드로이드", "네트워크 설정", "태블릿 활용"],
+        "keywords": [
+            "앱 vs 브라우저", "스트리밍 최적화", "iOS vs 안드로이드", "네트워크 설정", "태블릿 활용",
+            "배터리 최적화", "화질 설정", "LTE vs WiFi", "모바일 UX", "세로 모드 활용",
+            "앱 설치 가이드", "데이터 절약", "터치 인터페이스", "기기 호환성", "성능 향상",
+        ],
         "pexels_queries": ["mobile casino smartphone", "smartphone gaming casino", "tablet casino"],
         "slug_prefix": "mobile-casino",
         "slug_suffixes": ["guide", "tips", "setup", "optimization", "ios", "android", "streaming", "settings"],
     },
     "책임감 있는 게임": {
-        "keywords": ["기본 원칙", "자기 제한", "도박 문제 예방", "딜러 에티켓", "초보자 FAQ"],
+        "keywords": [
+            "기본 원칙", "자기 제한", "도박 문제 예방", "딜러 에티켓", "초보자 FAQ",
+            "시간 관리", "예산 설정", "감정 조절", "자가 진단", "휴식 전략",
+            "가족 보호", "자기 차단 기능", "건전한 이용법", "위험 신호", "도움받는 방법",
+        ],
         "pexels_queries": ["responsible gambling", "casino healthy gaming", "gambling prevention"],
         "slug_prefix": "responsible-gambling",
         "slug_suffixes": ["guide", "tips", "limits", "prevention", "self-control", "faq", "principles", "rules"],
@@ -309,6 +352,44 @@ def get_existing_slugs() -> set:
 
 
 # ─────────────────────────────────────────────────
+# 사용된 주제 추적 — (카테고리 + 키워드) 중복 방지
+# ─────────────────────────────────────────────────
+
+def load_used_topics() -> dict:
+    """data/used-topics.json에서 이미 사용한 (카테고리, 키워드) 기록 로드."""
+    if os.path.exists(USED_TOPICS_FILE):
+        try:
+            with open(USED_TOPICS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {cat: [] for cat in CATEGORIES}
+
+
+def save_used_topics(used: dict) -> None:
+    """사용된 주제 기록을 파일에 저장."""
+    os.makedirs(os.path.dirname(USED_TOPICS_FILE), exist_ok=True)
+    with open(USED_TOPICS_FILE, "w", encoding="utf-8") as f:
+        json.dump(used, f, ensure_ascii=False, indent=2)
+
+
+def get_next_keyword(category: str, used_topics: dict) -> str:
+    """카테고리에서 아직 사용하지 않은 키워드를 반환.
+    모두 소진되면 기록을 초기화하고 다시 순환."""
+    all_kws = CATEGORIES[category]["keywords"]
+    used_kws = used_topics.get(category, [])
+    available = [k for k in all_kws if k not in used_kws]
+    if not available:
+        # 모두 소진 → 초기화 후 전체 풀에서 다시 선택
+        print(f"  ♻️  [{category}] 키워드 풀 소진 → 초기화하여 재순환")
+        used_topics[category] = []
+        available = all_kws[:]
+    kw = random.choice(available)
+    used_topics[category].append(kw)
+    return kw
+
+
+# ─────────────────────────────────────────────────
 # 중복 검사 — 핵심 단어 3개 이상 겹치면 중복
 # ─────────────────────────────────────────────────
 
@@ -382,7 +463,9 @@ def safe_generate_content(client: genai.Client, prompt: str, use_search: bool = 
 def generate_unique_title(client: genai.Client, category: str, keyword: str, existing_titles: list, max_attempts: int = 3) -> str:
     """기존 제목과 중복되지 않는 새 제목 생성."""
     
-    existing_sample = existing_titles[-20:] if existing_titles else []
+    # 전체 제목 목록 사용 (기존 [-20:] 슬라이싱 제거 — 오래된 주제 재탕 방지)
+    # Gemini 프롬프트 길이 제한을 위해 최대 60개까지만 전달
+    existing_sample = existing_titles[-60:] if existing_titles else []
     existing_list = "\n".join(f"- {t}" for t in existing_sample) if existing_sample else "없음"
     
     # 카테고리별 키워드 풀에서 랜덤 선택
@@ -691,7 +774,9 @@ def main():
     existing_posts = get_existing_posts()
     existing_titles = [p["title"] for p in existing_posts]
     existing_slugs = get_existing_slugs()
-    
+
+    # 사용된 주제 기록 로드 (카테고리+키워드 중복 방지)
+    used_topics = load_used_topics()
     print(f"\n📊 기존 포스트: {len(existing_posts)}개")
 
     # 카테고리별 포스트 수 카운트 → 적게 작성된 카테고리 우선
@@ -715,7 +800,7 @@ def main():
     for i, category in enumerate(selected_categories):
         date = today.strftime("%Y-%m-%d")
         cat_data = CATEGORIES[category]
-        keyword = random.choice(cat_data["keywords"])
+        keyword = get_next_keyword(category, used_topics)  # 이미 쓴 키워드 제외
         pexels_queries = cat_data["pexels_queries"]
         slug_prefix = cat_data.get("slug_prefix", "casino")
         slug_suffixes = cat_data.get("slug_suffixes", ["guide", "tips"])
@@ -773,6 +858,11 @@ def main():
         existing_titles.append(title)
         existing_slugs.add(slug)
         success += 1
+
+        # 사용된 주제 기록 즉시 저장 (다음 실행 시 재탕 방지)
+        save_used_topics(used_topics)
+        print(f"  💾 used-topics.json 업데이트: [{category}] {keyword}")
+
         time.sleep(2)
 
     print("\n" + "=" * 55)
