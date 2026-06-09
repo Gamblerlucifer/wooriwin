@@ -68,9 +68,11 @@ const teamMembers = [
     name: '박성준',
     role: 'WOORIWIN 대표',
     experience: '15년+',
-    articles: null,
+    articles: 34,
     image: '/about/01.jpg',
     bio: '글로벌 금융 보안 전문가 출신으로, 불투명한 온라인 게이밍 시장에 \'데이터 기반 신뢰\'라는 표준을 세우기 위해 WOORIWIN을 설립했습니다. 단순한 홍보가 아닌, 철저한 라이선스 검증과 자본력 분석을 통해 사용자가 안심하고 즐길 수 있는 생태계를 구축하는 데 앞장서고 있습니다.',
+    quote: '신뢰받는 정보가 곧 사용자의 자산 보호입니다.',
+    credentials: ['前 금융보안 컨설턴트', 'MGA 라이선스 검증 전문', '온라인 플랫폼 자본력 분석'],
     category: '운영',
     specialty: ['보안 및 라이선스', '최신 트렌드'],
   },
@@ -81,7 +83,9 @@ const teamMembers = [
     experience: '10년+',
     articles: 87,
     image: '/about/02.jpg',
-    bio: '해외 메이저 카지노의 플로어 매니저 경력을 바탕으로 라이브 스트리밍의 공정성을 현미경처럼 분석합니다. 딜러의 숙련도, 카드 슈의 투명성, 0.1초의 레이턴시까지 놓치지 않는 날카로운 시각으로 실제 베팅 환경의 모든 변수를 수치화하여 전달합니다.',
+    bio: '해외 메이저 카지노 현장 경력을 바탕으로 라이브 스트리밍의 공정성을 현미경처럼 분석합니다. 딜러의 숙련도, 카드 슈의 투명성, 0.1초의 레이턴시까지 놓치지 않는 날카로운 시각으로 실제 베팅 환경의 모든 변수를 수치화하여 전달합니다.',
+    quote: '딜러의 손끝과 카드 슈 안에 모든 진실이 있습니다.',
+    credentials: ['前 해외 카지노 플로어 스태프', 'Evolution Gaming 딜러 트레이닝 이수', '라이브 스트리밍 지연 분석 전문'],
     category: '전문가',
     specialty: ['바카라 가이드', '블랙잭 가이드', '룰렛 & 포커', '게임쇼 분석'],
   },
@@ -93,28 +97,34 @@ const teamMembers = [
     articles: 143,
     image: '/about/03.jpg',
     bio: '복잡하게 얽힌 카지노 룰과 보너스 약관을 누구나 이해할 수 있는 직관적인 콘텐츠로 재구성합니다. UX 중심의 가이드 제작을 총괄하며, 초보자와 숙련자 모두가 길을 잃지 않도록 가장 친절하고 명확한 콘텐츠 로드맵을 설계합니다.',
+    quote: '복잡한 규칙을 단순하게, 단순함을 정확하게.',
+    credentials: ['UX 라이팅 전문가', '카지노 규칙·약관 현지화 경력', '한국어 SEO 콘텐츠 최적화'],
     category: '콘텐츠',
     specialty: ['에볼루션 가이드', '모바일 최적화'],
   },
   {
     id: '04',
     name: '최민석',
-    role: '에디터',
+    role: '시니어 에디터',
     experience: '12년+',
     articles: 210,
     image: '/about/04.jpg',
     bio: '화려한 광고 문구 뒤에 숨겨진 \'진짜 데이터\'를 추적하는 저널리스트입니다. 수천 개의 게임 데이터를 대조하여 실제 RTP와 입출금 속도의 상관관계를 파헤치며, 타협 없는 팩트 체크로 플랫폼의 단점까지 가감 없이 기록합니다.',
+    quote: '데이터가 거짓말하지 않는다면, 저도 거짓말하지 않습니다.',
+    credentials: ['前 게임 전문 IT 저널리스트', '데이터 저널리즘 기반 팩트체크', 'RTP 데이터베이스 구축·관리'],
     category: '에디터',
     specialty: ['에볼루션 가이드', '최신 트렌드', '자금 관리'],
   },
   {
     id: '05',
     name: '정혜진',
-    role: '책임도박 담당',
+    role: '책임도박 전문가',
     experience: '11년+',
     articles: 56,
     image: '/about/05.jpg',
     bio: '상담 심리학 석사로서 게임의 즐거움이 삶의 침해로 이어지지 않도록 방어선을 구축합니다. 도박 중독 예방 가이드를 설계하고, 모든 플랫폼 리뷰에 \'안전 베팅 지수\'를 도입하여 과몰입 방지를 위한 실질적인 솔루션을 제공합니다.',
+    quote: '즐거운 게임 경험이 일상을 해쳐서는 안 됩니다.',
+    credentials: ['상담 심리학 석사', '도박 중독 예방 가이드라인 집필', '책임도박 캠페인 자문 경력'],
     category: '전문가',
     specialty: ['책임감 있는 게임', '자금 관리'],
   },
@@ -123,9 +133,11 @@ const teamMembers = [
     name: '한재원',
     role: '커뮤니티 매니저',
     experience: '6년+',
-    articles: null,
+    articles: 29,
     image: '/about/06.jpg',
     bio: '유저들의 생생한 목소리를 수집하여 리뷰의 완성도를 높이는 소통의 가교입니다. 대형 게임 커뮤니티 운영 노하우를 살려 허위 리뷰를 걸러내고 유저와 업체 간 분쟁 발생 시 중재자 역할을 수행하며, 플레이어의 집단지성이 핵심 기준이 되도록 관리합니다.',
+    quote: '커뮤니티의 목소리가 가장 정직한 리뷰입니다.',
+    credentials: ['대형 온라인 카지노 커뮤니티 운영', '플레이어 분쟁 조정 전문', 'UGC 콘텐츠 품질 검수'],
     category: '커뮤니티',
     specialty: ['에볼루션 가이드', '모바일 최적화'],
   },
@@ -438,6 +450,40 @@ export default function About() {
                 >
                   {member.bio}
                 </p>
+
+                {/* 한 마디 quote */}
+                {'quote' in member && member.quote && (
+                  <p
+                    className="text-xs italic mt-3 pl-3"
+                    style={{
+                      color: '#C9A84C',
+                      borderLeft: '2px solid rgba(201,168,76,0.4)',
+                      opacity: 0.85,
+                    }}
+                  >
+                    &ldquo;{(member as typeof member & { quote: string }).quote}&rdquo;
+                  </p>
+                )}
+
+                {/* 자격/경력 뱃지 */}
+                {'credentials' in member && Array.isArray((member as typeof member & { credentials: string[] }).credentials) && (
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {(member as typeof member & { credentials: string[] }).credentials.map((c) => (
+                      <span
+                        key={c}
+                        className="text-xs px-2 py-0.5"
+                        style={{
+                          background: 'rgba(255,255,255,0.03)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          color: '#8A8A9A',
+                          borderRadius: 4,
+                        }}
+                      >
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 {/* 하단 구분선 + 태그 */}
                 <div

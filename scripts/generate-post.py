@@ -135,7 +135,8 @@ CATEGORY_TO_PAGE = {
 AUTHORS = {
     "박성준": {
         "role": "WOORIWIN 대표",
-        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "bio": "글로벌 금융 보안 전문가 출신으로, 철저한 라이선스 검증과 자본력 분석을 통해 사용자가 안심하고 즐길 수 있는 생태계를 구축하는 데 앞장서고 있습니다.",
+        "credentials": ["前 금융보안 컨설턴트", "MGA 라이선스 검증 전문", "온라인 플랫폼 자본력 분석"],
         "image": "/about/01.jpg",
         "url": "/about",
         "experience": "15년+",
@@ -143,7 +144,8 @@ AUTHORS = {
     },
     "김도현": {
         "role": "라이브카지노 전문가",
-        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "bio": "해외 메이저 카지노 현장 경력을 바탕으로 딜러의 숙련도, 카드 슈의 투명성, 0.1초의 레이턴시까지 놓치지 않는 날카로운 시각으로 라이브 게임 환경의 모든 변수를 수치화하여 전달합니다.",
+        "credentials": ["前 해외 카지노 플로어 스태프", "Evolution Gaming 딜러 트레이닝 이수", "라이브 스트리밍 지연 분석 전문"],
         "image": "/about/02.jpg",
         "url": "/about",
         "experience": "10년+",
@@ -151,23 +153,26 @@ AUTHORS = {
     },
     "이수연": {
         "role": "콘텐츠 전문가",
-        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "bio": "복잡하게 얽힌 카지노 룰과 보너스 약관을 누구나 이해할 수 있는 직관적인 콘텐츠로 재구성합니다. UX 중심의 가이드 제작을 총괄하며 초보자와 숙련자 모두를 위한 콘텐츠 로드맵을 설계합니다.",
+        "credentials": ["UX 라이팅 전문가", "카지노 규칙·약관 현지화 경력", "한국어 SEO 콘텐츠 최적화"],
         "image": "/about/03.jpg",
         "url": "/about",
         "experience": "8년+",
         "specialty": ["에볼루션 가이드", "모바일 최적화"],
     },
     "최민석": {
-        "role": "에디터",
-        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "role": "시니어 에디터",
+        "bio": "수천 개의 게임 데이터를 대조하여 실제 RTP와 입출금 속도의 상관관계를 파헤치는 저널리스트입니다. 타협 없는 팩트 체크로 플랫폼의 장단점을 가감 없이 기록합니다.",
+        "credentials": ["前 게임 전문 IT 저널리스트", "데이터 저널리즘 기반 팩트체크", "RTP 데이터베이스 구축·관리"],
         "image": "/about/04.jpg",
         "url": "/about",
         "experience": "12년+",
         "specialty": ["에볼루션 가이드", "최신 트렌드", "자금 관리"],
     },
     "정혜진": {
-        "role": "책임도박 담당",
-        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "role": "책임도박 전문가",
+        "bio": "상담 심리학 석사로서 게임의 즐거움이 삶의 침해로 이어지지 않도록 방어선을 구축합니다. 도박 중독 예방 가이드를 설계하고 모든 플랫폼 리뷰에 안전 베팅 지수를 도입하여 실질적인 솔루션을 제공합니다.",
+        "credentials": ["상담 심리학 석사", "도박 중독 예방 가이드라인 집필", "책임도박 캠페인 자문 경력"],
         "image": "/about/05.jpg",
         "url": "/about",
         "experience": "11년+",
@@ -175,7 +180,8 @@ AUTHORS = {
     },
     "한재원": {
         "role": "커뮤니티 매니저",
-        "bio": "에볼루션카지노 전문 콘텐츠 분석팀 · 바카라·블랙잭·룰렛 가이드 제공",
+        "bio": "유저들의 생생한 목소리를 수집하여 리뷰의 완성도를 높이는 소통의 가교입니다. 대형 게임 커뮤니티 운영 노하우를 살려 허위 리뷰를 걸러내고 플레이어의 집단지성이 핵심 기준이 되도록 관리합니다.",
+        "credentials": ["대형 온라인 카지노 커뮤니티 운영", "플레이어 분쟁 조정 전문", "UGC 콘텐츠 품질 검수"],
         "image": "/about/06.jpg",
         "url": "/about",
         "experience": "6년+",
@@ -385,8 +391,6 @@ def generate_unique_title(client: genai.Client, category: str, keyword: str, exi
     
     for attempt in range(max_attempts):
         prompt = f"""
-오늘 날짜: {datetime.now().strftime("%Y년 %m월 %d일")}
-
 다음 조건으로 한국인 독자에게 매력적인 블로그 제목 3개를 생성하세요.
 
 카테고리: {category}
@@ -431,8 +435,8 @@ def generate_unique_title(client: genai.Client, category: str, keyword: str, exi
         print(f"  🔄 모든 제목이 중복 — 재시도 ({attempt + 1}/{max_attempts})")
         time.sleep(1)
     
-    # 최후 fallback — 카테고리+키워드+타임스탬프
-    fallback = f"에볼루션카지노 {keyword} {datetime.now().strftime('%m월 %d일')} 인사이트"
+    # 최후 fallback — 카테고리+키워드+상시 에버그린 패턴 (날짜 배제)
+    fallback = f"에볼루션카지노 {keyword} 완벽 가이드"
     print(f"  ⚠️ Fallback 제목 사용: '{fallback}'")
     return fallback
 
@@ -564,7 +568,7 @@ def generate_post_content(
 def ensure_unique_slug(slug: str, existing_slugs: set) -> str:
     if slug not in existing_slugs:
         return slug
-    suffix = datetime.now().strftime("%m%d%H%M")
+    suffix = random.randint(1000, 9999)
     unique = f"{slug}-{suffix}"
     print(f"  🔄 슬러그 중복 → 변경: {slug} → {unique}")
     return unique
