@@ -1,0 +1,64 @@
+name: Fix All Posts (새 파이프라인 전체 재생성)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '드라이런 (목록만 출력, 수정 없음)'
+        required: false
+        default: false
+        type: boolean
+      limit:
+        description: '처리할 최대 포스트 수 (0=전체)'
+        required: false
+        default: '0'
+        type: string
+      resume:
+        description: '이전 진행 이어서 실행'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180  # 최대 3시간 (~90개 × 90초)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install google-genai python-dotenv requests
+
+      - name: Run fix-all-posts
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          SLEEP_BETWEEN_POSTS: '5'
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ "${{ github.event.inputs.resume }}" = "true" ]; then
+            ARGS="$ARGS --resume"
+          fi
+          LIMIT="${{ github.event.inputs.limit || '0' }}"
+          if [ "$LIMIT" != "0" ]; then
+            ARGS="$ARGS --limit $LIMIT"
+          fi
+          python scripts/fix-all-posts.py $ARGS
+
+      - name: Commit and push
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/posts/ data/used-topics.json
+          git diff --staged --quiet || git commit -m "fix: 전체 포스트 새 파이프라인 재생성 $(date +%Y-%m-%d)"
+          git push
