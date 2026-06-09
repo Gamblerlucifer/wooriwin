@@ -37,7 +37,7 @@ RESPONSIBLE_GAMBLING_TEXT = """
 ANGLES = {
     "입문":   "처음 접하는 독자가 핵심 개념을 이해하고 시작할 수 있도록 안내하는 관점",
     "실전":   "기본을 아는 독자가 실제 플레이에 바로 적용할 수 있는 실용적 관점",
-    "분석":   "확률·RTP·통계 데이터를 중심으로 논리적으로 접근하는 관점",
+    "분석":   "확률·RTP·통계 데이터를 중심으로 논리적으로 접근하는 관점 (RTP 수치는 Evolution Gaming 공식 게임 수학 문서 기준으로 제시)",
     "비교":   "다른 게임·변형·옵션과 비교하여 선택 기준을 제시하는 관점",
     "심화":   "경험 있는 플레이어를 위한 고급 전략과 심층 분석 관점",
 }
@@ -51,10 +51,12 @@ CONTENT_MODELS = {
     "분석형":     {
         "desc": "수치·통계·데이터를 중심으로 제시하고 결론 도출",
         "structure": "데이터 제시 → 수치 비교 → 패턴 분석 → 시사점",
+        "note": "RTP·확률 수치 포함, 마크다운 표 2개 이상 권장",
     },
     "비교형":     {
         "desc": "두 가지 이상을 비교하여 장단점과 추천 상황 제시",
         "structure": "비교 대상 소개 → 기준별 비교표 → 장단점 → 상황별 추천",
+        "note": "기준별 비교 마크다운 표 1개 이상 필수",
     },
     "실수방지형": {
         "desc": "흔히 저지르는 실수 목록과 그 이유, 예방법 중심",
@@ -134,6 +136,9 @@ CATEGORIES = {
         "pexels_queries": ["live casino studio", "casino platform interface", "online casino environment"],
         "slug_prefix": "live-casino",
         "slug_suffixes": ["guide", "tips", "review", "explained", "overview", "complete", "beginners", "advanced"],
+        "authorities": [
+            {"name": "eCOGRA", "url": "https://ecogra.org", "desc": "공인 게임 공정성 감사기관"},
+        ],
     },
     "바카라 가이드": {
         "keywords": [
@@ -145,6 +150,9 @@ CATEGORIES = {
         "pexels_queries": ["baccarat casino table", "baccarat cards dealer", "live baccarat"],
         "slug_prefix": "baccarat",
         "slug_suffixes": ["strategy", "rules", "tips", "guide", "winning", "odds", "how-to", "explained"],
+        "authorities": [
+            {"name": "eCOGRA", "url": "https://ecogra.org", "desc": "공인 게임 공정성 감사기관"},
+        ],
     },
     "블랙잭 가이드": {
         "keywords": [
@@ -155,6 +163,9 @@ CATEGORIES = {
         "pexels_queries": ["blackjack casino table", "blackjack dealer", "live blackjack"],
         "slug_prefix": "blackjack",
         "slug_suffixes": ["strategy", "rules", "tips", "guide", "basic-strategy", "odds", "how-to", "variants"],
+        "authorities": [
+            {"name": "eCOGRA", "url": "https://ecogra.org", "desc": "공인 게임 공정성 감사기관"},
+        ],
     },
     "게임쇼 분석": {
         "keywords": [
@@ -165,6 +176,9 @@ CATEGORIES = {
         "pexels_queries": ["casino game show wheel", "live game show casino", "casino entertainment"],
         "slug_prefix": "game-show",
         "slug_suffixes": ["review", "guide", "analysis", "tips", "explained", "how-to-play", "odds", "strategy"],
+        "authorities": [
+            {"name": "eCOGRA", "url": "https://ecogra.org", "desc": "공인 게임 공정성 감사기관"},
+        ],
     },
     "룰렛 & 포커": {
         "keywords": [
@@ -175,6 +189,9 @@ CATEGORIES = {
         "pexels_queries": ["roulette wheel casino", "live roulette dealer", "casino poker table"],
         "slug_prefix": "roulette",
         "slug_suffixes": ["strategy", "guide", "tips", "odds", "how-to", "variants", "explained", "winning"],
+        "authorities": [
+            {"name": "eCOGRA", "url": "https://ecogra.org", "desc": "공인 게임 공정성 감사기관"},
+        ],
     },
     "최신 트렌드": {
         "keywords": [
@@ -195,6 +212,9 @@ CATEGORIES = {
         "pexels_queries": ["casino budget management", "money management casino", "casino bankroll"],
         "slug_prefix": "bankroll",
         "slug_suffixes": ["management", "strategy", "guide", "tips", "budgeting", "limits", "control", "plan"],
+        "authorities": [
+            {"name": "BeGambleAware", "url": "https://www.begambleaware.org", "desc": "도박 문제 예방 및 지원 기관"},
+        ],
     },
     "보안 및 라이선스": {
         "keywords": [
@@ -205,6 +225,11 @@ CATEGORIES = {
         "pexels_queries": ["casino license security", "online security casino", "casino safety"],
         "slug_prefix": "casino-safety",
         "slug_suffixes": ["license", "security", "guide", "tips", "verified", "trusted", "how-to", "checklist"],
+        "authorities": [
+            {"name": "MGA (Malta Gaming Authority)", "url": "https://www.mga.org.mt", "desc": "몰타 게임 규제기관"},
+            {"name": "UK Gambling Commission", "url": "https://www.gamblingcommission.gov.uk", "desc": "영국 도박 규제기관"},
+            {"name": "eCOGRA", "url": "https://ecogra.org", "desc": "공인 게임 공정성 감사기관"},
+        ],
     },
     "모바일 최적화": {
         "keywords": [
@@ -225,6 +250,10 @@ CATEGORIES = {
         "pexels_queries": ["responsible gambling", "casino healthy gaming", "gambling prevention"],
         "slug_prefix": "responsible-gambling",
         "slug_suffixes": ["guide", "tips", "limits", "prevention", "self-control", "faq", "principles", "rules"],
+        "authorities": [
+            {"name": "BeGambleAware", "url": "https://www.begambleaware.org", "desc": "도박 문제 예방 및 지원 기관"},
+            {"name": "GamStop", "url": "https://www.gamstop.co.uk", "desc": "자가 제한 서비스"},
+        ],
     },
 }
 
@@ -366,17 +395,13 @@ Google E-E-A-T, Helpful Content, YMYL 기준을 엄격히 준수합니다.
 - 본문에 'YMYL', 'E-E-A-T', 'EEAT' 같은 SEO 용어 직접 노출 금지
 
 ━━━ 올바른 표현 기준 ━━━
-- RTP·하우스 엣지 수치는 사실로 제시하되 베팅 유도 없이 서술
 - 전략 설명 시 '고려할 수 있습니다', '참고할 수 있습니다' 등 중립 표현 사용
 - 게임 선택은 플레이어 본인의 판단임을 항상 명시
-- 모든 RTP 수치 언급 시 '이론적 기댓값이며 실제 결과와 다를 수 있습니다' 병기
-- 출처 명시: 'Evolution Gaming 공식 게임 수학 문서 기준'
+- RTP·확률 수치를 언급할 경우 '이론적 기댓값이며 실제 결과와 다를 수 있습니다' 병기
 
 ━━━ 필수 포함 요소 ━━━
 - 손실 위험 안내 문구 본문 내 1회 이상 포함
-- eCOGRA 등 공인 감사기관 언급으로 신뢰도 강화
-- 마크다운 표 1개 이상 (RTP 비교, 게임 비교 등)
-- 본문 최소 1600자 이상
+- 마크다운 표 1개 이상 (콘텐츠 구조에 맞게 작성)
 
 ━━━ 콘텐츠 관점 ━━━
 제목이 암시하는 주제(아래 '본문 핵심 관점' 지시를 따름)를 본문이 실제로 다루도록 작성하고,
@@ -649,8 +674,18 @@ def generate_post_content(
     random_suffix = random.choice(slug_suffixes)
 
     model_info    = CONTENT_MODELS[content_model]
+    model_note    = model_info.get("note", "")
     length_min    = length_option["min"]
     length_label  = length_option["label"]
+
+    # 카테고리별 공인기관 주입
+    cat_data   = CATEGORIES.get(category, {})
+    authorities = cat_data.get("authorities", [])
+    if authorities:
+        auth = authorities[0]
+        authority_line = f"- 본문 내 [{auth['name']}]({auth['url']}) ({auth['desc']}) 1회 이상 링크로 삽입"
+    else:
+        authority_line = ""
 
     prompt = f"""
 ━━━ 콘텐츠 생성 명세 ━━━
@@ -660,7 +695,7 @@ def generate_post_content(
 핵심 키워드: {keyword}
 독자 앵글  : {angle} — {ANGLES[angle]}
 콘텐츠 모델: {content_model} — {model_info['desc']}
-  └ 권장 전개 구조: {model_info['structure']}
+  └ 권장 전개 구조: {model_info['structure']}{"" if not model_note else f"{chr(10)}  └ 추가 요구사항: {model_note}"}
 문체       : {tone}
 도입부     : {intro_type}
 마무리     : {ending_type}
@@ -684,10 +719,9 @@ def generate_post_content(
 - '무조건', '절대', '반드시' 등 단정적 행동 지시 금지
 - 손익 보장·당첨 기대 표현 금지
 - 본문에 'YMYL', 'E-E-A-T', 'EEAT', 'SEO' 노출 금지
-- RTP 수치 언급 시 '이론적 기댓값이며 실제 결과와 다를 수 있습니다' 병기
-- 'Evolution Gaming 공식 게임 수학 문서 기준' 출처 1회 이상 포함
+- RTP·확률 수치 언급 시 '이론적 기댓값이며 실제 결과와 다를 수 있습니다' 병기
 - 손실 위험 안내 문구 1회 이상 포함
-- eCOGRA 등 공인 감사기관 언급
+{authority_line}
 
 [슬러그]
 - 기존 슬러그 목록과 겹치지 않게 생성

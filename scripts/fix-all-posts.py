@@ -247,8 +247,7 @@ def main():
     client     = setup_gemini()
     used_topics = load_used_topics()
 
-    # 현재 전체 제목·슬러그 목록 (중복 방지용)
-    existing_titles = [p["data"].get("title", "") for p in all_posts]
+    # 슬러그 목록 (slug 생성 시 중복 방지용)
     existing_slugs  = {p["data"].get("slug", "") for p in all_posts}
 
     success = 0
@@ -267,8 +266,14 @@ def main():
         slug_prefix   = cat_data.get("slug_prefix", "casino")
         slug_suffixes = cat_data.get("slug_suffixes", ["guide", "tips"])
 
+        # 기존 title·slug·imageAlt 유지
+        title         = old_data.get("title", "")
+        old_image_alt = old_data.get("imageAlt", title)
+        new_slug      = old_slug  # 슬러그 변경 없음
+
         print(f"\n[{idx+1}/{len(pending)}] {old_slug}")
         print(f"  카테고리: {category} | 원본 날짜: {date}")
+        print(f"  제목 유지: {title[:45]}")
 
         # ── 파이프라인 변수 결정 ──────────────────
         keyword, angle, content_model = get_next_topic(category, used_topics)
@@ -281,37 +286,19 @@ def main():
         print(f"  길이: {length_option['label']} | 문체: {tone[:15]}...")
 
         try:
-            # Step 1 — 제목 생성
-            print("  🔍 제목 생성 중...")
-            title = generate_unique_title(
-                client, category, keyword, angle, content_model,
-                existing_titles,
-            )
-            time.sleep(2)
-
-            # Step 2 — 본문 생성
+            # Step 1 — 본문 생성 (제목·슬러그 재사용)
             print("  🤖 본문 생성 중...")
-            # 현재 처리 중인 슬러그는 기존 목록에서 제외 (새 슬러그 할당 위해)
-            slugs_for_generation = existing_slugs - {old_slug}
             content_data = generate_post_content(
                 client, title, category, keyword,
                 angle, content_model, tone, intro_type, ending_type, length_option,
-                pexels_queries, slugs_for_generation, slug_prefix, slug_suffixes,
+                pexels_queries, existing_slugs, slug_prefix, slug_suffixes,
             )
             if not content_data:
                 print("  ❌ 본문 생성 실패 — 스킵")
                 fail += 1
                 continue
 
-            # Step 3 — 슬러그 확정
-            raw_slug = content_data.get("slug", "")
-            if not raw_slug:
-                print("  ❌ 슬러그 없음 — 스킵")
-                fail += 1
-                continue
-            new_slug = ensure_unique_slug(raw_slug, existing_slugs)
-
-            # Step 4 — 이미지 (기존 이미지 재사용, 검색 실패 시에만)
+            # Step 2 — 이미지 (기존 이미지 재사용, 없을 시만 검색)
             used_images = get_all_used_images(exclude_slug=old_slug)
             if image and image not in used_images:
                 print(f"  🖼️  기존 이미지 재사용")
@@ -326,10 +313,11 @@ def main():
             inline_queries = pexels_queries[::-1]
             used_images.add(final_image)
             inline_image_url = fetch_pexels_image(inline_queries, used_images)
-            inline_image_alt = f"{content_data.get('imageAlt', title)} - 본문 참고 이미지"
+            inline_image_alt = f"{old_image_alt} - 본문 참고 이미지"
 
-            # Step 5 — 저장
-            content_data["slug"] = new_slug
+            # Step 3 — 저장 (슬러그·제목 기존 것 유지)
+            content_data["slug"]  = new_slug
+            content_data["title"] = title
             save_new_post(
                 new_slug, old_slug, content_data,
                 final_image, category, date, author,
@@ -337,9 +325,6 @@ def main():
             )
 
             # 상태 업데이트
-            existing_titles.append(title)
-            existing_slugs.discard(old_slug)
-            existing_slugs.add(new_slug)
             done_slugs.add(old_slug)
             save_progress(done_slugs)
             save_used_topics(used_topics)
