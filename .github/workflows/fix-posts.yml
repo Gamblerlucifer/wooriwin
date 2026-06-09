@@ -1,0 +1,54 @@
+name: Fix Existing Posts Quality
+
+on:
+  workflow_dispatch:  # 수동 실행 전용
+    inputs:
+      type:
+        description: '수정 대상 (A=날짜제목, B=불일치, all=전체)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - A
+          - B
+      dry_run:
+        description: '드라이런 (대상 목록만 출력, 실제 수정 없음)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120  # 최대 2시간 (73개 × ~90초)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install google-genai python-dotenv requests
+
+      - name: Fix posts
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          ARGS="--type ${{ github.event.inputs.type || 'all' }}"
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          python scripts/fix-posts.py $ARGS
+
+      - name: Commit and push
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/posts/
+          git diff --staged --quiet || git commit -m "fix: 기존 포스트 품질 수정 (날짜제목+내용불일치 재생성) $(date +%Y-%m-%d)"
+          git push
