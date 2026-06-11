@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -28,25 +27,16 @@ const POSTS_PER_PAGE = 21
 export default function CategoryFilter({ posts, categories, categorySlugMap, slugCategoryMap }: CategoryFilterProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const [active, setActive] = useState('전체')
-  const [page, setPage] = useState(1)
 
-  useEffect(() => {
-    const slug = searchParams.get('category')
-    if (slug) {
-      const cat = slugCategoryMap[slug]
-      if (cat && categories.includes(cat)) {
-        setActive(cat)
-      }
-    } else {
-      setActive('전체')
-    }
-    setPage(1)
-  }, [searchParams, categories, slugCategoryMap])
+  const categorySlug = searchParams.get('category')
+  const active = categorySlug && slugCategoryMap[categorySlug] && categories.includes(slugCategoryMap[categorySlug])
+    ? slugCategoryMap[categorySlug]
+    : '전체'
+
+  const pageParam = parseInt(searchParams.get('page') || '1', 10)
+  const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1
 
   const handleSelect = (cat: string) => {
-    setActive(cat)
-    setPage(1)
     if (cat === '전체') {
       router.replace('/blog', { scroll: false })
     } else {
@@ -58,6 +48,18 @@ export default function CategoryFilter({ posts, categories, categorySlugMap, slu
   const filtered = active === '전체' ? posts : posts.filter((p) => p.category === active)
   const totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE)
   const paginated = filtered.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE)
+
+  const pageHref = (p: number) => {
+    const params = new URLSearchParams()
+    if (active !== '전체') {
+      params.set('category', categorySlugMap[active] || encodeURIComponent(active))
+    }
+    if (p > 1) {
+      params.set('page', String(p))
+    }
+    const qs = params.toString()
+    return qs ? `/blog?${qs}` : '/blog'
+  }
 
   return (
     <>
@@ -134,33 +136,43 @@ export default function CategoryFilter({ posts, categories, categorySlugMap, slu
             {/* 페이지네이션 */}
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mt-12">
-                <button
-                  onClick={() => { setPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                  disabled={page === 1}
-                  className="px-4 py-2 rounded-full text-sm font-semibold transition bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  ← 이전
-                </button>
+                {page > 1 ? (
+                  <Link
+                    href={pageHref(page - 1)}
+                    className="px-4 py-2 rounded-full text-sm font-semibold transition bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
+                  >
+                    ← 이전
+                  </Link>
+                ) : (
+                  <span className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-800 text-gray-400 opacity-30 cursor-not-allowed">
+                    ← 이전
+                  </span>
+                )}
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                  <button
+                  <Link
                     key={p}
-                    onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                    className={`w-9 h-9 rounded-full text-sm font-semibold transition ${
+                    href={pageHref(p)}
+                    className={`w-9 h-9 flex items-center justify-center rounded-full text-sm font-semibold transition ${
                       page === p
                         ? 'bg-yellow-400 text-gray-900'
                         : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
                     }`}
                   >
                     {p}
-                  </button>
+                  </Link>
                 ))}
-                <button
-                  onClick={() => { setPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                  disabled={page === totalPages}
-                  className="px-4 py-2 rounded-full text-sm font-semibold transition bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  다음 →
-                </button>
+                {page < totalPages ? (
+                  <Link
+                    href={pageHref(page + 1)}
+                    className="px-4 py-2 rounded-full text-sm font-semibold transition bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
+                  >
+                    다음 →
+                  </Link>
+                ) : (
+                  <span className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-800 text-gray-400 opacity-30 cursor-not-allowed">
+                    다음 →
+                  </span>
+                )}
               </div>
             )}
           </>
