@@ -55,3 +55,15 @@ service_account.json
 
 # 자동 생성 파이프라인의 색인 알림용 임시 파일 (커밋 불필요)
 /data/.new-posts-pending.json
+
+# GSC 색인 요청 진행 상태 로컬 추적 파일 (커밋 불필요)
+/data/.gsc-checklist-done.json
+
+# next-sitemap 빌드 시 자동 생성 (커밋 불필요)
+/public/sitemap.xml
+/public/sitemap-*.xml
+/public/robots.txt
+
+# Python bytecode cache
+__pycache__/
+*.pyc
