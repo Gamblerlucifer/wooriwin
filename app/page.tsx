@@ -90,7 +90,7 @@ const jsonLdArticle = {
     url: 'https://wooriwin.com',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://wooriwin.com/images/logo.png',
+      url: 'https://wooriwin.com/images/favicon.png',
     },
   },
 }

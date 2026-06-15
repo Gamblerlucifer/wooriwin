@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "WOORIWIN — 에볼루션카지노 완벽 가이드",
     description: "에볼루션카지노 라이브 게임 전략, 테이블 분석, 플레이 가이드 및 건전한 게임 문화 정보를 제공합니다.",
-    images: [{ url: "https://wooriwin.com/og-default.jpg", width: 1200, height: 630, alt: "WOORIWIN 에볼루션카지노 가이드" }],
+    images: [{ url: "https://wooriwin.com/images/og-main.jpg", width: 1200, height: 630, alt: "WOORIWIN 에볼루션카지노 가이드" }],
     siteName: "WOORIWIN",
     locale: "ko_KR",
     type: "website",
@@ -81,7 +81,7 @@ const jsonLd = {
 
     "logo": {
       "@type": "ImageObject",
-      "url": "https://wooriwin.com/logo.png"
+      "url": "https://wooriwin.com/images/favicon.png"
     }
   }
 };

@@ -10,7 +10,7 @@ const jsonLdOrg = {
   url: 'https://wooriwin.com',
   logo: {
     '@type': 'ImageObject',
-    url: 'https://wooriwin.com/favicon.png',
+    url: 'https://wooriwin.com/images/favicon.png',
   },
   description: '에볼루션카지노 전략·분석 전문 콘텐츠 플랫폼',
   email: 'admin@wooriwin.com',
@@ -190,7 +190,7 @@ export const metadata: Metadata = {
     url: 'https://wooriwin.com/about',
     images: [
       {
-        url: 'https://wooriwin.com/og-default.jpg',
+        url: 'https://wooriwin.com/images/og-main.jpg',
         width: 1200,
         height: 630,
         alt: 'WOORIWIN 소개',

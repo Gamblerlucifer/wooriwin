@@ -37,7 +37,7 @@ function getRelatedPosts(currentSlug: string, currentCategory: string, count = 3
 }
 
 function getImageUrl(image: string) {
-  if (!image) return 'https://wooriwin.com/og-default.jpg'
+  if (!image) return 'https://wooriwin.com/images/og-main.jpg'
   return image.startsWith('http') ? image : `https://wooriwin.com${image}`
 }
 
@@ -112,7 +112,7 @@ export default async function BlogPost({
       '@type': 'Organization',
       name: 'WOORIWIN',
       url: 'https://wooriwin.com',
-      logo: { '@type': 'ImageObject', url: 'https://wooriwin.com/images/logo.png' },
+      logo: { '@type': 'ImageObject', url: 'https://wooriwin.com/images/favicon.png' },
     },
   }
 
