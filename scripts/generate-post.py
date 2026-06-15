@@ -19,6 +19,7 @@ PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
 BASE_DIR      = os.path.join(os.path.dirname(__file__), "..")
 POSTS_DIR        = os.path.join(BASE_DIR, "data", "posts")
 USED_TOPICS_FILE = os.path.join(BASE_DIR, "data", "used-topics.json")
+NEW_POSTS_FILE   = os.path.join(BASE_DIR, "data", ".new-posts-pending.json")
 POSTS_PER_RUN = random.randint(1, 3)  # 하루 1~3개 랜덤 (과도한 발행으로 인한 색인 적체 방지)
 
 # ── E-E-A-T 고정 문구 (모든 글 하단 hard-code) ────
@@ -898,6 +899,7 @@ def main():
     used_images = get_used_images()
     print(f"🖼️  기존 사용 이미지: {len(used_images)}개 (중복 방지)")
     success = 0
+    new_slugs = []
 
     for i, category in enumerate(selected_categories):
         date = today.strftime("%Y-%m-%d")
@@ -967,6 +969,7 @@ def main():
         # 다음 루프를 위해 즉시 업데이트
         existing_titles.append(title)
         existing_slugs.add(slug)
+        new_slugs.append(slug)
         success += 1
 
         # 사용된 주제 기록 즉시 저장 (다음 실행 시 재탕 방지)
@@ -974,6 +977,9 @@ def main():
         print(f"  💾 used-topics.json 업데이트: [{category}] {keyword}|{angle}|{content_model}")
 
         time.sleep(2)
+
+    with open(NEW_POSTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(new_slugs, f, ensure_ascii=False, indent=2)
 
     print("\n" + "=" * 55)
     print(f"  완료: {success}개 포스트 생성")

@@ -36,3 +36,6 @@ jobs:
           git add data/posts/ data/used-topics.json
           git diff --staged --quiet || git commit -m "feat: auto generate posts $(date +%Y-%m-%d)"
           git push
+
+      - name: Notify Google Indexing API
+        run: python scripts/notify-indexing.py

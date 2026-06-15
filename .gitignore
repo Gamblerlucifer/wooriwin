@@ -52,3 +52,6 @@ service_account.json
 
 # 주의: /data/posts/ 는 GitHub에 커밋되어야 빌드 시 사이트맵에 포함됨
 # 로컬 테스트 시 생성된 파일은 git status에서 확인 후 선별 커밋
+
+# 자동 생성 파이프라인의 색인 알림용 임시 파일 (커밋 불필요)
+/data/.new-posts-pending.json
