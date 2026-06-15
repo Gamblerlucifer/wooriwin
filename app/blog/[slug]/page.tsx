@@ -112,7 +112,7 @@ export default async function BlogPost({
       '@type': 'Organization',
       name: 'WOORIWIN',
       url: 'https://wooriwin.com',
-      logo: { '@type': 'ImageObject', url: 'https://wooriwin.com/images/favicon.png' },
+      logo: { '@type': 'ImageObject', url: 'https://wooriwin.com/images/logo.png' },
     },
   }
 

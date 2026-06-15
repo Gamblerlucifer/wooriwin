@@ -10,7 +10,7 @@ const jsonLdOrg = {
   url: 'https://wooriwin.com',
   logo: {
     '@type': 'ImageObject',
-    url: 'https://wooriwin.com/images/favicon.png',
+    url: 'https://wooriwin.com/images/logo.png',
   },
   description: '에볼루션카지노 전략·분석 전문 콘텐츠 플랫폼',
   email: 'admin@wooriwin.com',
