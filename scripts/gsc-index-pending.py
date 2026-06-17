@@ -17,7 +17,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 BASE_DIR = os.path.join(os.path.dirname(__file__), "..")
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "wooriwin-indexing.json")
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "keys", "wooriwin-indexing.json")
 URLS_FILE = os.path.join(BASE_DIR, "data", "gsc-pending-urls.txt")
 CHECKLIST_FILE = os.path.join(BASE_DIR, "data", ".gsc-checklist-done.json")
 RESULT_LOG = os.path.join(BASE_DIR, "data", "gsc-pending-index-log.json")

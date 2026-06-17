@@ -1,0 +1,82 @@
+name: WooriWin.net 자동 포스팅
+
+on:
+  schedule:
+    - cron: '0 23 * * *'  # 08:00 KST → casino-news
+    - cron: '0 0 * * *'   # 09:00 KST → macau-casino
+    - cron: '0 1 * * *'   # 10:00 KST → philippines-casino
+    - cron: '0 2 * * *'   # 11:00 KST → overseas-casino
+    - cron: '0 3 * * *'   # 12:00 KST → industry-trends
+    - cron: '0 4 * * *'   # 13:00 KST → cambodia-casino
+    - cron: '0 5 * * *'   # 14:00 KST → vietnam-casino
+    - cron: '0 6 * * *'   # 15:00 KST → slot-news
+    - cron: '0 7 * * *'   # 16:00 KST → toto-news
+  workflow_dispatch:
+    inputs:
+      category:
+        description: '카테고리 슬러그 (비우면 시간 기준 자동 선택)'
+        required: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install google-genai requests python-dotenv google-auth google-api-python-client cloudscraper
+
+      - name: Restore Google Service Account Key
+        run: |
+          mkdir -p keys
+          echo '${{ secrets.GOOGLE_INDEXING_KEY }}' | base64 -d > keys/wooriwin-indexing.json
+
+      - name: Determine category by UTC hour
+        id: cat
+        run: |
+          if [ -n "${{ github.event.inputs.category }}" ]; then
+            echo "name=${{ github.event.inputs.category }}" >> $GITHUB_OUTPUT
+          else
+            HOUR=$(date -u +%H)
+            case "$HOUR" in
+              23) echo "name=casino-news"        >> $GITHUB_OUTPUT ;;
+              00) echo "name=macau-casino"       >> $GITHUB_OUTPUT ;;
+              01) echo "name=philippines-casino" >> $GITHUB_OUTPUT ;;
+              02) echo "name=overseas-casino"    >> $GITHUB_OUTPUT ;;
+              03) echo "name=industry-trends"    >> $GITHUB_OUTPUT ;;
+              04) echo "name=cambodia-casino"    >> $GITHUB_OUTPUT ;;
+              05) echo "name=vietnam-casino"     >> $GITHUB_OUTPUT ;;
+              06) echo "name=slot-news"          >> $GITHUB_OUTPUT ;;
+              07) echo "name=toto-news"          >> $GITHUB_OUTPUT ;;
+              *)  echo "name=casino-news"        >> $GITHUB_OUTPUT ;;
+            esac
+          fi
+
+      - name: Generate post
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_NET_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          WP_NET_URL: ${{ secrets.WP_NET_URL }}
+          WP_NET_USER: ${{ secrets.WP_NET_USER }}
+          WP_NET_APP_PASSWORD: ${{ secrets.WP_NET_APP_PASSWORD }}
+        run: |
+          echo "📌 카테고리: ${{ steps.cat.outputs.name }}"
+          python scripts/wp-news-generate.py --category ${{ steps.cat.outputs.name }} --count 1
+
+      - name: Commit used-topics & used-images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/wp-net-used-topics.json data/wp-net-used-images.json
+          git diff --staged --quiet || git commit -m "feat: auto generate posts $(date +%Y-%m-%d) [${{ steps.cat.outputs.name }}]"
+          git push
+
+      - name: Index new post
+        run: python scripts/wp-net-indexing.py --new 1
