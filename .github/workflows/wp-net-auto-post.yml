@@ -38,24 +38,23 @@ jobs:
           mkdir -p keys
           echo '${{ secrets.GOOGLE_INDEXING_KEY }}' | base64 -d > keys/wooriwin-indexing.json
 
-      - name: Determine category by UTC hour
+      - name: Determine category by schedule
         id: cat
         run: |
           if [ -n "${{ github.event.inputs.category }}" ]; then
             echo "name=${{ github.event.inputs.category }}" >> $GITHUB_OUTPUT
           else
-            HOUR=$(date -u +%H)
-            case "$HOUR" in
-              23) echo "name=casino-news"        >> $GITHUB_OUTPUT ;;
-              00) echo "name=macau-casino"       >> $GITHUB_OUTPUT ;;
-              01) echo "name=philippines-casino" >> $GITHUB_OUTPUT ;;
-              02) echo "name=overseas-casino"    >> $GITHUB_OUTPUT ;;
-              03) echo "name=industry-trends"    >> $GITHUB_OUTPUT ;;
-              04) echo "name=cambodia-casino"    >> $GITHUB_OUTPUT ;;
-              05) echo "name=vietnam-casino"     >> $GITHUB_OUTPUT ;;
-              06) echo "name=slot-news"          >> $GITHUB_OUTPUT ;;
-              07) echo "name=toto-news"          >> $GITHUB_OUTPUT ;;
-              *)  echo "name=casino-news"        >> $GITHUB_OUTPUT ;;
+            case "${{ github.event.schedule }}" in
+              "0 23 * * *") echo "name=casino-news"        >> $GITHUB_OUTPUT ;;
+              "0 0 * * *")  echo "name=macau-casino"       >> $GITHUB_OUTPUT ;;
+              "0 1 * * *")  echo "name=philippines-casino" >> $GITHUB_OUTPUT ;;
+              "0 2 * * *")  echo "name=overseas-casino"    >> $GITHUB_OUTPUT ;;
+              "0 3 * * *")  echo "name=industry-trends"    >> $GITHUB_OUTPUT ;;
+              "0 4 * * *")  echo "name=cambodia-casino"    >> $GITHUB_OUTPUT ;;
+              "0 5 * * *")  echo "name=vietnam-casino"     >> $GITHUB_OUTPUT ;;
+              "0 6 * * *")  echo "name=slot-news"          >> $GITHUB_OUTPUT ;;
+              "0 7 * * *")  echo "name=toto-news"          >> $GITHUB_OUTPUT ;;
+              *)             echo "name=casino-news"        >> $GITHUB_OUTPUT ;;
             esac
           fi
 
