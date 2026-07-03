@@ -79,3 +79,8 @@ jobs:
 
       - name: Index new post
         run: python scripts/wp-net-indexing.py --new 1
+
+      - name: Ping sitemap to Google
+        run: |
+          curl -s "https://www.google.com/ping?sitemap=https://wooriwin.net/sitemap_index.xml" || true
+          curl -s "https://www.google.com/ping?sitemap=https://wooriwin.net/wp-sitemap.xml" || true
