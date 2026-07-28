@@ -22,6 +22,7 @@ PLATFORMS = [
     "gist-post.py",
     "blogger-post.py",
     "tumblr-post.py",
+    "lj-post.py",
     # Write.as / WordPress.com — 2026-07 기준 무료 플랜 폐지, 스킵
 ]
 
@@ -49,6 +50,21 @@ def main():
     print("=" * 50)
     for script, ok in results:
         print(f"  {'✅' if ok else '❌'} {script}")
+
+    # 텔레그램 실행 결과 알림
+    try:
+        from telegram_notify import send_message
+        ok_count = sum(1 for _, ok in results if ok)
+        fail_count = len(results) - ok_count
+        top = "✅ 1-1 자동 포스팅 완료" if fail_count == 0 else f"⚠️ 1-1 자동 포스팅 ({fail_count}개 실패)"
+        lines = [f"<b>{top}</b>"]
+        for script, ok in results:
+            label = script.replace("-post.py", "").upper()
+            lines.append(f"{'✅' if ok else '❌'} {label}")
+        lines.append(f"\n완료 {ok_count}/{len(results)}")
+        send_message("\n".join(lines))
+    except Exception as e:
+        print(f"텔레그램 알림 실패: {e}")
 
 
 if __name__ == "__main__":

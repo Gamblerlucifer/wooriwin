@@ -1,0 +1,24 @@
+name: wooriwin.com 반자동 백링크 알림
+
+on:
+  schedule:
+    - cron: '0 4 * * 3'  # 매주 수요일 13:00 KST
+  workflow_dispatch: {}
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install requests
+
+      - name: 이번 주 1-2 플랫폼 텔레그램 알림
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/backlink-reminder.py
