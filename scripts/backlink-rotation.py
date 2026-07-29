@@ -14,6 +14,8 @@ import sys
 import time
 import subprocess
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 SCRIPTS_DIR = os.path.dirname(__file__)
 GAP_SECONDS = 120
 

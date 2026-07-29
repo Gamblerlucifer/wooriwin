@@ -1,5 +1,5 @@
 """
-telegram-notify.py — Telegram Bot API 공용 헬퍼
+telegram_notify.py — Telegram Bot API 공용 헬퍼
 다른 스크립트에서 import 하거나 단독 실행 가능.
 """
 

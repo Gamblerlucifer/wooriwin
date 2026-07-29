@@ -6,10 +6,15 @@ GitHub Actions cron: '0 4 * * 3'  # 수요일 13:00 KST
 
 import os
 import sys
+from dotenv import load_dotenv
 
 sys.path.insert(0, os.path.dirname(__file__))
 from telegram_notify import send_message
 from semiauto_platforms import get_this_week_platform, get_next_platform, TOTAL, week_index
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env.local'))
 
 
 def main():
