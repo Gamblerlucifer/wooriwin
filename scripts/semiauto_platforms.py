@@ -20,7 +20,7 @@ PLATFORMS = [
     {"name": "Diigo",             "da": 91, "desc": "북마크 추가",         "new_post_url": "https://www.diigo.com/",                                    "body_format": "plain"},
     {"name": "Medium",            "da": 95, "desc": "블로그 포스팅",        "new_post_url": "https://medium.com/new-story",                              "body_format": "html"},
     {"name": "WordPress.com",     "da": 93, "desc": "블로그 포스팅",        "new_post_url": "https://wordpress.com/post/wooriwin.wordpress.com",         "body_format": "html"},
-    {"name": "네이버 블로그",       "da": 0,  "desc": "블로그 포스팅",        "new_post_url": "https://blog.naver.com/",                                    "body_format": "plain"},
+    # 네이버 블로그 — 본문 외부 링크에 rel="nofollow" 자동 적용, dofollow 백링크 목적에 안 맞아 제외
     {"name": "구글 사이트",         "da": 90, "desc": "새 페이지 추가",       "new_post_url": "https://sites.google.com/",                                  "body_format": "plain"},
     {"name": "Penzu",             "da": 55, "desc": "저널 작성",            "new_post_url": "https://penzu.com/journals",                                 "body_format": "plain"},
     {"name": "Pearltrees",        "da": 62, "desc": "아이템 추가",          "new_post_url": "https://www.pearltrees.com/",                                "body_format": "plain"},
