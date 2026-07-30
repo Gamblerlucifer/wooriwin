@@ -62,7 +62,10 @@ def post_to_lj(title: str, body_markdown: str) -> str:
     challenge = get_challenge(server)
     response = auth_response(challenge, LJ_PASSWORD)
 
-    now = time.localtime()
+    # 로컬 시스템 시계가 아니라 LJ 챌린지에 실려오는 서버 유닉스타임을 신뢰한다
+    # (샌드박스/로컬 환경의 시계가 실제 시각과 어긋나면 글 날짜가 틀어지는 문제 방지)
+    server_unixtime = int(challenge.split(":")[1])
+    now = time.gmtime(server_unixtime)
     params = {
         "username": LJ_USERNAME,
         "auth_method": "challenge",

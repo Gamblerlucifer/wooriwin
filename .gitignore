@@ -76,3 +76,6 @@ __pycache__/
 # 반자동 백링크 로컬 진행 로그 (커밋 불필요)
 /scripts/.semiauto_log.json
 /scripts/.posts_to_fix.json
+
+# 백링크 진행 트래커 HTML (개인용 로컬 도구, 커밋 불필요)
+/docs/backlink-tracker/

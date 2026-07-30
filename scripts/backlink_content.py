@@ -50,17 +50,19 @@ def pick_source_post() -> dict:
     return random.choice(posts)
 
 
-def build_anchor_text(post: dict) -> str:
-    style = random.choice(ANCHOR_STYLES)
-    keyword = random.choice(post.get("keywords") or [post["category"]])
+def pick_anchor_style() -> str:
+    return random.choice(ANCHOR_STYLES)
 
-    if style == "exact":
-        return keyword
-    if style == "phrase":
-        return f"{keyword} {random.choice(PHRASE_SUFFIXES)}"
+
+def fixed_anchor_text(style: str) -> str | None:
+    """branded/generic 스타일은 글의 구체적 소재와 무관하게 고정 후보에서 뽑는다.
+    exact/phrase는 실제로 어떤 글이 나올지 모르는 상태라 여기서 못 정하고, None을 반환해
+    제미나이가 자기 글 내용에 맞춰 직접 고르게 한다."""
     if style == "branded":
         return random.choice(["wooriwin 카지노 가이드", "wooriwin.com 바로가기", "wooriwin 카지노 정보"])
-    return random.choice(GENERIC_ANCHORS)
+    if style == "generic":
+        return random.choice(GENERIC_ANCHORS)
+    return None
 
 
 def clean_json_response(text: str) -> str:
@@ -73,13 +75,30 @@ def clean_json_response(text: str) -> str:
 def generate_backlink_article(platform_name: str) -> dict:
     """반환값: {"title", "body_markdown", "anchor_text", "source_slug"}"""
     post = pick_source_post()
-    anchor_text = build_anchor_text(post)
     target_url = f"{SITE_BASE_URL}/blog/{post['slug']}"
+    style = pick_anchor_style()
+    anchor = fixed_anchor_text(style)
+
+    if anchor:
+        anchor_rule = f"""- 본문 중 자연스러운 위치에 다음 앵커 텍스트로 링크를 정확히 1번 삽입: "{anchor}"
+  링크 형식: [{anchor}]({target_url})"""
+    else:
+        suffix_options = "/".join(f'"{s}"' for s in PHRASE_SUFFIXES)
+        style_hint = (
+            "글에서 실제로 다루는 핵심 소재/게임명 단어 그대로"
+            if style == "exact"
+            else f"글에서 실제로 다루는 핵심 소재/게임명 + {suffix_options} 중 하나를 붙인 형태"
+        )
+        anchor_rule = f"""- 본문 중 자연스러운 위치에 링크를 정확히 1번 삽입하되, 앵커 텍스트는 {style_hint}로 직접 정하세요.
+  (예: 글이 크레이지타임을 다룬다면 앵커는 "크레이지타임" 또는 "크레이지타임 후기"처럼 실제 글 소재와 정확히 일치해야 함 — 원본 글 키워드 목록이 아니라 방금 쓴 새 글 자체의 소재 기준)
+  링크 형식: [실제 사용한 앵커 텍스트]({target_url})
+  그리고 그 "실제 사용한 앵커 텍스트"를 JSON의 anchor_text 필드에도 그대로 적으세요."""
 
     prompt = f"""당신은 카지노/온라인 게이밍 분야 칼럼니스트입니다. {platform_name}에 올릴 짧은 글을 씁니다.
 
 아래는 참고할 원본 글 정보입니다. 이 글을 요약하거나 발췌하지 말고, 같은 주제를 완전히 다른 각도로
-새로 쓰세요(예: 최근 이슈 코멘트, 짧은 팁 모음, 개인적 관전평 등 원본과 다른 형식).
+새로 쓰세요(예: 최근 이슈 코멘트, 짧은 팁 모음, 개인적 관전평 등 원본과 다른 형식). 특정 게임/소재 하나에
+초점을 좁혀서 써도 됩니다.
 
 원본 제목: {post['title']}
 원본 주제: {post['description']}
@@ -89,11 +108,10 @@ def generate_backlink_article(platform_name: str) -> dict:
 요구사항:
 - 400~600자 분량의 완전히 새로운 한국어 글
 - 마크다운 형식
-- 본문 중 자연스러운 위치에 다음 앵커 텍스트로 링크를 정확히 1번 삽입: "{anchor_text}"
-  링크 형식: [{anchor_text}]({target_url})
+{anchor_rule}
 - 광고 문구나 "지금 가입하세요" 같은 표현 없이, 정보/분석 톤 유지
 - 응답은 아래 JSON 형식으로만 출력 (다른 텍스트 금지):
-{{"title": "글 제목", "body_markdown": "마크다운 본문"}}
+{{"title": "글 제목", "body_markdown": "마크다운 본문", "anchor_text": "본문에 실제로 삽입한 앵커 텍스트"}}
 """
 
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -103,6 +121,6 @@ def generate_backlink_article(platform_name: str) -> dict:
     return {
         "title": data["title"],
         "body_markdown": data["body_markdown"],
-        "anchor_text": anchor_text,
+        "anchor_text": anchor or data["anchor_text"],
         "source_slug": post["slug"],
     }
