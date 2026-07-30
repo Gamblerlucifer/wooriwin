@@ -14,6 +14,7 @@ import re
 import json
 import glob
 import random
+import markdown as md_lib
 from google import genai
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -63,6 +64,13 @@ def fixed_anchor_text(style: str) -> str | None:
     if style == "generic":
         return random.choice(GENERIC_ANCHORS)
     return None
+
+
+def markdown_to_html(text: str) -> str:
+    try:
+        return md_lib.markdown(text)
+    except Exception:
+        return "".join(f"<p>{line}</p>" for line in text.split("\n\n") if line.strip())
 
 
 def clean_json_response(text: str) -> str:
